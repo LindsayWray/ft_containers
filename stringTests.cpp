@@ -42,6 +42,46 @@ void	stringVectorTests(){
 	std::cout << "last original		" << vector_string.back() << std::endl;
 	std::cout << "last copy		" << copy_vector.back() << std::endl;
 
+	vector_string.resize(50);
+	std::cout << "size after smaller resize	" << vector_string.size() << std::endl;
+	std::cout << "capacity after smaller resize	" << vector_string.capacity() << std::endl;
+	try{
+		std::cout << "on index 49			" << vector_string.at(49) << std::endl;
+		std::cout << "on index 50			" << vector_string.at(50) << std::endl;
+	}
+	catch(std::out_of_range& e){
+		std::cout << e.what() << std::endl;
+	}
+	
+	vector_string.resize(200);
+	std::cout << "size after bigger resize	" << vector_string.size() << std::endl;
+	std::cout << "capacity after bigger resize	" << vector_string.capacity() << std::endl;
+	std::cout << "[] operator		"<< vector_string[50] << std::endl;
+	std::cout << "[] operator		" << vector_string[199] << std::endl;
+	std::cout << "[] operator		" << vector_string[49] << std::endl;
+	vector_string.resize(400, "more test");
+	std::cout << "size after bigger resize	" << vector_string.size() << std::endl;
+	std::cout << "capacity after bigger resize	" << vector_string.capacity() << std::endl;
+	std::cout << "[] operator		"<< vector_string[199] << std::endl;
+	std::cout << "[] operator		"<< vector_string[200] << std::endl;
+	std::cout << "[] operator		" << vector_string[399] << std::endl;
+	std::cout << "[] operator		" << vector_string[50] << std::endl;
+	vector_string.resize(400);
+	std::cout << "size after equal	" << vector_string.size() << std::endl;
+	std::cout << "capacity after equal	" << vector_string.capacity() << std::endl;
+
+	std::cout << "max capacity		" << vector_string.max_size() << std::endl;
+	vector_string.reserve(300);
+	std::cout << "reserve capacity		" << vector_string.capacity() << std::endl;
+	vector_string.reserve(1000);
+	std::cout << "reserve capacity		" << vector_string.capacity() << std::endl;
+	vector_string.resize(1000);
+	vector_string.push_back("test");
+	std::cout << "reserve capacity		" << vector_string.capacity() << std::endl;
+
+
+
+
 
 	std::cout << "\n--- REAL VECTOR --" << std::endl;
 	std::vector<std::string> testVec;
@@ -76,14 +116,46 @@ void	stringVectorTests(){
 	std::cout << "last original		" << testVec.back() << std::endl;
 	std::cout << "last copy		" << copyVector.back() << std::endl;
 
+
 	testVec.resize(50);
 	std::cout << "size after smaller resize	" << testVec.size() << std::endl;
 	std::cout << "capacity after smaller resize	" << testVec.capacity() << std::endl;
+	try{
+		std::cout << "on index 49			" << testVec.at(49) << std::endl;
+		std::cout << "on index 50			" << testVec.at(50) << std::endl;
+	}
+	catch(std::out_of_range& e){
+		std::cout << e.what() << std::endl;
+	}
 	
+	testVec.resize(200);
+	std::cout << "size after bigger resize	" << testVec.size() << std::endl;
+	std::cout << "capacity after bigger resize	" << testVec.capacity() << std::endl;
+	std::cout << "[] operator			"<< testVec[50] << std::endl;
+	std::cout << "[] operator			" << testVec[199] << std::endl;
+	std::cout << "[] operator			" << testVec[49] << std::endl;
 	testVec.resize(400, "more test");
 	std::cout << "size after bigger resize	" << testVec.size() << std::endl;
 	std::cout << "capacity after bigger resize	" << testVec.capacity() << std::endl;
-	std::cout << "[] operator		" << testVec[51] << std::endl;
+	std::cout << "[] operator		"<< testVec[199] << std::endl;
+	std::cout << "[] operator		"<< testVec[200] << std::endl;
 	std::cout << "[] operator		" << testVec[399] << std::endl;
-	std::cout << "[] operator		" << testVec[400] << std::endl;
+	std::cout << "[] operator		" << testVec[50] << std::endl;
+	testVec.resize(400);
+	std::cout << "size after equal	" << testVec.size() << std::endl;
+	std::cout << "capacity after equal	" << testVec.capacity() << std::endl;
+
+	std::cout << "max capacity		" << testVec.max_size() << std::endl;
+	testVec.reserve(300);
+	std::cout << "reserve capacity		" << testVec.capacity() << std::endl;
+	testVec.reserve(1000);
+	std::cout << "reserve capacity		" << testVec.capacity() << std::endl;
+	testVec.resize(1000);
+	testVec.push_back("test");
+	std::cout << "reserve capacity		" << testVec.capacity() << std::endl;
+
+
+
+	ft::vector<std::string>::allocator_type alloc = vector_string.get_allocator();
+	(void)alloc;
 }

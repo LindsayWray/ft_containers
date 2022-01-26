@@ -2,15 +2,19 @@
 # define VECTOR_HPP
 # include <memory>
 # include <cstring>
-# include <stdexcept> 
+# include <stdexcept>
 
 namespace ft{
 	template<typename value_type>
 	class vector{
+	public:
+		typedef size_t						size_type;
+		typedef std::allocator<value_type>	allocator_type;
+		//typedef ft::vector<int>::iterator it
 	private:
 		value_type*					_array;
-		unsigned long				_size;
-		unsigned long				_allocSize;
+		size_type					_size;
+		size_type					_allocSize;
 		std::allocator<value_type>	_alloc;
 	public:
 		vector() : _array(NULL), _size(0), _allocSize(0){
@@ -40,81 +44,155 @@ namespace ft{
 			return *this;
 		}
 
-		
-		//CAPACITY
-		unsigned long size() const{
-			return _size;
-		};
-		unsigned long capacity() const{
-			return _allocSize;
-		};
-		void	push_back(const value_type& val){
-			if (_size == _allocSize){
-				if (_allocSize == 0)
-					_allocSize +=1;
-				else
-					_allocSize *= 2;
-				try{
-					value_type* _tempArray = _alloc.allocate(_allocSize);
-					// std::memcpy(_tempArray, _array, _size * sizeof(value_type));   is there a way to use this only for basic types?;
-					for(unsigned long i = 0; i < _size; i++){
-						_alloc.construct(_tempArray + i, _array[i]);
-						_alloc.destroy(&_array[i]);
-					}
-					_alloc.deallocate(_array, _size);
-					_array = _tempArray;
-				}
-				catch(std::bad_alloc &e){
-					std::cerr << e.what() << std::endl;
-					exit(EXIT_FAILURE);
-				}
-			}
-			_alloc.construct(&_array[_size], val);
-			_size++;
-		};
-		bool empty() const{
-			if (_size == 0)
-				return true;
-			return false;
-		};
-		void resize(size_type n, value_type val = value_type()){
-			if (n < _size){
-				for (i = n; i < _size; i++){
+
+		//  ------------    HELPER FUNCTIONS   ------------
+		void increaseCapacity(size_type n){
+			_allocSize = n;
+			try{
+				value_type* _tempArray = _alloc.allocate(_allocSize);
+				for(size_type i = 0; i < _size; i++){
+					_alloc.construct(_tempArray + i, _array[i]);
 					_alloc.destroy(&_array[i]);
 				}
+				_alloc.deallocate(_array, _size);
+				_array = _tempArray;
+			}
+			catch(std::bad_alloc &e){
+				std::cerr << e.what() << std::endl;
+				exit(EXIT_FAILURE);
+			}
+		}
+		void increaseCapacity(){
+			if (_allocSize == 0)
+				_allocSize +=1;
+			else
+				_allocSize *= 2;
+			increaseCapacity(_allocSize);
+		}
+
+		
+
+
+		//  ------------  ITERATORS  ------------
+		class iterator{
+		private:
+			value_type* _ptr;
+		public:
+			iterator() : _ptr(NULL){};
+			iterator(value_type* ptr) : _ptr(ptr){};
+			~iterator(){};
+
+			inline bool operator==(const iterator& rhs) const{ 
+				return this->_ptr == rhs._ptr;
+			}
+			inline bool operator!=(const iterator& rhs) const{ 
+				return this->_ptr != rhs._ptr;
 			}
 		};
 
-		//ELEMENT ACCESS
-		value_type& operator[](unsigned int index) _NOEXCEPT{  //Array subscript operator
+		iterator begin() _NOEXCEPT {
+			return iterator(_array);
+		};
+		// const_iterator begin() const _NOEXCEPT {
+			
+		// };
+		iterator end(){
+			return iterator(&_array[_size]);
+		};
+		// const_iterator end() const{
+
+		// };
+
+
+
+
+		//  ------------  CAPACITY  ------------
+		size_type size() const {
+			return _size;
+		};
+		size_type max_size() const {
+			return _alloc.max_size();
+		};
+		void resize(size_type n, value_type val = value_type()) {
+			if(n <= _size){
+				for(size_type i = n; i < _size; i++){
+					_alloc.destroy(&_array[i]);
+				}
+			}
+			else {
+				while(n > _allocSize)
+					increaseCapacity();
+				for(size_type i = _size; i < n; i++) {
+					_alloc.construct(&_array[i], val);
+				}
+			}
+			_size = n;
+		};
+		size_type capacity() const {
+			return _allocSize;
+		};
+		bool empty() const{
+			if(_size == 0)
+				return true;
+			return false;
+		};
+		void reserve(size_type n) {
+			if (n > _allocSize)
+				increaseCapacity(n);
+		};
+
+
+
+		//  ------------  ELEMENT ACCESS   ------------
+		value_type& operator[](size_type index) _NOEXCEPT {  //Array subscript operator
 			return _array[index];
 		};
-		value_type const& operator[](unsigned int index) const _NOEXCEPT{
+		value_type const& operator[](size_type index) const _NOEXCEPT {
 			return _array[index];
 		};
-		value_type& at(unsigned int index){
+		value_type& at(size_type index) {
 			if (index >= _size)
 				throw(std::out_of_range("test")); // look into text / or make exception
 			return _array[index];
 		};
-		value_type const& at(unsigned int index) const{
+		value_type const& at(size_type index) const {
 			if (index >= _size)
 				throw(std::out_of_range("test"));
 			return _array[index];
 		};
-		value_type& front() _NOEXCEPT{
+		value_type& front() _NOEXCEPT {
 			return _array[0];
 		};
-		value_type const& front() const _NOEXCEPT{
+		value_type const& front() const _NOEXCEPT {
 			return _array[0];
 		};
-		value_type& back() _NOEXCEPT{
+		value_type& back() _NOEXCEPT {
 			return _array[_size - 1];
 		};
-		value_type const& back() const _NOEXCEPT{
+		value_type const& back() const _NOEXCEPT {
 			return _array[_size - 1];
+		};
+
+
+
+
+		//  ------------  MODIFIERS   ------------
+		void	push_back(const value_type& val) {
+			if (_size == _allocSize){
+				increaseCapacity();
+			}
+			_alloc.construct(&_array[_size], val);
+			_size++;
+		};
+
+
+		//  ------------  ALLOCATOR   ------------
+		allocator_type get_allocator() const{
+			return _alloc;
 		};
 	};
+
+
 }
 
 #endif
