@@ -57,13 +57,16 @@ std::cout << "--- INT VECTOR TESTS --" << std::endl;
 	std::cout << "reserve capacity		" << vector_int.capacity() << std::endl;
 
 
-	// std::cout << "myvector contains:";
-	// for (ft::vector<int>::iterator it = vector_int.begin() ; it != vector_int.end(); ++it)
-	// 	std::cout << ' ' << *it;
-	// std::cout << '\n';
+	std::cout << "myvector contains:";
+	for (ft::vector<int>::iterator it = vector_int.begin() ; it != vector_int.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
 
 	ft::vector<int>::iterator it = vector_int.begin();
 	std::cout << "does equal work " << (it != vector_int.end()) << std::endl;
+
+
+
 
 
 
@@ -115,4 +118,9 @@ std::cout << "--- INT VECTOR TESTS --" << std::endl;
 	std::cout << "reserve capacity		" << testVec.capacity() << std::endl;
 	testVec.reserve(1000);
 	std::cout << "reserve capacity		" << testVec.capacity() << std::endl;
+
+	std::cout << "realvector contains:";
+	for (std::vector<int>::iterator it = testVec.begin() ; it != testVec.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
 }

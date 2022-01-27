@@ -80,6 +80,7 @@ namespace ft{
 		public:
 			iterator() : _ptr(NULL){};
 			iterator(value_type* ptr) : _ptr(ptr){};
+			iterator(iterator const& original) : _ptr(original._ptr){};
 			~iterator(){};
 
 			inline bool operator==(const iterator& rhs) const{ 
@@ -88,7 +89,32 @@ namespace ft{
 			inline bool operator!=(const iterator& rhs) const{ 
 				return this->_ptr != rhs._ptr;
 			}
+			iterator& operator++(){
+				this->_ptr++;
+				return *this;
+			}
+			iterator operator++(int){
+				iterator copy(*this);
+				this->_ptr++;
+				return copy;
+			}
+			iterator& operator--(){
+				this->_ptr--;
+				return *this;
+			}
+			iterator operator--(int){
+				iterator copy(*this);
+				this->_ptr--;
+				return copy;
+			}
+			value_type& operator*(){
+				return *_ptr;
+			}
+			value_type* operator->(){
+				return _ptr;
+			}
 		};
+
 
 		iterator begin() _NOEXCEPT {
 			return iterator(_array);

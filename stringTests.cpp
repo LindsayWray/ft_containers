@@ -79,6 +79,18 @@ void	stringVectorTests(){
 	vector_string.push_back("test");
 	std::cout << "reserve capacity		" << vector_string.capacity() << std::endl;
 
+	std::cout << "myvector contains:";
+	for (ft::vector<std::string>::iterator it = vector_string.begin() ; it != vector_string.end(); it++)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
+	ft::vector<std::string>::iterator it = vector_string.begin();
+	std::cout << "on index 2: " << it->at(2) << std::endl;
+	std::cout << *it++ << std::endl;
+
+
+
+
 
 
 
@@ -154,8 +166,12 @@ void	stringVectorTests(){
 	testVec.push_back("test");
 	std::cout << "reserve capacity		" << testVec.capacity() << std::endl;
 
+	std::cout << "realvector contains:";
+	for (std::vector<std::string>::iterator it = testVec.begin() ; it != testVec.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
 
-
-	ft::vector<std::string>::allocator_type alloc = vector_string.get_allocator();
-	(void)alloc;
+	std::vector<std::string>::iterator ite = testVec.begin();
+	std::cout << "on index 2: " << ite->at(2) << std::endl;
+	std::cout << *ite++ << std::endl;
 }
