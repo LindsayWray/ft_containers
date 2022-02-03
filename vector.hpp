@@ -113,6 +113,8 @@ namespace ft{
 			value_type* operator->(){
 				return _ptr;
 			}
+
+			iterator operator+(const T2 &b) const;
 		};
 
 
@@ -132,7 +134,7 @@ namespace ft{
 
 
 
-		//  ------------  CAPACITY  ------------
+		//  ------------  CAPACITY  ------------ 
 		size_type size() const {
 			return _size;
 		};
