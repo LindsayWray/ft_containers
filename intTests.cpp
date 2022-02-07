@@ -86,12 +86,21 @@ std::cout << "--- INT VECTOR TESTS --" << std::endl;
 	std::cout << "dereference and increment	" << *it++ << std::endl;
 	std::cout << "dereference and increment	" << *++it << std::endl;
 	std::cout << "increment with five		" << *(it + 5) << std::endl;
-	std::cout << "increment with two		" << *(2 + it) << std::endl;
+	//std::cout << "increment with eight		" << *(8 + it) << std::endl;
+
+	ft::vector<int>::iterator itr = vector_int.begin();
+	std::cout << "size			" << vector_int.size() << std::endl;
+	it += 30;
+	itr += 3;
+	std::cout << "value			" << *it << std::endl;
+	std::cout << "value			" << *itr << std::endl;
+	//std::cout << "subtract iterators		" << it - itr << std::endl;
 	std::cout << "decrement with three		" << *(it - 3) << std::endl;
 	it += 10;
 	std::cout << "after increment ten		" << *it << std::endl;
 	it -= 4;
 	std::cout << "after decrement four		" << *it << std::endl;
+	std::cout << "look at index eight		" << it[8] << std::endl;
 
 
 
@@ -146,10 +155,10 @@ std::cout << "--- INT VECTOR TESTS --" << std::endl;
 	testVec.reserve(1000);
 	std::cout << "reserve capacity		" << testVec.capacity() << std::endl;
 
-	// std::cout << "realvector contains:";
-	// for (std::vector<int>::iterator it = testVec.begin() ; it != testVec.end(); ++it)
-	// 	std::cout << ' ' << *it;
-	// std::cout << '\n';
+	std::cout << "realvector contains:";
+	for (std::vector<int>::iterator it = testVec.begin() ; it != testVec.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
 
 	
 	std::cout << "\n--- ITERATOR TESTS --" << std::endl;
@@ -175,10 +184,19 @@ std::cout << "--- INT VECTOR TESTS --" << std::endl;
 	std::cout << "dereference and increment	" << *ite++ << std::endl;
 	std::cout << "dereference and increment	" << *++ite << std::endl;
 	std::cout << "increment with five		" << *(ite + 5) << std::endl;
-	std::cout << "increment with two		" << *(2 + ite) << std::endl;
+	std::cout << "increment with eight		" << *(8 + ite) << std::endl;
+
+	std::vector<int>::iterator iter = testVec.begin();
+	std::cout << "size			" << testVec.size() << std::endl;
+	ite += 30;
+	iter += 3;
+	std::cout << "value			" << *ite << std::endl;
+	std::cout << "value			" << *iter << std::endl;
+	//std::cout << "subtract iterators		" << ite - iter << std::endl;
 	std::cout << "decrement with three		" << *(ite - 3) << std::endl;
 	ite += 10;
 	std::cout << "after increment ten		" << *ite << std::endl;
 	ite -= 4;
 	std::cout << "after decrement four		" << *ite << std::endl;
+	std::cout << "look at index eight		" << ite[8] << std::endl;
 }

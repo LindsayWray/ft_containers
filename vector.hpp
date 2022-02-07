@@ -126,6 +126,12 @@ namespace ft{
 			value_type* operator->(){
 				return _ptr;
 			}
+			value_type& operator[](size_type index) const{
+				iterator copy(*this);
+				copy._ptr += index;
+				return *copy._ptr;
+			}
+
 			iterator operator+(const int &b) const{
 				iterator copy(*this);
 				copy._ptr += b;
