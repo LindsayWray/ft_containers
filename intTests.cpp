@@ -62,9 +62,36 @@ std::cout << "--- INT VECTOR TESTS --" << std::endl;
 		std::cout << ' ' << *it;
 	std::cout << '\n';
 
-	ft::vector<int>::iterator it = vector_int.begin();
-	std::cout << "does equal work " << (it != vector_int.end()) << std::endl;
 
+	std::cout << "\n--- ITERATOR TESTS --" << std::endl;
+	ft::vector<int>::iterator it = vector_int.begin();
+	std::cout << "is equal			" << (it == vector_int.end()) << std::endl;
+	std::cout << "is not equal			" << (it != vector_int.end()) << std::endl;
+	std::cout << "is not equal			" << (it != vector_int.end()) << std::endl;
+	std::cout << "is smaller			" << (it < vector_int.end()) << std::endl;
+	std::cout << "is smaller			" << (vector_int.end() < it) << std::endl;
+	std::cout << "is bigger			" << (it > vector_int.end()) << std::endl;
+	std::cout << "is bigger			" << (vector_int.end() > it) << std::endl;
+	std::cout << "is smaller or equal		" << (it <= vector_int.end()) << std::endl;
+	std::cout << "is smaller or equal		" << (vector_int.end() <= vector_int.end()) << std::endl;
+	std::cout << "is bigger or equal		" << (it >= vector_int.end()) << std::endl;
+	std::cout << "is bigger or equal		" << (it >= it) << std::endl;
+	std::cout << "the value is			" << *it << std::endl;
+	++it;
+	it++;
+	std::cout << "the value after increment	" << *it << std::endl;
+	--it;
+	it--;
+	std::cout << "the value after decrement	" << *it << std::endl;
+	std::cout << "dereference and increment	" << *it++ << std::endl;
+	std::cout << "dereference and increment	" << *++it << std::endl;
+	std::cout << "increment with five		" << *(it + 5) << std::endl;
+	std::cout << "increment with two		" << *(2 + it) << std::endl;
+	std::cout << "decrement with three		" << *(it - 3) << std::endl;
+	it += 10;
+	std::cout << "after increment ten		" << *it << std::endl;
+	it -= 4;
+	std::cout << "after decrement four		" << *it << std::endl;
 
 
 
@@ -119,8 +146,39 @@ std::cout << "--- INT VECTOR TESTS --" << std::endl;
 	testVec.reserve(1000);
 	std::cout << "reserve capacity		" << testVec.capacity() << std::endl;
 
-	std::cout << "realvector contains:";
-	for (std::vector<int>::iterator it = testVec.begin() ; it != testVec.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
+	// std::cout << "realvector contains:";
+	// for (std::vector<int>::iterator it = testVec.begin() ; it != testVec.end(); ++it)
+	// 	std::cout << ' ' << *it;
+	// std::cout << '\n';
+
+	
+	std::cout << "\n--- ITERATOR TESTS --" << std::endl;
+	std::vector<int>::iterator ite = testVec.begin();
+	std::cout << "is equal			" << (ite == testVec.end()) << std::endl;
+	std::cout << "is not equal			" << (ite != testVec.end()) << std::endl;
+	std::cout << "is not equal			" << (ite != testVec.end()) << std::endl;
+	std::cout << "is smaller			" << (ite < testVec.end()) << std::endl;
+	std::cout << "is smaller			" << (testVec.end() < ite) << std::endl;
+	std::cout << "is bigger			" << (ite > testVec.end()) << std::endl;
+	std::cout << "is bigger			" << (testVec.end() > ite) << std::endl;
+	std::cout << "is smaller or equal		" << (ite <= testVec.end()) << std::endl;
+	std::cout << "is smaller or equal		" << (testVec.end() <= testVec.end()) << std::endl;
+	std::cout << "is bigger or equal		" << (ite >= testVec.end()) << std::endl;
+	std::cout << "is bigger or equal		" << (ite >= ite) << std::endl;
+	std::cout << "the value is			" << *ite << std::endl;
+	++ite;
+	ite++;
+	std::cout << "the value after increment	" << *ite << std::endl;
+	--ite;
+	ite--;
+	std::cout << "the value after decrement	" << *ite << std::endl;
+	std::cout << "dereference and increment	" << *ite++ << std::endl;
+	std::cout << "dereference and increment	" << *++ite << std::endl;
+	std::cout << "increment with five		" << *(ite + 5) << std::endl;
+	std::cout << "increment with two		" << *(2 + ite) << std::endl;
+	std::cout << "decrement with three		" << *(ite - 3) << std::endl;
+	ite += 10;
+	std::cout << "after increment ten		" << *ite << std::endl;
+	ite -= 4;
+	std::cout << "after decrement four		" << *ite << std::endl;
 }

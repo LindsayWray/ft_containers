@@ -89,6 +89,19 @@ namespace ft{
 			inline bool operator!=(const iterator& rhs) const{ 
 				return this->_ptr != rhs._ptr;
 			}
+			bool operator<(const iterator& rhs) const{
+				return this->_ptr < rhs._ptr;
+			}
+			bool operator>(const iterator& rhs) const{
+				return this->_ptr > rhs._ptr;
+			}
+			bool operator<=(const iterator& rhs) const{
+				return this->_ptr <= rhs._ptr;
+			}
+			bool operator>=(const iterator& rhs) const{
+				return this->_ptr >= rhs._ptr;
+			}
+
 			iterator& operator++(){
 				this->_ptr++;
 				return *this;
@@ -113,8 +126,24 @@ namespace ft{
 			value_type* operator->(){
 				return _ptr;
 			}
-
-			iterator operator+(const T2 &b) const;
+			iterator operator+(const int &b) const{
+				iterator copy(*this);
+				copy._ptr += b;
+				return copy;
+			}
+			iterator operator-(const int &b) const{
+				iterator copy(*this);
+				copy._ptr -= b;
+				return copy;
+			}
+			iterator& operator+=(const int &b){
+				this->_ptr += b;
+				return *this;
+			}
+			iterator& operator-=(const int &b){
+				this->_ptr -= b;
+				return *this;
+			}
 		};
 
 
@@ -219,7 +248,6 @@ namespace ft{
 			return _alloc;
 		};
 	};
-
 
 }
 
