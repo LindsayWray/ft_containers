@@ -172,82 +172,82 @@ namespace ft{
 			reverse_iterator(reverse_iterator const& original) : _ptr(original._ptr){};
 			~reverse_iterator(){};
 
-		// 	inline bool operator==(const reverse_iterator& rhs) const{ 
-		// 		return this->_ptr == rhs._ptr;
-		// 	}
-		// 	inline bool operator!=(const reverse_iterator& rhs) const{ 
-		// 		return this->_ptr != rhs._ptr;
-		// 	}
-		// 	bool operator<(const reverse_iterator& rhs) const{
-		// 		return this->_ptr < rhs._ptr;
-		// 	}
-		// 	bool operator>(const reverse_iterator& rhs) const{
-		// 		return this->_ptr > rhs._ptr;
-		// 	}
-		// 	bool operator<=(const reverse_iterator& rhs) const{
-		// 		return this->_ptr <= rhs._ptr;
-		// 	}
-		// 	bool operator>=(const reverse_iterator& rhs) const{
-		// 		return this->_ptr >= rhs._ptr;
-		// 	}
-
-		// 	reverse_iterator& operator++(){
-		// 		this->_ptr++;
-		// 		return *this;
-		// 	}
-		// 	reverse_iterator operator++(int){
-		// 		iterator copy(*this);
-		// 		this->_ptr++;
-		// 		return copy;
-		// 	}
-		// 	reverse_iterator& operator--(){
-		// 		this->_ptr--;
-		// 		return *this;
-		// 	}
-		// 	reverse_iterator operator--(int){
-		// 		iterator copy(*this);
-		// 		this->_ptr--;
-		// 		return copy;
-		// 	}
-			value_type& operator*(){
-				return *_ptr;
+			inline bool operator==(const reverse_iterator& rhs) const{ 
+				return this->_ptr == rhs._ptr;
 			}
-		// 	value_type* operator->(){
-		// 		return _ptr;
-		// 	}
-		// 	value_type& operator[](size_type index) const{
-		// 		reverse_iterator copy(*this);
-		// 		copy._ptr += index;
-		// 		return *copy._ptr;
-		// 	}
-		// 	reverse_iterator operator+(const int &b) const{
-		// 		iterator copy(*this);
-		// 		copy._ptr += b;
-		// 		return copy;
-		// 	}
-		// 	// reverse_iterator operator+(const int &b) const{   //the int plus iter problem
-		// 	// 	reverse_iterator copy(*this);
-		// 	// 	copy._ptr += b;
-		// 	// 	return copy;
-		// 	// }
-		// 	reverse_iterator operator-(const int &b) const{
-		// 		reverse_iterator copy(*this);
-		// 		copy._ptr -= b;
-		// 		return copy;
-		// 	}
-		// 	// difference_type operator-(iterator &b) const{  //subtracting iters problem
-		// 	// 	reverse_iterator copy(*this);
-		// 	// 	copy._ptr -= b;
-		// 	// 	return copy;
-		// 	// }
-		// 	reverse_iterator& operator+=(const int &b){
-		// 		this->_ptr += b;
-		// 		return *this;
-		// 	}
-		// 	reverse_iterator& operator-=(const int &b){
-		// 		this->_ptr -= b;
-		// 		return *this;
-		// 	}
+			inline bool operator!=(const reverse_iterator& rhs) const{ 
+				return this->_ptr != rhs._ptr;
+			}
+			bool operator<(const reverse_iterator& rhs) const{
+				return this->_ptr < rhs._ptr;
+			}
+			bool operator>(const reverse_iterator& rhs) const{
+				return this->_ptr > rhs._ptr;
+			}
+			bool operator<=(const reverse_iterator& rhs) const{
+				return this->_ptr <= rhs._ptr;
+			}
+			bool operator>=(const reverse_iterator& rhs) const{
+				return this->_ptr >= rhs._ptr;
+			}
+
+			reverse_iterator& operator++(){
+				this->_ptr--;
+				return *this;
+			}
+			reverse_iterator operator++(int){
+				reverse_iterator copy(*this);
+				this->_ptr--;
+				return copy;
+			}
+			reverse_iterator& operator--(){
+				this->_ptr++;
+				return *this;
+			}
+			reverse_iterator operator--(int){
+				reverse_iterator copy(*this);
+				this->_ptr++;
+				return copy;
+			}
+			value_type& operator*(){
+				return *_ptr;	
+			}
+			value_type* operator->(){
+				return _ptr;
+			}
+			value_type& operator[](size_type index) const{
+				reverse_iterator copy(*this);
+				copy._ptr += index;
+				return *copy._ptr;
+			}
+			reverse_iterator operator+(const int &b) const{
+				reverse_iterator copy(*this);
+				copy._ptr -= b;
+				return copy;
+			}
+			// reverse_iterator operator+(const int &b) const{   //the int plus iter problem
+			// 	reverse_iterator copy(*this);
+			// 	copy._ptr += b;
+			// 	return copy;
+			// }
+			reverse_iterator operator-(const int &b) const{
+				reverse_iterator copy(*this);
+				copy._ptr += b;
+				return copy;
+			}
+			// difference_type operator-(iterator &b) const{  //subtracting iters problem
+			// 	reverse_iterator copy(*this);
+			// 	copy._ptr -= b;
+			// 	return copy;
+			// }
+			reverse_iterator& operator+=(const int &b){
+				this->_ptr -= b;
+				return *this;
+			}
+			reverse_iterator& operator-=(const int &b){
+				this->_ptr += b;
+				return *this;
+			}
 		};
 
 
@@ -263,15 +263,16 @@ namespace ft{
 		// const_iterator end() const{
 
 		// };
-		iterator rbegin() _NOEXCEPT {
-			return iterator(&_array[_size]);
+		reverse_iterator rbegin() _NOEXCEPT {
+			//return reverse_iterator(_array);
+			return reverse_iterator(&_array[_size -1]);
 		};
 		// const_iterator begin() const _NOEXCEPT {
 			
 		// };
-			// iterator rend(){
-			// 	return iterator(&_array[_size]);
-			// };
+		reverse_iterator rend(){
+			return reverse_iterator(_array);
+		};
 		// const_iterator end() const{
 
 		// };

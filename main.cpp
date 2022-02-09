@@ -120,6 +120,6 @@ void intVectorTests();
 
 int main(){
 	intVectorTests();
-	//stringVectorTests();
+	stringVectorTests();
 	//system("leaks containers");
 }

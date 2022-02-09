@@ -57,7 +57,13 @@ std::cout << "--- INT VECTOR TESTS --" << std::endl;
 	std::cout << "reserve capacity		" << vector_int.capacity() << std::endl;
 
 
-	std::cout << "myvector contains:";
+	// std::cout << "myvector contains:";
+	// for (ft::vector<int>::iterator it = vector_int.begin() ; it != vector_int.end(); ++it)
+	// 	std::cout << ' ' << *it;
+	// std::cout << '\n';
+
+	vector_int.resize(50);
+	std::cout << "realvector contains:";
 	for (ft::vector<int>::iterator it = vector_int.begin() ; it != vector_int.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
@@ -105,9 +111,27 @@ std::cout << "--- INT VECTOR TESTS --" << std::endl;
 	std::cout << "\n--- REVERSE ITERATOR TESTS --" << std::endl;
 	ft::vector<int>::reverse_iterator rit = vector_int.rbegin();
 	std::cout << "begin value " << *rit << std::endl;
-	// std::cout << "end value " << *(vector_int.rend()) << std::endl;
+	std::cout << "end value " << *(vector_int.rend()) << std::endl;
+
+	std::cout << "myvector contains:";
+	for (ft::vector<int>::reverse_iterator rit = vector_int.rbegin(); rit != vector_int.rend(); ++rit){
+		std::cout << ' ' << *rit;
+	}
+	std::cout << '\n';
 
 
+
+
+	std::cout << "the value is			" << *rit << std::endl;
+	++rit;
+	rit++;
+	std::cout << "the value after increment	" << *rit << std::endl;
+	--rit;
+	rit--;
+	std::cout << "the value after decrement	" << *rit << std::endl;
+	std::cout << "dereference and increment	" << *rit++ << std::endl;
+	std::cout << "dereference and increment	" << *++rit << std::endl;
+	std::cout << "increment with five		" << *(rit + 5) << std::endl;
 
 
 
@@ -159,13 +183,18 @@ std::cout << "--- INT VECTOR TESTS --" << std::endl;
 	std::cout << "reserve capacity		" << testVec.capacity() << std::endl;
 	testVec.reserve(1000);
 	std::cout << "reserve capacity		" << testVec.capacity() << std::endl;
+	
+	// std::cout << "realvector contains:";
+	// for (std::vector<int>::iterator it = testVec.begin() ; it != testVec.end(); ++it)
+	// 	std::cout << ' ' << *it;
+	// std::cout << '\n';
 
+	testVec.resize(50);
 	std::cout << "realvector contains:";
-	for (std::vector<int>::iterator it = testVec.begin() ; it != testVec.end(); ++it)
-		std::cout << ' ' << *it;
+	for (std::vector<int>::iterator ite = testVec.begin() ; ite != testVec.end(); ++ite)
+		std::cout << ' ' << *ite;
 	std::cout << '\n';
 
-	
 	std::cout << "\n--- ITERATOR TESTS --" << std::endl;
 	std::vector<int>::iterator ite = testVec.begin();
 	std::cout << "is equal			" << (ite == testVec.end()) << std::endl;
@@ -205,8 +234,41 @@ std::cout << "--- INT VECTOR TESTS --" << std::endl;
 	std::cout << "after decrement four		" << *ite << std::endl;
 	std::cout << "look at index eight		" << ite[8] << std::endl;
 
+
 	std::cout << "\n--- REVERSE ITERATOR TESTS --" << std::endl;
 	std::vector<int>::reverse_iterator rite = testVec.rbegin();
 	std::cout << "begin value " << *rite << std::endl;
 	std::cout << "end value " << *(testVec.rend()) << std::endl;
+
+
+	std::cout << "realvector contains:";
+	for (std::vector<int>::reverse_iterator rite = testVec.rbegin(); rite != testVec.rend(); ++rite){
+		std::cout << ' ' << *rite;
+	}
+	std::cout << '\n';
+
+	// std::cout << "is equal			" << (rite == testVec.end()) << std::endl;
+	// std::cout << "is not equal			" << (rite != testVec.end()) << std::endl;
+	// std::cout << "is not equal			" << (rite != testVec.end()) << std::endl;
+	// std::cout << "is smaller			" << (testVec.end() < rite) << std::endl;
+	// std::cout << "is bigger			" << (rite > testVec.end()) << std::endl;
+	// std::cout << "is bigger			" << (testVec.end() > rite) << std::endl;
+	// std::cout << "is smaller or equal		" << (rite <= testVec.end()) << std::endl;
+	// std::cout << "is smaller or equal		" << (testVec.end() <= testVec.end()) << std::endl;
+	// std::cout << "is bigger or equal		" << (rite >= testVec.end()) << std::endl;
+	// std::cout << "is bigger or equal		" << (rite >= rite) << std::endl;
+
+	//https://en.cppreference.com/w/cpp/iterator/reverse_iterator     comparison is non member and should work
+
+	std::cout << "the value is			" << *rite << std::endl;
+	++rite;
+	rite++;
+	std::cout << "the value after increment	" << *rite << std::endl;
+	--rite;
+	rite--;
+	std::cout << "the value after decrement	" << *rite << std::endl;
+	std::cout << "dereference and increment	" << *rite++ << std::endl;
+	std::cout << "dereference and increment	" << *++rite << std::endl;
+	std::cout << "increment with five		" << *(rite + 5) << std::endl;
+	//std::cout << "increment with eight		" << *(8 + rite) << std::endl;
 }
