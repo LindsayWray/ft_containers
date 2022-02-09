@@ -76,8 +76,9 @@ namespace ft{
 		//  ------------  ITERATORS  ------------
 		class iterator{
 		private:
-			value_type* _ptr;
+			value_type* 	_ptr;
 		public:
+			typedef size_t	difference_type;
 			iterator() : _ptr(NULL){};
 			iterator(value_type* ptr) : _ptr(ptr){};
 			iterator(iterator const& original) : _ptr(original._ptr){};
@@ -131,17 +132,26 @@ namespace ft{
 				copy._ptr += index;
 				return *copy._ptr;
 			}
-
 			iterator operator+(const int &b) const{
 				iterator copy(*this);
 				copy._ptr += b;
 				return copy;
 			}
+			// iterator operator+(const int &b) const{   //the int plus iter problem
+			// 	iterator copy(*this);
+			// 	copy._ptr += b;
+			// 	return copy;
+			// }
 			iterator operator-(const int &b) const{
 				iterator copy(*this);
 				copy._ptr -= b;
 				return copy;
 			}
+			// difference_type operator-(iterator &b) const{  //subtracting iters problem
+			// 	iterator copy(*this);
+			// 	copy._ptr -= b;
+			// 	return copy;
+			// }
 			iterator& operator+=(const int &b){
 				this->_ptr += b;
 				return *this;
@@ -150,6 +160,94 @@ namespace ft{
 				this->_ptr -= b;
 				return *this;
 			}
+		};
+
+		class reverse_iterator{
+		private:
+			value_type* 	_ptr;
+		public:
+			typedef size_t	difference_type;
+			reverse_iterator() : _ptr(NULL){};
+			reverse_iterator(value_type* ptr) : _ptr(ptr){};
+			reverse_iterator(reverse_iterator const& original) : _ptr(original._ptr){};
+			~reverse_iterator(){};
+
+		// 	inline bool operator==(const reverse_iterator& rhs) const{ 
+		// 		return this->_ptr == rhs._ptr;
+		// 	}
+		// 	inline bool operator!=(const reverse_iterator& rhs) const{ 
+		// 		return this->_ptr != rhs._ptr;
+		// 	}
+		// 	bool operator<(const reverse_iterator& rhs) const{
+		// 		return this->_ptr < rhs._ptr;
+		// 	}
+		// 	bool operator>(const reverse_iterator& rhs) const{
+		// 		return this->_ptr > rhs._ptr;
+		// 	}
+		// 	bool operator<=(const reverse_iterator& rhs) const{
+		// 		return this->_ptr <= rhs._ptr;
+		// 	}
+		// 	bool operator>=(const reverse_iterator& rhs) const{
+		// 		return this->_ptr >= rhs._ptr;
+		// 	}
+
+		// 	reverse_iterator& operator++(){
+		// 		this->_ptr++;
+		// 		return *this;
+		// 	}
+		// 	reverse_iterator operator++(int){
+		// 		iterator copy(*this);
+		// 		this->_ptr++;
+		// 		return copy;
+		// 	}
+		// 	reverse_iterator& operator--(){
+		// 		this->_ptr--;
+		// 		return *this;
+		// 	}
+		// 	reverse_iterator operator--(int){
+		// 		iterator copy(*this);
+		// 		this->_ptr--;
+		// 		return copy;
+		// 	}
+			value_type& operator*(){
+				return *_ptr;
+			}
+		// 	value_type* operator->(){
+		// 		return _ptr;
+		// 	}
+		// 	value_type& operator[](size_type index) const{
+		// 		reverse_iterator copy(*this);
+		// 		copy._ptr += index;
+		// 		return *copy._ptr;
+		// 	}
+		// 	reverse_iterator operator+(const int &b) const{
+		// 		iterator copy(*this);
+		// 		copy._ptr += b;
+		// 		return copy;
+		// 	}
+		// 	// reverse_iterator operator+(const int &b) const{   //the int plus iter problem
+		// 	// 	reverse_iterator copy(*this);
+		// 	// 	copy._ptr += b;
+		// 	// 	return copy;
+		// 	// }
+		// 	reverse_iterator operator-(const int &b) const{
+		// 		reverse_iterator copy(*this);
+		// 		copy._ptr -= b;
+		// 		return copy;
+		// 	}
+		// 	// difference_type operator-(iterator &b) const{  //subtracting iters problem
+		// 	// 	reverse_iterator copy(*this);
+		// 	// 	copy._ptr -= b;
+		// 	// 	return copy;
+		// 	// }
+		// 	reverse_iterator& operator+=(const int &b){
+		// 		this->_ptr += b;
+		// 		return *this;
+		// 	}
+		// 	reverse_iterator& operator-=(const int &b){
+		// 		this->_ptr -= b;
+		// 		return *this;
+		// 	}
 		};
 
 
@@ -162,6 +260,18 @@ namespace ft{
 		iterator end(){
 			return iterator(&_array[_size]);
 		};
+		// const_iterator end() const{
+
+		// };
+		iterator rbegin() _NOEXCEPT {
+			return iterator(&_array[_size]);
+		};
+		// const_iterator begin() const _NOEXCEPT {
+			
+		// };
+			// iterator rend(){
+			// 	return iterator(&_array[_size]);
+			// };
 		// const_iterator end() const{
 
 		// };
@@ -248,11 +358,26 @@ namespace ft{
 			_size++;
 		};
 
+		void pop_back(){
+
+		};
+
+
+		// iterator erase (iterator position);
+		// iterator erase (iterator first, iterator last);
+
+		// void swap (vector& x);
+
+		// void clear();
+
 
 		//  ------------  ALLOCATOR   ------------
 		allocator_type get_allocator() const{
 			return _alloc;
 		};
+
+		// -------------  Non-member function overloads  -----------
+
 	};
 
 }

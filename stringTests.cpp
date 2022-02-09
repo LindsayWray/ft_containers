@@ -10,9 +10,21 @@ void	stringVectorTests(){
 	std::cout << "--- MY VECTOR --" << std::endl;
 	ft::vector<std::string> vector_string;
 
-	std::string str = "test";
-	for(int i = 0; i < 300; i++){
-		vector_string.push_back(str);
+	//std::string str = "test";
+		vector_string.push_back("one");
+		vector_string.push_back("two");
+		vector_string.push_back("three");
+		vector_string.push_back("four");
+		vector_string.push_back("five");
+		vector_string.push_back("six");
+		vector_string.push_back("seven");
+		vector_string.push_back("eight");
+		vector_string.push_back("nine");
+		vector_string.push_back("ten");
+		vector_string.push_back("eleven");
+		vector_string.push_back("twelve");
+	for(int i = 12; i < 300; i++){
+		vector_string.push_back("test");
 	}
 	
 	std::cout << "size			" << vector_string.size() << std::endl;
@@ -89,8 +101,6 @@ void	stringVectorTests(){
 	ft::vector<std::string>::iterator it = vector_string.begin();
 	std::cout << "on index 2: " << it->at(2) << std::endl;
 	std::cout << *it++ << std::endl;
-
-
 	std::cout << "is equal			" << (it == vector_string.end()) << std::endl;
 	std::cout << "is not equal			" << (it != vector_string.end()) << std::endl;
 	std::cout << "is not equal			" << (it != vector_string.end()) << std::endl;
@@ -112,14 +122,24 @@ void	stringVectorTests(){
 	std::cout << "dereference and increment	" << *it++ << std::endl;
 	std::cout << "dereference and increment	" << *++it << std::endl;
 	std::cout << "increment with five		" << *(it + 5) << std::endl;
-	std::cout << "decrement with three		" << *(it - 3) << std::endl; // also always zero??
-	it += 10;
-	std::cout << "after increment ten		" << *it << std::endl;
-	it -= 4;
-	std::cout << "after decrement four		" << *it << std::endl;
+	//std::cout << "increment with eight		" << *(8 + it) << std::endl;
+	
+	ft::vector<std::string>::iterator itr = vector_string.begin();
+	std::cout << "size				" << vector_string.size() << std::endl;
+	it += 8;
+	itr += 3;
+	std::cout << "value				" << *it << std::endl;
+	std::cout << "value				" << *itr << std::endl;
+	//std::cout << "subtract iterators		" << it - itr << std::endl;
+	std::cout << "decrement	eight		" << *(it - 8) << std::endl;
+	it -= 9;
+	std::cout << "after decrement			" << *it << std::endl;
+	it += 5;
+	std::cout << "after increment			" << *it << std::endl;
+	std::cout << "look at index eight		" << it[8] << std::endl;
 
 
-
+	std::cout << "\n--- REVERSE ITERATOR TESTS --" << std::endl;
 
 
 
@@ -127,7 +147,19 @@ void	stringVectorTests(){
 	std::cout << "\n--- REAL VECTOR --" << std::endl;
 	std::vector<std::string> testVec;
 
-	for(int i = 0; i < 300; i++){
+	testVec.push_back("one");
+	testVec.push_back("two");
+	testVec.push_back("three");
+	testVec.push_back("four");
+	testVec.push_back("five");
+	testVec.push_back("six");
+	testVec.push_back("seven");
+	testVec.push_back("eight");
+	testVec.push_back("nine");
+	testVec.push_back("ten");
+	testVec.push_back("eleven");
+	testVec.push_back("twelve");
+	for(int i = 12; i < 300; i++){
 		testVec.push_back("test");
 	}
 	std::cout << "size			" << testVec.size() << std::endl;
@@ -228,9 +260,26 @@ void	stringVectorTests(){
 	std::cout << "dereference and increment	" << *ite++ << std::endl;
 	std::cout << "dereference and increment	" << *++ite << std::endl;
 	std::cout << "increment with five		" << *(ite + 5) << std::endl;
-	std::cout << "decrement with three		" << *(ite - 3) << std::endl; // always zero??
-	ite += 10;
-	std::cout << "after increment ten		" << *ite << std::endl;
-	ite -= 4;
-	std::cout << "after decrement four		" << *ite << std::endl;
+	//std::cout << "increment with eight		" << *(8 + ite) << std::endl;
+
+	std::vector<std::string>::iterator iter = testVec.begin();
+	std::cout << "size				" << testVec.size() << std::endl;
+	ite += 8;
+	iter += 3;
+	std::cout << "value				" << *ite << std::endl;
+	std::cout << "value				" << *iter << std::endl;
+	//std::cout << "subtract iterators		" << iter - ite << std::endl;
+	std::cout << "decrement	eight		" << *(ite - 8) << std::endl;
+	ite -= 9;
+	std::cout << "after decrement			" << *ite << std::endl;
+	ite += 5;
+	std::cout << "after increment			" << *ite << std::endl;
+	std::cout << "look at index eight		" << ite[8] << std::endl;
+
+
+	std::cout << "\n--- REVERSE ITERATOR TESTS --" << std::endl;
+	std::vector<std::string>::reverse_iterator rite = testVec.rbegin();
+	std::cout << "on index 2: " << rite->at(2) << std::endl;
+	std::cout << *rite++ << std::endl;
+
 }

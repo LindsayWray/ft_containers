@@ -102,6 +102,11 @@ std::cout << "--- INT VECTOR TESTS --" << std::endl;
 	std::cout << "after decrement four		" << *it << std::endl;
 	std::cout << "look at index eight		" << it[8] << std::endl;
 
+	std::cout << "\n--- REVERSE ITERATOR TESTS --" << std::endl;
+	ft::vector<int>::reverse_iterator rit = vector_int.rbegin();
+	std::cout << "begin value " << *rit << std::endl;
+	// std::cout << "end value " << *(vector_int.rend()) << std::endl;
+
 
 
 
@@ -187,16 +192,21 @@ std::cout << "--- INT VECTOR TESTS --" << std::endl;
 	std::cout << "increment with eight		" << *(8 + ite) << std::endl;
 
 	std::vector<int>::iterator iter = testVec.begin();
-	std::cout << "size			" << testVec.size() << std::endl;
+	std::cout << "size				" << testVec.size() << std::endl;
 	ite += 30;
 	iter += 3;
-	std::cout << "value			" << *ite << std::endl;
-	std::cout << "value			" << *iter << std::endl;
-	//std::cout << "subtract iterators		" << ite - iter << std::endl;
+	std::cout << "value				" << *ite << std::endl;
+	std::cout << "value				" << *iter << std::endl;
+	//std::cout << "subtract iterators		" << iter - ite << std::endl;
 	std::cout << "decrement with three		" << *(ite - 3) << std::endl;
 	ite += 10;
 	std::cout << "after increment ten		" << *ite << std::endl;
 	ite -= 4;
 	std::cout << "after decrement four		" << *ite << std::endl;
 	std::cout << "look at index eight		" << ite[8] << std::endl;
+
+	std::cout << "\n--- REVERSE ITERATOR TESTS --" << std::endl;
+	std::vector<int>::reverse_iterator rite = testVec.rbegin();
+	std::cout << "begin value " << *rite << std::endl;
+	std::cout << "end value " << *(testVec.rend()) << std::endl;
 }
