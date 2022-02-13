@@ -263,8 +263,8 @@ namespace ft{
 		// const_iterator end() const{
 
 		// };
-		iterator rbegin() _NOEXCEPT {
-			return iterator(&_array[_size]);
+		reverse_iterator rbegin() _NOEXCEPT {
+			return reverse_iterator(&_array[_size]);
 		};
 		// const_iterator begin() const _NOEXCEPT {
 			
