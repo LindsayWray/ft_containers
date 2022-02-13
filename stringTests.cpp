@@ -96,6 +96,11 @@ void	stringVectorTests(){
 	// 	std::cout << ' ' << *it;
 	// std::cout << '\n';
 
+	vector_string.resize(15);
+	for (ft::vector<std::string>::iterator it = vector_string.begin() ; it != vector_string.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
 
 	std::cout << "\n--- ITERATOR TESTS --" << std::endl;
 	ft::vector<std::string>::iterator it = vector_string.begin();
@@ -139,7 +144,33 @@ void	stringVectorTests(){
 	std::cout << "look at index eight		" << it[8] << std::endl;
 
 
+
+
 	std::cout << "\n--- REVERSE ITERATOR TESTS --" << std::endl;
+	ft::vector<std::string>::reverse_iterator rit = vector_string.rbegin();
+	std::cout << "begin value " << *rit << std::endl;
+	std::cout << "end value " << *(vector_string.rend()) << std::endl;
+	std::cout << "on index 2: " << rit->at(2) << std::endl;
+	std::cout << *rit++ << std::endl;	
+
+
+	std::cout << "realvector contains:";
+	for (ft::vector<std::string>::reverse_iterator rit = vector_string.rbegin(); rit != vector_string.rend(); ++rit){
+		std::cout << ' ' << *rit;
+	}
+	std::cout << '\n';
+
+
+	std::cout << "the value is			" << *rit << std::endl;
+	++rit;
+	rit++;
+	std::cout << "the value after increment	" << *rit << std::endl;
+	--rit;
+	rit--;
+	std::cout << "the value after decrement	" << *rit << std::endl;
+	std::cout << "dereference and increment	" << *rit++ << std::endl;
+	std::cout << "dereference and increment	" << *++rit << std::endl;
+	std::cout << "increment with five		" << *(rit + 5) << std::endl;
 
 
 
@@ -233,6 +264,11 @@ void	stringVectorTests(){
 	// std::cout << '\n';
 
 
+	testVec.resize(15);
+	for (std::vector<std::string>::iterator ite = testVec.begin() ; ite != testVec.end(); ++ite)
+		std::cout << ' ' << *ite;
+	std::cout << '\n';
+
 
 	std::cout << "\n--- ITERATOR TESTS --" << std::endl;
 	std::vector<std::string>::iterator ite = testVec.begin();
@@ -279,7 +315,29 @@ void	stringVectorTests(){
 
 	std::cout << "\n--- REVERSE ITERATOR TESTS --" << std::endl;
 	std::vector<std::string>::reverse_iterator rite = testVec.rbegin();
+	std::cout << "begin value " << *rite << std::endl;
+	std::cout << "end value " << *(testVec.rend()) << std::endl;
 	std::cout << "on index 2: " << rite->at(2) << std::endl;
-	std::cout << *rite++ << std::endl;
+	std::cout << *rite++ << std::endl;	
+
+
+	std::cout << "realvector contains:";
+	for (std::vector<std::string>::reverse_iterator rite = testVec.rbegin(); rite != testVec.rend(); ++rite){
+		std::cout << ' ' << *rite;
+	}
+	std::cout << '\n';
+
+
+	std::cout << "the value is			" << *rite << std::endl;
+	++rite;
+	rite++;
+	std::cout << "the value after increment	" << *rite << std::endl;
+	--rite;
+	rite--;
+	std::cout << "the value after decrement	" << *rite << std::endl;
+	std::cout << "dereference and increment	" << *rite++ << std::endl;
+	std::cout << "dereference and increment	" << *++rite << std::endl;
+	std::cout << "increment with five		" << *(rite + 5) << std::endl;
+	//std::cout << "increment with eight		" << *(8 + rite) << std::endl;
 
 }
