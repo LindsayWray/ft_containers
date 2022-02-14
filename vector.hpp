@@ -193,7 +193,10 @@ namespace ft{
 			_size++;
 		};
 
-		void pop_back(){};
+		void pop_back(){
+			_alloc.destroy(&_array[_size]);
+			_size--;
+		};
 
 		iterator insert(iterator position, const value_type& val){
 			if(position == this->end()){
@@ -202,29 +205,39 @@ namespace ft{
 			else{
 				value_type temp_val = val;
 				int pos = (this->begin() - position) * -1;
-				printf("pos = %i\n", pos);
 				if (_size == _allocSize){
 					increaseCapacity();
-					_size++;
-					while(position < this->end()){
-						value_type temp = _array[pos];
-						_alloc.destroy(&_array[pos]);
-						_alloc.construct(&_array[pos], temp_val);
-						temp_val = temp;
-						position++;
-						pos++;
-					}
 				}
+				while(position <= this->end()){
+				value_type temp = _array[pos];
+				_alloc.destroy(&_array[pos]);
+				_alloc.construct(&_array[pos], temp_val);
+				temp_val = temp;
+				position++;
+				pos++;
+				}
+				_size++;
 			}
 			return (position + 1);
 		};
-		// void insert (iterator position, size_type n, const value_type& val);
-		// void insert (iterator position, iterator first, iterator last){
+		void insert(iterator position, size_type n, const value_type& val){
+			for(size_type i = 0; i < n; i++){
+				insert(position + i, val);
+			}
+		};
+
+		void insert (iterator position, iterator first, iterator last){
+			int i = 0;
+			for(iterator it = first; it != last; ++it){
+				insert(position + i, *it);
+				i++;
+			}
+		};
+
+
+		// iterator erase (iterator position){
 
 		// };
-
-
-		// iterator erase (iterator position);
 		// iterator erase (iterator first, iterator last);
 
 		// void swap (vector& x);

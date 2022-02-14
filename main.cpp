@@ -123,6 +123,6 @@ int main(){
 	std::ofstream tests1("myVectorOutput", std::ios_base::trunc);
 	std::ofstream tests2("realVectorOutput", std::ios_base::trunc);
 	intVectorTests(tests1, tests2);
-	stringVectorTests(tests1, tests2);
+	//stringVectorTests(tests1, tests2);
 	//system("leaks containers");
 }

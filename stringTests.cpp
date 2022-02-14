@@ -101,6 +101,13 @@ void	stringVectorTests(std::ofstream& tests1, std::ofstream& tests2){
 		tests1 << ' ' << *it;
 	tests1 << '\n';
 
+	ft::vector<std::string> vector_string2 (4,"constructor_test");
+	std::cout << "vector constructor with input:";
+	for (ft::vector<std::string>::iterator it = vector_string2.begin(); it != vector_string2.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+	std::cout << "capacity		" << vector_string2.capacity() << std::endl;
+
 
 	//  REAL VECTOR
 	tests2 << "\n--- STRING VECTOR GENERAL TESTS --" << std::endl;
@@ -197,6 +204,40 @@ void	stringVectorTests(std::ofstream& tests1, std::ofstream& tests2){
 		tests2 << ' ' << *ite;
 	tests2 << '\n';
 
+
+	// SECOND VECTOR CONSTRUCTOR 
+	std::vector<std::string> testVec2 (4,"constructor_test");
+	std::cout << "vector constructor with input:";
+	for (std::vector<std::string>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+	std::cout << "capacity		" << testVec2.capacity() << std::endl;
+
+	//IN PROGRESS
+	// std::vector<int> testVec3 (testVec.begin(), testVec.end());
+	// std::cout << "vector constructor with range contains:";
+	// for (std::vector<int>::iterator it = testVec3.begin(); it != testVec3.end(); ++it)
+	// 	std::cout << ' ' << *it;
+	// std::cout << '\n';
+
+	std::vector<std::string>::iterator iterat = testVec.begin();
+	iterat += 4;
+	testVec.insert(iterat, "inserted_string");
+	std::cout << "real vector after single insert: ";
+	for (std::vector<std::string>::iterator it = testVec.begin(); it != testVec.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+	testVec.insert(testVec.end(), testVec2.begin(), testVec2.end());
+	
+	testVec.insert(iterat, 3, "more_inserts");
+	std::cout << "real vector after n inserts: ";
+	for (std::vector<std::string>::iterator it = testVec.begin(); it != testVec.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+	// std::cout << "vector after insert:	";
+	// for (std::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
+	// 	std::cout << ' ' << *it;
+	// std::cout << '\n';
 
 
 
