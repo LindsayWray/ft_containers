@@ -60,7 +60,7 @@ look at index eight		46
 --- INT VECTOR REVERSE ITERATOR TESTS --
 begin value 100
 end value 0
-vector contains: 100 100 100 100 100 100 100 9 8 7 6 5 300 4 3 2 1 0
+vector contains: 100 100 100 100 100 100 100 9 8 7 6 5 4 300 3 2 1 0
 is equal			0
 is not equal			1
 is smaller			0

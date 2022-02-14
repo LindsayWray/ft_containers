@@ -84,11 +84,15 @@ void intVectorTests(std::ofstream& tests1, std::ofstream& tests2){
 
 	
 	vector_int.resize(10);
-	vector_int.insert(vector_int.end(), 300);
-	// std::cout << "vector after insert:	";
-	// for (std::vector<int>::iterator it = vector_int.begin(); it != vector_int.end(); ++it)
-	// 	std::cout << ' ' << *it;
-	// std::cout << '\n';
+
+	ft::vector<int>::iterator itera = vector_int.begin();
+	itera += 4;
+	vector_int.insert(itera, 300);
+	//vector_int.insert(vector_int.end(), 300);
+	std::cout << "my vector after single insert:	";
+	for (ft::vector<int>::iterator it = vector_int.begin(); it != vector_int.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
 	// vector_int.insert(vector_int.end(), vector_int2.begin(), vector_int2.end());
 	// std::cout << "vector after insert:	";
 	// for (std::vector<int>::iterator it = vector_int.begin(); it != vector_int.end(); ++it)
@@ -161,7 +165,6 @@ void intVectorTests(std::ofstream& tests1, std::ofstream& tests2){
 
 
 	// SECOND VECTOR CONSTRUCTOR 
-
 	std::vector<int> testVec2 (7,100);
 	std::cout << "vector constructor with input:";
 	for (std::vector<int>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
@@ -179,17 +182,17 @@ void intVectorTests(std::ofstream& tests1, std::ofstream& tests2){
 
 	testVec.resize(10);
 	std::vector<int>::iterator iterat = testVec.begin();
-	iterat += 5;
+	iterat += 4;
 	testVec.insert(iterat, 300);
-	std::cout << "vector after insert:	";
+	std::cout << "real vector after single insert: ";
 	for (std::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
 	testVec.insert(testVec.end(), testVec2.begin(), testVec2.end());
-	std::cout << "vector after insert:	";
-	for (std::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
+	// std::cout << "vector after insert:	";
+	// for (std::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
+	// 	std::cout << ' ' << *it;
+	// std::cout << '\n';
 
 
 

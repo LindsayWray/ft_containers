@@ -200,15 +200,17 @@ namespace ft{
 				push_back(val);
 			}
 			else{
+				value_type temp_val = val;
 				int pos = (this->begin() - position) * -1;
+				printf("pos = %i\n", pos);
 				if (_size == _allocSize){
 					increaseCapacity();
 					_size++;
 					while(position < this->end()){
 						value_type temp = _array[pos];
 						_alloc.destroy(&_array[pos]);
-						_alloc.construct(&_array[pos], position);
-						*position = temp;
+						_alloc.construct(&_array[pos], temp_val);
+						temp_val = temp;
 						position++;
 						pos++;
 					}
