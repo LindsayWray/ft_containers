@@ -22,16 +22,16 @@ namespace ft{
 			return this->_ptr != rhs._ptr;
 		}
 		bool operator<(const reverse_iterator& rhs) const{
-			return this->_ptr < rhs._ptr;
-		}
-		bool operator>(const reverse_iterator& rhs) const{
 			return this->_ptr > rhs._ptr;
 		}
+		bool operator>(const reverse_iterator& rhs) const{
+			return this->_ptr < rhs._ptr;
+		}
 		bool operator<=(const reverse_iterator& rhs) const{
-			return this->_ptr <= rhs._ptr;
+			return this->_ptr >= rhs._ptr;
 		}
 		bool operator>=(const reverse_iterator& rhs) const{
-			return this->_ptr >= rhs._ptr;
+			return this->_ptr <= rhs._ptr;
 		}
 
 		reverse_iterator& operator++(){

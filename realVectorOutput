@@ -1,3 +1,84 @@
+--- INT VECTOR GENERAL TESTS --
+size			300
+capacity		512
+first element		0
+as const		0
+last element		299
+as const		299
+[] operator		10
+as const		100
+out of bounds		0
+at func test		10
+as const		100
+out of bounds		1vector
+size after smaller resize	50
+capacity after smaller resize	512
+size after bigger resize	200
+capacity after bigger resize	512
+[] operator		0
+[] operator		0
+[] operator		200
+size after bigger resize	400
+capacity after bigger resize	512
+[] operator		0
+[] operator		99
+[] operator		99
+max capacity		4611686018427387903
+reserve capacity		512
+reserve capacity		1000
+vector contains: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49
+
+--- INT VECTOR ITERATOR TESTS --
+is equal			0
+is not equal			1
+is not equal			1
+is smaller			1
+is smaller			0
+is bigger			0
+is bigger			1
+is smaller or equal		1
+is smaller or equal		1
+is bigger or equal		0
+is bigger or equal		1
+the value is			0
+the value after increment	2
+the value after decrement	0
+dereference and increment	0
+dereference and increment	2
+increment with five		6
+increment with eight		9
+size				18
+value				32
+value				3
+subtract iterators		29
+subtract iterators		-29
+decrement with three		29
+after increment ten		42
+after decrement four		38
+look at index eight		46
+
+--- INT VECTOR REVERSE ITERATOR TESTS --
+begin value 100
+end value 0
+vector contains: 100 100 100 100 100 100 100 9 8 7 6 5 300 4 3 2 1 0
+is equal			0
+is not equal			1
+is smaller			0
+is bigger			0
+is bigger			1
+is smaller or equal		1
+is smaller or equal		1
+is bigger or equal		0
+is bigger or equal		1
+the value is			100
+the value after increment	100
+the value after decrement	100
+dereference and increment	100
+dereference and increment	100
+increment with five		9
+increment with eight		6
+
+--- STRING VECTOR GENERAL TESTS --
 size			300
 capacity		512
 first element		one
@@ -35,7 +116,7 @@ reserve capacity		1000
 reserve capacity		2000
  one two three four five six seven eight nine ten eleven twelve test test test
 
---- ITERATOR TESTS --
+--- STRING VECTOR ITERATOR TESTS --
 on index 2: e
 one
 is equal			0
@@ -55,7 +136,7 @@ the value after decrement	two
 dereference and increment	two
 dereference and increment	four
 increment with five		nine
-increment with eight		twelve
+int first increment		twelve
 size				15
 value				twelve
 value				four
@@ -66,12 +147,21 @@ after decrement			three
 after increment			eight
 look at index eight		test
 
---- REVERSE ITERATOR TESTS --
+--- STRING VECTOR REVERSE ITERATOR TESTS --
 begin value test
 end value 
 on index 2: s
 test
 vector contains: test test test twelve eleven ten nine eight seven six five four three two one
+is equal			0
+is not equal			1
+is smaller			0
+is bigger			0
+is bigger			1
+is smaller or equal		1
+is smaller or equal		1
+is bigger or equal		0
+is bigger or equal		1
 the value is			test
 the value after increment	twelve
 the value after decrement	test

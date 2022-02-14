@@ -2,29 +2,27 @@
 #include <stdlib.h>
 #include <string>
 #include <vector>
-#include <fstream>
 
 #include "vector.hpp"
 
 void	stringVectorTests(std::ofstream& tests1, std::ofstream& tests2){
 
-	//tests1 << "\n--- STRING VECTOR TESTS --" << std::endl;
-	//tests1 << "--- MY VECTOR --" << std::endl;
+	//  MY VECTOR
+	tests1 << "\n--- STRING VECTOR GENERAL TESTS --" << std::endl;
 	ft::vector<std::string> vector_string;
 
-	//std::string str = "test";
-		vector_string.push_back("one");
-		vector_string.push_back("two");
-		vector_string.push_back("three");
-		vector_string.push_back("four");
-		vector_string.push_back("five");
-		vector_string.push_back("six");
-		vector_string.push_back("seven");
-		vector_string.push_back("eight");
-		vector_string.push_back("nine");
-		vector_string.push_back("ten");
-		vector_string.push_back("eleven");
-		vector_string.push_back("twelve");
+	vector_string.push_back("one");
+	vector_string.push_back("two");
+	vector_string.push_back("three");
+	vector_string.push_back("four");
+	vector_string.push_back("five");
+	vector_string.push_back("six");
+	vector_string.push_back("seven");
+	vector_string.push_back("eight");
+	vector_string.push_back("nine");
+	vector_string.push_back("ten");
+	vector_string.push_back("eleven");
+	vector_string.push_back("twelve");
 	for(int i = 12; i < 300; i++){
 		vector_string.push_back("test");
 	}
@@ -104,90 +102,8 @@ void	stringVectorTests(std::ofstream& tests1, std::ofstream& tests2){
 	tests1 << '\n';
 
 
-	tests1 << "\n--- ITERATOR TESTS --" << std::endl;
-	ft::vector<std::string>::iterator it = vector_string.begin();
-	tests1 << "on index 2: " << it->at(2) << std::endl;
-	tests1 << *it++ << std::endl;
-	tests1 << "is equal			" << (it == vector_string.end()) << std::endl;
-	tests1 << "is not equal			" << (it != vector_string.end()) << std::endl;
-	tests1 << "is not equal			" << (it != vector_string.end()) << std::endl;
-	tests1 << "is smaller			" << (it < vector_string.end()) << std::endl;
-	tests1 << "is smaller			" << (vector_string.end() < it) << std::endl;
-	tests1 << "is bigger			" << (it > vector_string.end()) << std::endl;
-	tests1 << "is bigger			" << (vector_string.end() > it) << std::endl;
-	tests1 << "is smaller or equal		" << (it <= vector_string.end()) << std::endl;
-	tests1 << "is smaller or equal		" << (vector_string.end() <= vector_string.end()) << std::endl;
-	tests1 << "is bigger or equal		" << (it >= vector_string.end()) << std::endl;
-	tests1 << "is bigger or equal		" << (it >= it) << std::endl;
-	tests1 << "the value is			" << *it << std::endl;
-	++it;
-	it++;
-	tests1 << "the value after increment	" << *it << std::endl;
-	--it;
-	it--;
-	tests1 << "the value after decrement	" << *it << std::endl;
-	tests1 << "dereference and increment	" << *it++ << std::endl;
-	tests1 << "dereference and increment	" << *++it << std::endl;
-	tests1 << "increment with five		" << *(it + 5) << std::endl;
-	tests1 << "int first increment		" << *(8 + it) << std::endl;
-	
-	ft::vector<std::string>::iterator itr = vector_string.begin();
-	tests1 << "size				" << vector_string.size() << std::endl;
-	it += 8;
-	itr += 3;
-	tests1 << "value				" << *it << std::endl;
-	tests1 << "value				" << *itr << std::endl;
-	tests1 << "subtract iterators		" << it - itr << std::endl;
-	tests1 << "subtract iterators		" << itr - it << std::endl;
-	tests1 << "decrement	eight		" << *(it - 8) << std::endl;
-	it -= 9;
-	tests1 << "after decrement			" << *it << std::endl;
-	it += 5;
-	tests1 << "after increment			" << *it << std::endl;
-	tests1 << "look at index eight		" << it[8] << std::endl;
-
-
-
-
-	tests1 << "\n--- REVERSE ITERATOR TESTS --" << std::endl;
-	ft::vector<std::string>::reverse_iterator rit = vector_string.rbegin();
-	tests1 << "begin value " << *rit << std::endl;
-	tests1 << "end value " << *(vector_string.rend()) << std::endl;
-	tests1 << "on index 2: " << rit->at(2) << std::endl;
-	tests1 << *rit++ << std::endl;	
-
-
-	tests1 << "vector contains:";
-	for (ft::vector<std::string>::reverse_iterator rit = vector_string.rbegin(); rit != vector_string.rend(); ++rit){
-		tests1 << ' ' << *rit;
-	}
-	tests1 << '\n';
-
-
-	tests1 << "the value is			" << *rit << std::endl;
-	++rit;
-	rit++;
-	tests1 << "the value after increment	" << *rit << std::endl;
-	--rit;
-	rit--;
-	tests1 << "the value after decrement	" << *rit << std::endl;
-	tests1 << "dereference and increment	" << *rit++ << std::endl;
-	tests1 << "dereference and increment	" << *++rit << std::endl;
-	tests1 << "increment with five		" << *(rit + 5) << std::endl;
-	tests1 << "int first increment		" << *(8 + rit) << std::endl;
-	tests1 << "subtract riterators		" << rit - vector_string.rend() << std::endl;
-
-
-
-
-
-
-
-
-
-
-	//tests2 << "\n--- REAL VECTOR --" << std::endl;
-
+	//  REAL VECTOR
+	tests2 << "\n--- STRING VECTOR GENERAL TESTS --" << std::endl;
 	std::vector<std::string> testVec;
 
 	testVec.push_back("one");
@@ -282,7 +198,59 @@ void	stringVectorTests(std::ofstream& tests1, std::ofstream& tests2){
 	tests2 << '\n';
 
 
-	tests2 << "\n--- ITERATOR TESTS --" << std::endl;
+
+
+	//-------------------------------------------------------------------------------------------------------
+
+
+
+	// MY VECTOR
+	tests1 << "\n--- STRING VECTOR ITERATOR TESTS --" << std::endl;
+	ft::vector<std::string>::iterator it = vector_string.begin();
+	tests1 << "on index 2: " << it->at(2) << std::endl;
+	tests1 << *it++ << std::endl;
+	tests1 << "is equal			" << (it == vector_string.end()) << std::endl;
+	tests1 << "is not equal			" << (it != vector_string.end()) << std::endl;
+	tests1 << "is not equal			" << (it != vector_string.end()) << std::endl;
+	tests1 << "is smaller			" << (it < vector_string.end()) << std::endl;
+	tests1 << "is smaller			" << (vector_string.end() < it) << std::endl;
+	tests1 << "is bigger			" << (it > vector_string.end()) << std::endl;
+	tests1 << "is bigger			" << (vector_string.end() > it) << std::endl;
+	tests1 << "is smaller or equal		" << (it <= vector_string.end()) << std::endl;
+	tests1 << "is smaller or equal		" << (vector_string.end() <= vector_string.end()) << std::endl;
+	tests1 << "is bigger or equal		" << (it >= vector_string.end()) << std::endl;
+	tests1 << "is bigger or equal		" << (it >= it) << std::endl;
+	tests1 << "the value is			" << *it << std::endl;
+	++it;
+	it++;
+	tests1 << "the value after increment	" << *it << std::endl;
+	--it;
+	it--;
+	tests1 << "the value after decrement	" << *it << std::endl;
+	tests1 << "dereference and increment	" << *it++ << std::endl;
+	tests1 << "dereference and increment	" << *++it << std::endl;
+	tests1 << "increment with five		" << *(it + 5) << std::endl;
+	tests1 << "int first increment		" << *(8 + it) << std::endl;
+	
+	ft::vector<std::string>::iterator itr = vector_string.begin();
+	tests1 << "size				" << vector_string.size() << std::endl;
+	it += 8;
+	itr += 3;
+	tests1 << "value				" << *it << std::endl;
+	tests1 << "value				" << *itr << std::endl;
+	tests1 << "subtract iterators		" << it - itr << std::endl;
+	tests1 << "subtract iterators		" << itr - it << std::endl;
+	tests1 << "decrement	eight		" << *(it - 8) << std::endl;
+	it -= 9;
+	tests1 << "after decrement			" << *it << std::endl;
+	it += 5;
+	tests1 << "after increment			" << *it << std::endl;
+	tests1 << "look at index eight		" << it[8] << std::endl;
+
+
+
+	// REAL VECTOR
+	tests2 << "\n--- STRING VECTOR ITERATOR TESTS --" << std::endl;
 	std::vector<std::string>::iterator ite = testVec.begin();
 	tests2 << "on index 2: " << ite->at(2) << std::endl;
 	tests2 << *ite++ << std::endl;
@@ -308,7 +276,7 @@ void	stringVectorTests(std::ofstream& tests1, std::ofstream& tests2){
 	tests2 << "dereference and increment	" << *ite++ << std::endl;
 	tests2 << "dereference and increment	" << *++ite << std::endl;
 	tests2 << "increment with five		" << *(ite + 5) << std::endl;
-	tests2 << "increment with eight		" << *(8 + ite) << std::endl;
+	tests2 << "int first increment		" << *(8 + ite) << std::endl;
 
 	std::vector<std::string>::iterator iter = testVec.begin();
 	tests2 << "size				" << testVec.size() << std::endl;
@@ -326,7 +294,57 @@ void	stringVectorTests(std::ofstream& tests1, std::ofstream& tests2){
 	tests2 << "look at index eight		" << ite[8] << std::endl;
 
 
-	tests2 << "\n--- REVERSE ITERATOR TESTS --" << std::endl;
+
+
+	//-------------------------------------------------------------------------------------------------------
+
+
+
+
+	// MY VECTOR 
+	tests1 << "\n--- STRING VECTOR REVERSE ITERATOR TESTS --" << std::endl;
+	ft::vector<std::string>::reverse_iterator rit = vector_string.rbegin();
+	tests1 << "begin value " << *rit << std::endl;
+	tests1 << "end value " << *(vector_string.rend()) << std::endl;
+	tests1 << "on index 2: " << rit->at(2) << std::endl;
+	tests1 << *rit++ << std::endl;	
+
+
+	tests1 << "vector contains:";
+	for (ft::vector<std::string>::reverse_iterator rit = vector_string.rbegin(); rit != vector_string.rend(); ++rit){
+		tests1 << ' ' << *rit;
+	}
+	tests1 << '\n';
+
+	tests1 << "is equal			" << (rit == vector_string.rend()) << std::endl;
+	tests1 << "is not equal			" << (rit != vector_string.rend()) << std::endl;
+	tests1 << "is smaller			" << (vector_string.rend() < rit) << std::endl;
+	tests1 << "is bigger			" << (rit > vector_string.rend()) << std::endl;
+	tests1 << "is bigger			" << (vector_string.rend() > rit) << std::endl;
+	tests1 << "is smaller or equal		" << (rit <= vector_string.rend()) << std::endl;
+	tests1 << "is smaller or equal		" << (vector_string.rend() <= vector_string.rend()) << std::endl;
+	tests1 << "is bigger or equal		" << (rit >= vector_string.rend()) << std::endl;
+	tests1 << "is bigger or equal		" << (rit >= rit) << std::endl;
+
+
+	tests1 << "the value is			" << *rit << std::endl;
+	++rit;
+	rit++;
+	tests1 << "the value after increment	" << *rit << std::endl;
+	--rit;
+	rit--;
+	tests1 << "the value after decrement	" << *rit << std::endl;
+	tests1 << "dereference and increment	" << *rit++ << std::endl;
+	tests1 << "dereference and increment	" << *++rit << std::endl;
+	tests1 << "increment with five		" << *(rit + 5) << std::endl;
+	tests1 << "int first increment		" << *(8 + rit) << std::endl;
+	tests1 << "subtract riterators		" << rit - vector_string.rend() << std::endl;
+
+
+
+
+	//  REAL VECTOR
+	tests2 << "\n--- STRING VECTOR REVERSE ITERATOR TESTS --" << std::endl;
 	std::vector<std::string>::reverse_iterator rite = testVec.rbegin();
 	tests2 << "begin value " << *rite << std::endl;
 	tests2 << "end value " << *(testVec.rend()) << std::endl;
@@ -339,6 +357,16 @@ void	stringVectorTests(std::ofstream& tests1, std::ofstream& tests2){
 		tests2 << ' ' << *rite;
 	}
 	tests2 << '\n';
+
+	tests2 << "is equal			" << (rite == testVec.rend()) << std::endl;
+	tests2 << "is not equal			" << (rite != testVec.rend()) << std::endl;
+	tests2 << "is smaller			" << (testVec.rend() < rite) << std::endl;
+	tests2 << "is bigger			" << (rite > testVec.rend()) << std::endl;
+	tests2 << "is bigger			" << (testVec.rend() > rite) << std::endl;
+	tests2 << "is smaller or equal		" << (rite <= testVec.rend()) << std::endl;
+	tests2 << "is smaller or equal		" << (testVec.rend() <= testVec.rend()) << std::endl;
+	tests2 << "is bigger or equal		" << (rite >= testVec.rend()) << std::endl;
+	tests2 << "is bigger or equal		" << (rite >= rite) << std::endl;
 
 
 	tests2 << "the value is			" << *rite << std::endl;
@@ -354,8 +382,5 @@ void	stringVectorTests(std::ofstream& tests1, std::ofstream& tests2){
 	tests2 << "int first increment		" << *(8 + rite) << std::endl;
 	tests2 << "subtract riterators		" << rite - testVec.rend() << std::endl;
 	
-
-
-	//tests2 << "is equal			" << (rite == testVec.rend()) << std::endl;
 
 }

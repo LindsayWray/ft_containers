@@ -3,6 +3,7 @@
 # include <memory>
 # include <cstring>
 # include <stdexcept>
+# include <fstream>
 # include "Iterators/iterator.hpp"
 # include "Iterators/reverse_iterator.hpp"
 
@@ -22,6 +23,15 @@ namespace ft{
 	public:
 		vector() : _array(NULL), _size(0), _allocSize(0){
 		};
+		vector(size_type n, const value_type& val) : _array(NULL), _size(0){
+			increaseCapacity(n);					// to emulate the exact capacity like the real vector
+			for(size_type i = 0; i < n; i++){
+				push_back(val);
+			}
+		};
+		// vector(ft::vector<int>::iterator begin, ft::vector<int>::iterator end) : _array(NULL), _size(0), _allocSize(0){
+		// 	//need insert
+		// };
 		vector(vector const& original){
 			*this = original;
 		}
@@ -67,7 +77,7 @@ namespace ft{
 		}
 		void increaseCapacity(){
 			if (_allocSize == 0)
-				_allocSize +=1;
+				_allocSize += 1;
 			else
 				_allocSize *= 2;
 			increaseCapacity(_allocSize);
@@ -183,9 +193,33 @@ namespace ft{
 			_size++;
 		};
 
-		void pop_back(){
+		void pop_back(){};
 
+		iterator insert(iterator position, const value_type& val){
+			if(position == this->end()){
+				push_back(val);
+			}
+			else{
+				int pos = (this->begin() - position) * -1;
+				if (_size == _allocSize){
+					increaseCapacity();
+					_size++;
+					while(position < this->end()){
+						value_type temp = _array[pos];
+						_alloc.destroy(&_array[pos]);
+						_alloc.construct(&_array[pos], position);
+						*position = temp;
+						position++;
+						pos++;
+					}
+				}
+			}
+			return (position + 1);
 		};
+		// void insert (iterator position, size_type n, const value_type& val);
+		// void insert (iterator position, iterator first, iterator last){
+
+		// };
 
 
 		// iterator erase (iterator position);
