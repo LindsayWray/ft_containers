@@ -3,14 +3,17 @@
 # include <memory>
 # include <cstring>
 # include <stdexcept>
+# include "Iterators/iterator.hpp"
+# include "Iterators/reverse_iterator.hpp"
 
 namespace ft{
 	template<typename value_type>
 	class vector{
 	public:
-		typedef size_t						size_type;
-		typedef std::allocator<value_type>	allocator_type;
-		//typedef ft::vector<int>::iterator it
+		typedef size_t								size_type;
+		typedef std::allocator<value_type>			allocator_type;
+		typedef ft::iterator<value_type>			iterator;
+		typedef ft::reverse_iterator<value_type>	reverse_iterator;
 	private:
 		value_type*					_array;
 		size_type					_size;
@@ -70,187 +73,9 @@ namespace ft{
 			increaseCapacity(_allocSize);
 		}
 
-		
 
 
-		//  ------------  ITERATORS  ------------
-		class iterator{
-		private:
-			value_type* 	_ptr;
-		public:
-			typedef size_t	difference_type;
-			iterator() : _ptr(NULL){};
-			iterator(value_type* ptr) : _ptr(ptr){};
-			iterator(iterator const& original) : _ptr(original._ptr){};
-			~iterator(){};
-
-			inline bool operator==(const iterator& rhs) const{ 
-				return this->_ptr == rhs._ptr;
-			}
-			inline bool operator!=(const iterator& rhs) const{ 
-				return this->_ptr != rhs._ptr;
-			}
-			bool operator<(const iterator& rhs) const{
-				return this->_ptr < rhs._ptr;
-			}
-			bool operator>(const iterator& rhs) const{
-				return this->_ptr > rhs._ptr;
-			}
-			bool operator<=(const iterator& rhs) const{
-				return this->_ptr <= rhs._ptr;
-			}
-			bool operator>=(const iterator& rhs) const{
-				return this->_ptr >= rhs._ptr;
-			}
-
-			iterator& operator++(){
-				this->_ptr++;
-				return *this;
-			}
-			iterator operator++(int){
-				iterator copy(*this);
-				this->_ptr++;
-				return copy;
-			}
-			iterator& operator--(){
-				this->_ptr--;
-				return *this;
-			}
-			iterator operator--(int){
-				iterator copy(*this);
-				this->_ptr--;
-				return copy;
-			}
-			value_type& operator*(){
-				return *_ptr;
-			}
-			value_type* operator->(){
-				return _ptr;
-			}
-			value_type& operator[](size_type index) const{
-				iterator copy(*this);
-				copy._ptr += index;
-				return *copy._ptr;
-			}
-			iterator operator+(const int &b) const{
-				iterator copy(*this);
-				copy._ptr += b;
-				return copy;
-			}
-			// iterator operator+(const int &b) const{   //the int plus iter problem
-			// 	iterator copy(*this);
-			// 	copy._ptr += b;
-			// 	return copy;
-			// }
-			iterator operator-(const int &b) const{
-				iterator copy(*this);
-				copy._ptr -= b;
-				return copy;
-			}
-			// difference_type operator-(iterator &b) const{  //subtracting iters problem
-			// 	iterator copy(*this);
-			// 	copy._ptr -= b;
-			// 	return copy;
-			// }
-			iterator& operator+=(const int &b){
-				this->_ptr += b;
-				return *this;
-			}
-			iterator& operator-=(const int &b){
-				this->_ptr -= b;
-				return *this;
-			}
-		};
-
-		class reverse_iterator{
-		private:
-			value_type* 	_ptr;
-		public:
-			typedef size_t	difference_type;
-			reverse_iterator() : _ptr(NULL){};
-			reverse_iterator(value_type* ptr) : _ptr(ptr){};
-			reverse_iterator(reverse_iterator const& original) : _ptr(original._ptr){};
-			~reverse_iterator(){};
-
-			inline bool operator==(const reverse_iterator& rhs) const{ 
-				return this->_ptr == rhs._ptr;
-			}
-			inline bool operator!=(const reverse_iterator& rhs) const{ 
-				return this->_ptr != rhs._ptr;
-			}
-			bool operator<(const reverse_iterator& rhs) const{
-				return this->_ptr < rhs._ptr;
-			}
-			bool operator>(const reverse_iterator& rhs) const{
-				return this->_ptr > rhs._ptr;
-			}
-			bool operator<=(const reverse_iterator& rhs) const{
-				return this->_ptr <= rhs._ptr;
-			}
-			bool operator>=(const reverse_iterator& rhs) const{
-				return this->_ptr >= rhs._ptr;
-			}
-
-			reverse_iterator& operator++(){
-				this->_ptr--;
-				return *this;
-			}
-			reverse_iterator operator++(int){
-				reverse_iterator copy(*this);
-				this->_ptr--;
-				return copy;
-			}
-			reverse_iterator& operator--(){
-				this->_ptr++;
-				return *this;
-			}
-			reverse_iterator operator--(int){
-				reverse_iterator copy(*this);
-				this->_ptr++;
-				return copy;
-			}
-			value_type& operator*(){
-				return *_ptr;	
-			}
-			value_type* operator->(){
-				return _ptr;
-			}
-			value_type& operator[](size_type index) const{
-				reverse_iterator copy(*this);
-				copy._ptr += index;
-				return *copy._ptr;
-			}
-			reverse_iterator operator+(const int &b) const{
-				reverse_iterator copy(*this);
-				copy._ptr -= b;
-				return copy;
-			}
-			// reverse_iterator operator+(const int &b) const{   //the int plus iter problem
-			// 	reverse_iterator copy(*this);
-			// 	copy._ptr += b;
-			// 	return copy;
-			// }
-			reverse_iterator operator-(const int &b) const{
-				reverse_iterator copy(*this);
-				copy._ptr += b;
-				return copy;
-			}
-			// difference_type operator-(iterator &b) const{  //subtracting iters problem
-			// 	reverse_iterator copy(*this);
-			// 	copy._ptr -= b;
-			// 	return copy;
-			// }
-			reverse_iterator& operator+=(const int &b){
-				this->_ptr -= b;
-				return *this;
-			}
-			reverse_iterator& operator-=(const int &b){
-				this->_ptr += b;
-				return *this;
-			}
-		};
-
-
+		//  ------------  ITERATOR FUNCTIONS  ------------
 		iterator begin() _NOEXCEPT {
 			return iterator(_array);
 		};
@@ -264,14 +89,13 @@ namespace ft{
 
 		// };
 		reverse_iterator rbegin() _NOEXCEPT {
-			//return reverse_iterator(_array);
-			return reverse_iterator(&_array[_size -1]);
+			return reverse_iterator(&_array[_size - 1]);
 		};
 		// const_iterator begin() const _NOEXCEPT {
 			
 		// };
 		reverse_iterator rend(){
-			return reverse_iterator(_array);
+			return reverse_iterator(_array - 1);
 		};
 		// const_iterator end() const{
 
@@ -326,12 +150,12 @@ namespace ft{
 		};
 		value_type& at(size_type index) {
 			if (index >= _size)
-				throw(std::out_of_range("test")); // look into text / or make exception
+				throw(std::out_of_range("1vector")); // look into text / or make exception
 			return _array[index];
 		};
 		value_type const& at(size_type index) const {
 			if (index >= _size)
-				throw(std::out_of_range("test"));
+				throw(std::out_of_range("vector"));
 			return _array[index];
 		};
 		value_type& front() _NOEXCEPT {

@@ -5,7 +5,9 @@
 
 #include "vector.hpp"
 
-void intVectorTests(){
+void intVectorTests(std::ofstream& tests1, std::ofstream& tests2){
+(void)tests1;
+(void)tests2;
 
 std::cout << "--- INT VECTOR TESTS --" << std::endl;
 	std::cout << "--- MY VECTOR --" << std::endl;

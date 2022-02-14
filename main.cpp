@@ -2,9 +2,10 @@
 #include <stdlib.h>
 #include <string>
 #include <vector>
+#include <fstream>
 
-void	stringVectorTests();
-void intVectorTests();
+void	stringVectorTests(std::ofstream& tests1, std::ofstream& tests2);
+void	intVectorTests(std::ofstream& tests1, std::ofstream& tests2);
 // #if 1 //CREATE A REAL STL EXAMPLE
 // 	// #include <map>
 // 	// #include <stack>
@@ -119,7 +120,9 @@ void intVectorTests();
 
 
 int main(){
-	intVectorTests();
-	stringVectorTests();
+	std::ofstream tests1("myVectorOutput", std::ios_base::trunc);
+	std::ofstream tests2("realVectorOutput", std::ios_base::trunc);
+	intVectorTests(tests1, tests2);
+	stringVectorTests(tests1, tests2);
 	//system("leaks containers");
 }
