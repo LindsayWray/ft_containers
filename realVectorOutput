@@ -77,3 +77,96 @@ dereference and increment	9
 dereference and increment	7
 increment with five		200
 increment with eight		100
+
+--- STRING VECTOR GENERAL TESTS --
+size			300
+capacity		512
+first element		one
+as const		one
+last element		test
+as const		test
+[] operator		eleven
+as const		test
+at func test		eleven
+as const		test
+out of bounds		1vector
+size original		300
+size copy		301
+last original		test copy constructor
+last copy		test copy constructor
+size after smaller resize	50
+capacity after smaller resize	512
+on index 49			test
+size after bigger resize	200
+capacity after bigger resize	512
+[] operator		
+[] operator		
+[] operator		test
+size after bigger resize	400
+capacity after bigger resize	512
+[] operator		
+[] operator		more test
+[] operator		more test
+[] operator		
+size after equal	400
+capacity after equal	512
+max capacity		768614336404564650
+reserve capacity		512
+reserve capacity		1000
+reserve capacity		2000
+ one two three four five six seven eight nine ten eleven twelve test test test
+
+--- STRING VECTOR ITERATOR TESTS --
+on index 2: e
+one
+is equal			0
+is not equal			1
+is not equal			1
+is smaller			1
+is smaller			0
+is bigger			0
+is bigger			1
+is smaller or equal		1
+is smaller or equal		1
+is bigger or equal		0
+is bigger or equal		1
+the value is			two
+the value after increment	four
+the value after decrement	two
+dereference and increment	two
+dereference and increment	four
+increment with five		five
+int first increment		eight
+size				23
+value				eight
+value				four
+subtract iterators		8
+subtract iterators		-8
+decrement	eight		four
+after decrement			three
+after increment			inserted_string
+look at index eight		twelve
+
+--- STRING VECTOR REVERSE ITERATOR TESTS --
+begin value constructor_test
+end value 
+on index 2: n
+constructor_test
+vector contains: constructor_test constructor_test constructor_test constructor_test test test test twelve eleven ten nine eight seven six five inserted_string more_inserts more_inserts more_inserts four three two one
+is equal			0
+is not equal			1
+is smaller			0
+is bigger			0
+is bigger			1
+is smaller or equal		1
+is smaller or equal		1
+is bigger or equal		0
+is bigger or equal		1
+the value is			constructor_test
+the value after increment	constructor_test
+the value after decrement	constructor_test
+dereference and increment	constructor_test
+dereference and increment	constructor_test
+increment with five		eleven
+int first increment		eight
+subtract riterators		-20

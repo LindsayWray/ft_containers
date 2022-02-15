@@ -199,26 +199,27 @@ namespace ft{
 		};
 
 		iterator insert(iterator position, const value_type& val){
+			iterator start_position = position;
 			if(position == this->end()){
 				push_back(val);
 			}
 			else{
 				value_type temp_val = val;
-				int pos = (this->begin() - position) * -1;
+				int pos = position - this->begin();
 				if (_size == _allocSize){
 					increaseCapacity();
 				}
 				while(position <= this->end()){
-				value_type temp = _array[pos];
-				_alloc.destroy(&_array[pos]);
-				_alloc.construct(&_array[pos], temp_val);
-				temp_val = temp;
-				position++;
-				pos++;
+					value_type temp = _array[pos];
+					_alloc.destroy(&_array[pos]);
+					_alloc.construct(&_array[pos], temp_val);
+					temp_val = temp;
+					position++;
+					pos++;
 				}
 				_size++;
 			}
-			return (position + 1);
+			return (start_position);
 		};
 		void insert(iterator position, size_type n, const value_type& val){
 			for(size_type i = 0; i < n; i++){
@@ -227,10 +228,8 @@ namespace ft{
 		};
 
 		void insert (iterator position, iterator first, iterator last){
-			int i = 0;
 			for(iterator it = first; it != last; ++it){
-				insert(position + i, *it);
-				i++;
+				insert(position++, *it);
 			}
 		};
 

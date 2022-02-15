@@ -67,6 +67,10 @@ void intVectorTests(std::ofstream& tests1, std::ofstream& tests2){
 		tests1 << ' ' << *it;
 	tests1 << '\n';
 
+
+
+	
+
 	std::cout << "------------------------------------------------" << std::endl;
 
  	ft::vector<int> vector_int2 (7,100);
