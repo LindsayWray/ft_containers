@@ -3,7 +3,7 @@
 # include <memory>
 # include <cstring>
 # include <stdexcept>
-# include <fstream>
+
 # include "Iterators/iterator.hpp"
 # include "Iterators/reverse_iterator.hpp"
 
@@ -29,13 +29,10 @@ namespace ft{
 				push_back(val);
 			}
 		};
-		// vector(ft::vector<int>::iterator begin, ft::vector<int>::iterator end) : _array(NULL), _size(0), _allocSize(0){
-		// 	increaseCapacity(begin - end);
-		// 	//iterator ite = this->begin();
-		// 	for(iterator it = begin; it != end; it++){
-		// 		insert(this->begin(), *it);
-		// 	}
-		// };
+		vector(iterator begin, iterator end) : _array(NULL), _size(0), _allocSize(0){
+			increaseCapacity(end - begin);
+			insert(this->begin(), begin, end);
+		};
 		vector(vector const& original){
 			*this = original;
 		}
@@ -257,9 +254,10 @@ namespace ft{
 			return (start_position);
 		};
 		iterator erase (iterator first, iterator last){
-			for(iterator it = first; it != last; ++it){
-				erase(first++, *it);
+			for(iterator it = first; it != last; it++){
+				erase(first);
 			}
+			return first;
 		};
 
 		// void swap (vector& x);
