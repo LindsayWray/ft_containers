@@ -71,61 +71,85 @@ void intVectorTests(std::ofstream& tests1, std::ofstream& tests2){
 
 	
 
+
+	// SECOND VECTOR INSTRUCTOR
+ 	ft::vector<int> vector_int2 (7,100);
+	tests1 << "vector constructor with input:";
+	for (ft::vector<int>::iterator it = vector_int2.begin(); it != vector_int2.end(); ++it)
+		tests1 << ' ' << *it;
+	tests1 << '\n';
+	tests1 << "capacity	" << vector_int2.capacity() << std::endl;
+
 	std::cout << "------------------------------------------------" << std::endl;
 
- 	ft::vector<int> vector_int2 (7,100);
-	std::cout << "vector constructor with input:";
-	for (ft::vector<int>::iterator it = vector_int2.begin(); it != vector_int2.end(); ++it)
+	//THIRD VECTOR CONSTRUCTOR
+	ft::vector<int> vector_int3 (vector_int2.begin(), vector_int2.end());
+	std::cout << "vector constructor with range contains:";
+	for (ft::vector<int>::iterator it = vector_int3.begin(); it != (vector_int3.end() -3) ; ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
-	std::cout << "capacity	" << vector_int2.capacity() << std::endl;
+	std::cout << "size	" << vector_int3.size() << std::endl;
+	std::cout << "capacity " << vector_int3.capacity() << std::endl;
 
-
-	//IN PROGRESS
-	// ft::vector<int> vector_int3 (vector_int.begin(), vector_int.end());
-	// std::cout << "vector constructor with range contains:";
-	// for (ft::vector<int>::iterator it = vector_int3.begin(); it != vector_int3.end(); ++it)
-	// 	std::cout << ' ' << *it;
-	// std::cout << '\n';
+	std::cout << "------------------------------------------------" << std::endl;
 
 	
 	vector_int.resize(10);
-	std::cout << "original state: ";
+	tests1 << "original state: ";
 	for (ft::vector<int>::iterator it = vector_int.begin(); it != vector_int.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
+		tests1 << ' ' << *it;
+	tests1 << '\n';
 
 
 	vector_int.insert(vector_int.end(), 900);
-	std::cout << "my vector after end insert:	";
+	tests1 << "vector after end insert:	";
 	for (ft::vector<int>::iterator it = vector_int.begin(); it != vector_int.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
+		tests1 << ' ' << *it;
+	tests1 << '\n';
 	ft::vector<int>::iterator itera = vector_int.begin();
 		itera += 4;
 	vector_int.insert(itera, 300);
-	std::cout << "my vector after middle insert:	";
+	tests1 << "vector after middle insert: ";
 	for (ft::vector<int>::iterator it = vector_int.begin(); it != vector_int.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
+		tests1 << ' ' << *it;
+	tests1 << '\n';
 	vector_int.insert(itera, 3, 200);
-	std::cout << "my vector after n inserts: ";
+	tests1 << "vector after n inserts: ";
 	for (ft::vector<int>::iterator it = vector_int.begin(); it != vector_int.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
+		tests1 << ' ' << *it;
+	tests1 << '\n';
 	vector_int.insert(itera, vector_int2.begin(), vector_int2.end());
-	std::cout << "my vector after iterator range insert:	";
+	tests1 << "vector after iterator range insert:	";
 	for (ft::vector<int>::iterator it = vector_int.begin(); it != vector_int.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
+		tests1 << ' ' << *it;
+	tests1 << '\n';
 	vector_int.pop_back();
-	std::cout << "vector pop_back:	";
+	tests1 << "vector pop_back:	";
 	for (ft::vector<int>::iterator it = vector_int.begin(); it != vector_int.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
+		tests1 << ' ' << *it;
+	tests1 << '\n';
 	
 	
 
+	std::cout << "------------------------------------------------" << std::endl;
+
+	std::cout << "Clear TESTS\n";
+	std::cout << "vector contains: ";
+	for (ft::vector<int>::iterator it = vector_int.begin(); it != vector_int.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+	std::cout << "size before clear: " << vector_int.size() << std::endl;
+	std::cout << "capacity before clear: " << vector_int.capacity() << std::endl;
+	vector_int.clear();
+	std::cout << "size after clear: " << vector_int.size() << std::endl;
+	std::cout << "capacity after clear: " << vector_int.capacity() << std::endl;
+	std::cout << "vector after clear: ";
+	for (ft::vector<int>::iterator it = vector_int.begin(); it != vector_int.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
+
+	std::cout << "------------------------------------------------" << std::endl;
 
 
 
@@ -198,57 +222,79 @@ void intVectorTests(std::ofstream& tests1, std::ofstream& tests2){
 
 	// SECOND VECTOR CONSTRUCTOR 
 	std::vector<int> testVec2 (7,100);
-	std::cout << "vector constructor with input:";
+	tests2 << "vector constructor with input:";
 	for (std::vector<int>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
+		tests2 << ' ' << *it;
+	tests2 << '\n';
+	tests2 << "capacity	" << testVec2.capacity() << std::endl;
+
+	std::cout << "------------------------------------------------" << std::endl;
+	//THIRD VECTOR CONSTRUCTOR
+	std::vector<int> testVec3 (testVec2.begin(), testVec2.end());
+	std::cout << "vector constructor with range contains:";
+	for (std::vector<int>::iterator it = testVec3.begin(); it != (testVec3.end() -3) ; ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
-	std::cout << "capacity	" << testVec2.capacity() << std::endl;
-
-
-	//IN PROGRESS
-	// std::vector<int> testVec3 (testVec.begin(), testVec.end());
-	// std::cout << "vector constructor with range contains:";
-	// for (std::vector<int>::iterator it = testVec3.begin(); it != testVec3.end(); ++it)
-	// 	std::cout << ' ' << *it;
-	// std::cout << '\n';
+	std::cout << "size	" << testVec3.size() << std::endl;
+	std::cout << "capacity " << testVec3.capacity() << std::endl;
+	std::cout << "------------------------------------------------" << std::endl;
 
 	testVec.resize(10);
-	std::cout << "original state ";
+	tests2 << "original state: ";
 	for (std::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
+		tests2 << ' ' << *it;
+	tests2 << '\n';
 
 
 	testVec.insert(testVec.end(), 900);
-	std::cout << "real vector after end insert:	";
+	tests2 << "vector after end insert:	";
 	for (std::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
+		tests2 << ' ' << *it;
+	tests2 << '\n';
 	std::vector<int>::iterator iterat = testVec.begin();
 	iterat += 4;
 	testVec.insert(iterat, 300);
-	std::cout << "real vector after middle insert: ";
+	tests2 << "vector after middle insert: ";
 	for (std::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
+		tests2 << ' ' << *it;
+	tests2 << '\n';
 	testVec.insert(iterat, 3, 200);
-	std::cout << "real vector after n inserts: ";
+	tests2 << "vector after n inserts: ";
 	for (std::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
+		tests2 << ' ' << *it;
+	tests2 << '\n';
 	testVec.insert(iterat, testVec2.begin(), testVec2.end());
-	std::cout << "vector after iterator range insert:	";
+	tests2 << "vector after iterator range insert:	";
 	for (std::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
+		tests2 << ' ' << *it;
+	tests2 << '\n';
 	testVec.pop_back();
-	std::cout << "vector pop_back:	";
+	tests2 << "vector pop_back:	";
+	for (std::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
+		tests2 << ' ' << *it;
+	tests2 << '\n';
+
+
+	std::cout << "------------------------------------------------" << std::endl;
+
+	std::cout << "Clear TESTS\n";
+	std::cout << "vector contains: ";
+	for (std::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+	std::cout << "size before clear: " << testVec.size() << std::endl;
+	std::cout << "capacity before clear: " << testVec.capacity() << std::endl;
+	testVec.clear();
+	std::cout << "size after clear: " << testVec.size() << std::endl;
+	std::cout << "capacity after clear: " << testVec.capacity() << std::endl;
+	std::cout << "vector after clear: ";
 	for (std::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
 
 
 
+	std::cout << "------------------------------------------------" << std::endl;
 
 
 

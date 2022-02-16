@@ -27,18 +27,26 @@ max capacity		4611686018427387903
 reserve capacity		512
 reserve capacity		1000
 vector contains: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49
+vector constructor with input: 100 100 100 100 100 100 100
+capacity	7
+original state:  0 1 2 3 4 5 6 7 8 9
+vector after end insert:	 0 1 2 3 4 5 6 7 8 9 900
+vector after middle insert:  0 1 2 3 300 4 5 6 7 8 9 900
+vector after n inserts:  0 1 2 3 200 200 200 300 4 5 6 7 8 9 900
+vector after iterator range insert:	 0 1 2 3 100 100 100 100 100 100 100 200 200 200 300 4 5 6 7 8 9 900
+vector pop_back:	 0 1 2 3 100 100 100 100 100 100 100 200 200 200 300 4 5 6 7 8 9
 
 --- INT VECTOR ITERATOR TESTS --
-is equal			0
-is not equal			1
-is not equal			1
-is smaller			1
+is equal			1
+is not equal			0
+is not equal			0
+is smaller			0
 is smaller			0
 is bigger			0
-is bigger			1
+is bigger			0
 is smaller or equal		1
 is smaller or equal		1
-is bigger or equal		0
+is bigger or equal		1
 is bigger or equal		1
 the value is			0
 the value after increment	2
@@ -47,7 +55,7 @@ dereference and increment	0
 dereference and increment	2
 increment with five		100
 increment with eight		100
-size				21
+size				0
 value				32
 value				3
 subtract iterators		29
@@ -58,25 +66,25 @@ after decrement four		38
 look at index eight		46
 
 --- INT VECTOR REVERSE ITERATOR TESTS --
-begin value 9
+begin value 0
 end value 0
-vector contains: 9 8 7 6 5 4 300 200 200 200 100 100 100 100 100 100 100 3 2 1 0
-is equal			0
-is not equal			1
+vector contains:
+is equal			1
+is not equal			0
 is smaller			0
 is bigger			0
-is bigger			1
+is bigger			0
 is smaller or equal		1
 is smaller or equal		1
-is bigger or equal		0
 is bigger or equal		1
-the value is			9
-the value after increment	7
-the value after decrement	9
-dereference and increment	9
-dereference and increment	7
-increment with five		200
-increment with eight		100
+is bigger or equal		1
+the value is			0
+the value after increment	0
+the value after decrement	0
+dereference and increment	0
+dereference and increment	0
+increment with five		0
+increment with eight		0
 
 --- STRING VECTOR GENERAL TESTS --
 size			300
@@ -114,7 +122,6 @@ max capacity		768614336404564650
 reserve capacity		512
 reserve capacity		1000
 reserve capacity		2000
- one two three four five six seven eight nine ten eleven twelve test test test
 
 --- STRING VECTOR ITERATOR TESTS --
 on index 2: e
@@ -135,24 +142,24 @@ the value after increment	four
 the value after decrement	two
 dereference and increment	two
 dereference and increment	four
-increment with five		nine
-int first increment		twelve
-size				15
-value				twelve
+increment with five		five
+int first increment		eight
+size				23
+value				eight
 value				four
 subtract iterators		8
 subtract iterators		-8
 decrement	eight		four
 after decrement			three
-after increment			eight
-look at index eight		test
+after increment			inserted_string
+look at index eight		twelve
 
 --- STRING VECTOR REVERSE ITERATOR TESTS --
-begin value test
+begin value constructor_test
 end value 
-on index 2: s
-test
-vector contains: test test test twelve eleven ten nine eight seven six five four three two one
+on index 2: n
+constructor_test
+vector contains: constructor_test constructor_test constructor_test constructor_test test test test twelve eleven ten nine eight seven six five inserted_string more_inserts more_inserts more_inserts four three two one
 is equal			0
 is not equal			1
 is smaller			0
@@ -162,11 +169,11 @@ is smaller or equal		1
 is smaller or equal		1
 is bigger or equal		0
 is bigger or equal		1
-the value is			test
-the value after increment	twelve
-the value after decrement	test
-dereference and increment	test
-dereference and increment	twelve
-increment with five		seven
-int first increment		four
-subtract riterators		-12
+the value is			constructor_test
+the value after increment	constructor_test
+the value after decrement	constructor_test
+dereference and increment	constructor_test
+dereference and increment	constructor_test
+increment with five		eleven
+int first increment		eight
+subtract riterators		-20

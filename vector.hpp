@@ -29,9 +29,13 @@ namespace ft{
 				push_back(val);
 			}
 		};
-		// vector(ft::vector<int>::iterator begin, ft::vector<int>::iterator end) : _array(NULL), _size(0), _allocSize(0){
-		// 	//need insert
-		// };
+		vector(ft::vector<int>::iterator begin, ft::vector<int>::iterator end) : _array(NULL), _size(0), _allocSize(0){
+			increaseCapacity(begin - end);
+			//iterator ite = this->begin();
+			for(iterator it = begin; it != end; it++){
+				insert(this->begin(), *it);
+			}
+		};
 		vector(vector const& original){
 			*this = original;
 		}
@@ -241,7 +245,12 @@ namespace ft{
 
 		// void swap (vector& x);
 
-		// void clear();
+		void clear(){
+			for(unsigned long i = 0; i < _size; i++){
+				_alloc.destroy(&_array[i]);
+			}
+			_size = 0;
+		};
 
 
 		//  ------------  ALLOCATOR   ------------
