@@ -29,13 +29,13 @@ namespace ft{
 				push_back(val);
 			}
 		};
-		vector(ft::vector<int>::iterator begin, ft::vector<int>::iterator end) : _array(NULL), _size(0), _allocSize(0){
-			increaseCapacity(begin - end);
-			//iterator ite = this->begin();
-			for(iterator it = begin; it != end; it++){
-				insert(this->begin(), *it);
-			}
-		};
+		// vector(ft::vector<int>::iterator begin, ft::vector<int>::iterator end) : _array(NULL), _size(0), _allocSize(0){
+		// 	increaseCapacity(begin - end);
+		// 	//iterator ite = this->begin();
+		// 	for(iterator it = begin; it != end; it++){
+		// 		insert(this->begin(), *it);
+		// 	}
+		// };
 		vector(vector const& original){
 			*this = original;
 		}
@@ -238,10 +238,29 @@ namespace ft{
 		};
 
 
-		// iterator erase (iterator position){
-
-		// };
-		// iterator erase (iterator first, iterator last);
+		iterator erase (iterator position){
+			iterator start_position = position;
+			if(position == this->end()){
+				pop_back();
+			}
+			else{
+				int pos = position - this->begin();
+				while(position <= this->end()){
+					value_type temp = _array[pos + 1];
+					_alloc.destroy(&_array[pos]);
+					_alloc.construct(&_array[pos], temp);
+					position++;
+					pos++;
+				}
+				_size--;
+			}
+			return (start_position);
+		};
+		iterator erase (iterator first, iterator last){
+			for(iterator it = first; it != last; ++it){
+				erase(first++, *it);
+			}
+		};
 
 		// void swap (vector& x);
 

@@ -54,10 +54,10 @@ the value after decrement	0
 dereference and increment	0
 dereference and increment	2
 increment with five		100
-increment with eight		100
+increment with eight		200
 size				0
 value				32
-value				3
+value				100
 subtract iterators		29
 subtract iterators		-29
 decrement with three		29

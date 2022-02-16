@@ -83,15 +83,15 @@ void intVectorTests(std::ofstream& tests1, std::ofstream& tests2){
 	std::cout << "------------------------------------------------" << std::endl;
 
 	//THIRD VECTOR CONSTRUCTOR
-	ft::vector<int> vector_int3 (vector_int2.begin(), vector_int2.end());
-	std::cout << "vector constructor with range contains:";
-	for (ft::vector<int>::iterator it = vector_int3.begin(); it != (vector_int3.end() -3) ; ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
-	std::cout << "size	" << vector_int3.size() << std::endl;
-	std::cout << "capacity " << vector_int3.capacity() << std::endl;
+	// ft::vector<int> vector_int3 (vector_int2.begin(), vector_int2.end());
+	// std::cout << "vector constructor with range contains:";
+	// for (ft::vector<int>::iterator it = vector_int3.begin(); it != (vector_int3.end() -3) ; ++it)
+	// 	std::cout << ' ' << *it;
+	// std::cout << '\n';
+	// std::cout << "size	" << vector_int3.size() << std::endl;
+	// std::cout << "capacity " << vector_int3.capacity() << std::endl;
 
-	std::cout << "------------------------------------------------" << std::endl;
+	// std::cout << "------------------------------------------------" << std::endl;
 
 	
 	vector_int.resize(10);
@@ -133,7 +133,21 @@ void intVectorTests(std::ofstream& tests1, std::ofstream& tests2){
 
 	std::cout << "------------------------------------------------" << std::endl;
 
-	std::cout << "Clear TESTS\n";
+	std::cout << "  Erase TESTS\n";
+	std::cout << "vector contains: ";
+	for (ft::vector<int>::iterator it = vector_int.begin(); it != vector_int.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+	std::cout << "size before erase: " << vector_int.size() << std::endl;
+	vector_int.erase(vector_int.begin() + 3);
+	std::cout << "vector contains: ";
+	for (ft::vector<int>::iterator it = vector_int.begin(); it != vector_int.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+	std::cout << "size after erase: " << vector_int.size() << std::endl;
+
+
+	std::cout << "  Clear TESTS\n";
 	std::cout << "vector contains: ";
 	for (ft::vector<int>::iterator it = vector_int.begin(); it != vector_int.end(); ++it)
 		std::cout << ' ' << *it;
@@ -277,7 +291,27 @@ void intVectorTests(std::ofstream& tests1, std::ofstream& tests2){
 
 	std::cout << "------------------------------------------------" << std::endl;
 
-	std::cout << "Clear TESTS\n";
+	std::cout << "  Erase TESTS\n";
+	std::cout << "vector contains: ";
+	for (std::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+	std::cout << "size before erase: " << testVec.size() << std::endl;
+	testVec.erase(testVec.begin() + 3);
+	std::cout << "vector contains: ";
+	for (std::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+	std::cout << "size after erase: " << testVec.size() << std::endl;
+	testVec.erase((testVec.begin() + 4), (testVec.begin() + 10));
+	std::cout << "vector contains: ";
+	for (std::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+	std::cout << "size after mass erase: " << testVec.size() << std::endl;
+
+
+	std::cout << "  Clear TESTS\n";
 	std::cout << "vector contains: ";
 	for (std::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
 		std::cout << ' ' << *it;
