@@ -4,7 +4,7 @@
 #include <vector>
 #include <fstream>
 
-void	stringVectorTests(std::ofstream& tests1, std::ofstream& tests2);
+void	stringVectorTests(std::ofstream& tests);
 void intVectorTests(std::ofstream& tests);
 // #if 1 //CREATE A REAL STL EXAMPLE
 // 	// #include <map>
@@ -122,14 +122,21 @@ void intVectorTests(std::ofstream& tests);
 
 
 #if STD_CONTAINER
-	std::string file = "realVectorOutput";
+	std::string file = "TestOutput/realVectorOutput";
 #else
-	std::string file = "myVectorOutput";
+	std::string file = "TestOutput/myVectorOutput";
 #endif
 
 int main(){
 	std::ofstream tests(file, std::ios_base::trunc);
 	intVectorTests(tests);
-	//stringVectorTests(tests1, tests2);
+	stringVectorTests(tests);
 	//system("leaks containers");
+
+
+
+
+	int arr[10] = {1,2,3,4,5,6,7,8,9,0};
+	int* ret = std::find(&arr[0], &arr[9], 6);
+	std::cout << *ret << std::endl;
 }

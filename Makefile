@@ -3,7 +3,7 @@ FT_NAME := ft_containers
 HEADERFILES := vector.hpp # map.hpp stack.hpp
 SRCS :=	main.cpp stringTests.cpp intTests.cpp
 
-FLAGS := -Wall -Wextra -Werror -std=c++98 -pedantic
+FLAGS := -Wall -Wextra -Werror -std=c++98
 OBJFILES := $(SRCS:%.cpp=obj/%.o)
 FT_OBJFILES := $(SRCS:%.cpp=ft_obj/%.o)
 
@@ -31,4 +31,4 @@ fclean: clean
 re: fclean all
 
 test: all
-	diff myVectorOutput realVectorOutput
+	diff TestOutput/myVectorOutput TestOutput/realVectorOutput

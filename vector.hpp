@@ -6,44 +6,49 @@
 
 # include "Iterators/iterator.hpp"
 # include "Iterators/reverse_iterator.hpp"
+# include "utilities.hpp"
 
 namespace ft{
-	template<typename value_type>
+	template<class value_type, class Alloc = std::allocator<value_type> >
 	class vector{
 	public:
 		typedef size_t								size_type;
-		typedef std::allocator<value_type>			allocator_type;
+		typedef Alloc								allocator_type;
 		typedef ft::iterator<value_type>			iterator;
 		typedef ft::reverse_iterator<value_type>	reverse_iterator;
 	private:
 		value_type*					_array;
 		size_type					_size;
 		size_type					_allocSize;
-		std::allocator<value_type>	_alloc;
+		allocator_type				_alloc;
 	public:
-		vector() : _array(NULL), _size(0), _allocSize(0){
-		};
-		vector(size_type n, const value_type& val) : _array(NULL), _size(0){
+		explicit vector(const allocator_type& alloc = allocator_type()) : _array(NULL), _size(0), _allocSize(0), _alloc(alloc){};
+		explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _array(NULL), _size(0), _alloc(alloc){
 			increaseCapacity(n);					// to emulate the exact capacity like the real vector
 			for(size_type i = 0; i < n; i++){
 				push_back(val);
 			}
 		};
-		vector(iterator begin, iterator end) : _array(NULL), _size(0), _allocSize(0){
+		vector(iterator begin, iterator end, const allocator_type& alloc = allocator_type()) : _array(NULL), _size(0), _allocSize(0), _alloc(alloc){
 			increaseCapacity(end - begin);
 			insert(this->begin(), begin, end);
 		};
-		vector(vector const& original){
+		vector(vector const& original) : _array(NULL), _size(0), _allocSize(0){
 			*this = original;
 		}
 		~vector(){
-			for(unsigned long i = 0; i < _size; i++){
+			for(size_type i = 0; i < _size; i++){
 				_alloc.destroy(&_array[i]);
 			}
 			_alloc.deallocate(_array, _allocSize);
 		};
 
 		vector& operator=(vector const& original){
+			//std::cout << "size: " << _size << std::endl;
+			for(size_type i = 0; i < _size; i++){
+				_alloc.destroy(&_array[i]);
+			}
+			_alloc.deallocate(_array, _allocSize);
 			try{
 				_array = _alloc.allocate(original._allocSize);
 			}
@@ -88,7 +93,7 @@ namespace ft{
 
 		//  ------------  ITERATOR FUNCTIONS  ------------
 		iterator begin() _NOEXCEPT {
-			return iterator(_array);
+			return iterator(&_array[0]);
 		};
 		// const_iterator begin() const _NOEXCEPT {
 			
@@ -106,7 +111,7 @@ namespace ft{
 			
 		// };
 		reverse_iterator rend(){
-			return reverse_iterator(_array - 1);
+			return reverse_iterator(&_array[0] - 1);
 		};
 		// const_iterator end() const{
 
@@ -186,6 +191,19 @@ namespace ft{
 
 
 		//  ------------  MODIFIERS   ------------
+
+		// template <class InputIterator>
+		void assign (iterator first, iterator last){
+			this->clear();
+			this->insert(this->end(), first, last);
+		};
+		void assign (size_type n, const value_type& val){
+			this->clear();
+			for(size_type i = 0; i < n; i++){
+				push_back(val);
+			}
+		};
+
 		void	push_back(const value_type& val) {
 			if (_size == _allocSize){
 				increaseCapacity();
@@ -200,11 +218,12 @@ namespace ft{
 		};
 
 		iterator insert(iterator position, const value_type& val){
-			iterator start_position = position;
+			int start_pos = position - this->begin();
 			if(position == this->end()){
 				push_back(val);
 			}
 			else{
+				//std::cout << "psssing by\n" << std::endl;
 				value_type temp_val = val;
 				int pos = position - this->begin();
 				if (_size == _allocSize){
@@ -220,17 +239,20 @@ namespace ft{
 				}
 				_size++;
 			}
-			return (start_position);
+			return (this->begin() + start_pos);
 		};
 		void insert(iterator position, size_type n, const value_type& val){
 			for(size_type i = 0; i < n; i++){
-				insert(position + i, val);
+				position = insert(position, val);
+				position++;
 			}
 		};
-
-		void insert (iterator position, iterator first, iterator last){
-			for(iterator it = first; it != last; ++it){
-				insert(position++, *it);
+		//template <class InputIterator, typename std::enable_if<!std::is_integral<InputIterator>::value, bool>::type = true>
+		template <class InputIterator>
+		typename enable_if<!is_integral<InputIterator>::value,void>::type insert (iterator position, InputIterator first, InputIterator last){
+			for(InputIterator it = first; it != last; ++it){
+				position = insert(position, *it);
+				position++;
 			}
 		};
 
@@ -260,10 +282,15 @@ namespace ft{
 			return first;
 		};
 
-		// void swap (vector& x);
+		void swap (vector& x){
+			ft::vector<value_type> temp;
+			temp = *this;
+			*this = x;
+			x = temp;
+		};
 
 		void clear(){
-			for(unsigned long i = 0; i < _size; i++){
+			for(size_type i = 0; i < _size; i++){
 				_alloc.destroy(&_array[i]);
 			}
 			_size = 0;
@@ -274,10 +301,48 @@ namespace ft{
 		allocator_type get_allocator() const{
 			return _alloc;
 		};
-
-		// -------------  Non-member function overloads  -----------
-
 	};
+	
+	// -------------  Non-member function overloads  -----------
+
+	template <class T, class Alloc>
+	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y){
+		x.swap(y);
+	}
+
+	// -------------- relational operators -------------------
+
+
+	template <class T, class Alloc>
+	bool operator==(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
+		if (lhs.size() != rhs.size())
+			return false;
+		return equal(lhs.begin(), lhs.end(), rhs.begin());
+	}
+	template <class T, class Alloc>
+	bool operator!=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
+		return !(lhs == rhs);
+	}
+
+	template <class T, class Alloc>
+	bool operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
+		return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+	}
+
+	template <class T, class Alloc>
+	bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
+		return !(rhs < lhs);
+	}
+
+	template <class T, class Alloc>
+	bool operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
+		return rhs < lhs;
+	}
+
+	template <class T, class Alloc>
+	bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
+		return !(lhs < rhs);
+	}
 
 }
 

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string>
-# include <fstream>
+#include <fstream>
 
 #if STD_CONTAINER
 	#include <map>
@@ -16,6 +16,7 @@
 
 
 void intVectorTests(std::ofstream& tests){
+
 
 	tests << "--- INT VECTOR GENERAL TESTS --" << std::endl;
 	ft::vector<int> testVec;
@@ -79,7 +80,7 @@ void intVectorTests(std::ofstream& tests){
 
 
 
-	std::cout << "------------------------------------------------" << std::endl;
+	tests << "------------------------------------------------" << std::endl;
 
 	// SECOND VECTOR CONSTRUCTOR 
 	ft::vector<int> testVec2 (7,100);
@@ -89,16 +90,16 @@ void intVectorTests(std::ofstream& tests){
 	tests << '\n';
 	tests << "capacity	" << testVec2.capacity() << std::endl;
 
-	std::cout << "------------------------------------------------" << std::endl;
+	tests << "------------------------------------------------" << std::endl;
 	//THIRD VECTOR CONSTRUCTOR
 	ft::vector<int> testVec3 (testVec2.begin(), (testVec2.end() - 3));
-	std::cout << "vector constructor with range contains:";
+	tests << "vector constructor with range contains:";
 	for (ft::vector<int>::iterator it = testVec3.begin(); it != (testVec3.end()) ; ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
-	std::cout << "size	" << testVec3.size() << std::endl;
-	std::cout << "capacity " << testVec3.capacity() << std::endl;
-	std::cout << "------------------------------------------------" << std::endl;
+		tests << ' ' << *it;
+	tests << '\n';
+	tests << "size	" << testVec3.size() << std::endl;
+	tests << "capacity " << testVec3.capacity() << std::endl;
+	tests << "------------------------------------------------" << std::endl;
 
 	testVec.resize(10);
 	tests << "original state: ";
@@ -136,40 +137,102 @@ void intVectorTests(std::ofstream& tests){
 	tests << '\n';
 
 
-	std::cout << "------------------------------------------------" << std::endl;
+	tests << "------------------------------------------------" << std::endl;
 
-	std::cout << "  Erase TESTS\n";
-	std::cout << "vector contains: ";
+	tests << "  Erase TESTS\n";
+	tests << "vector contains: ";
 	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
-	std::cout << "size before erase: " << testVec.size() << std::endl;
+		tests << ' ' << *it;
+	tests << '\n';
+	tests << "size before erase: " << testVec.size() << std::endl;
 	testVec.erase(testVec.begin() + 3);
-	std::cout << "vector contains: ";
+	tests << "vector contains: ";
 	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
-	std::cout << "size after erase: " << testVec.size() << std::endl;
+		tests << ' ' << *it;
+	tests << '\n';
+	tests << "size after erase: " << testVec.size() << std::endl;
 	testVec.erase((testVec.begin() + 4), (testVec.begin() + 10));
-	std::cout << "vector contains: ";
+	tests << "vector contains: ";
+	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
+		tests << ' ' << *it;
+	tests << '\n';
+	tests << "size after mass erase: " << testVec.size() << std::endl;
+
+	tests << "  Assign TESTS\n";
+	tests << "vector contains: ";
+	for (ft::vector<int>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
+		tests << ' ' << *it;
+	tests << '\n';
+	tests << "capacity before assign: " << testVec2.capacity() << std::endl;
+	testVec2.assign(testVec.begin(), testVec.end());
+	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
+		tests << ' ' << *it;
+	tests << '\n';
+	tests << "vector after assign: ";
+	for (ft::vector<int>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
+		tests << ' ' << *it;
+	tests << '\n';
+	tests << "capacity after assign: " << testVec2.capacity() << std::endl;
+	testVec2.assign(6, 33);
+	tests << "vector after assign: ";
+	for (ft::vector<int>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
+		tests << ' ' << *it;
+	tests << '\n';
+	tests << "capacity after assign: " << testVec2.capacity() << std::endl;
+
+
+	std::cout << "  Swap TESTS\n";
+	ft::vector<int>::iterator it_testMemory = testVec2.begin();
+	std::cout << "vectorA contains: ";
+		std::cout << testVec.size() << std::endl; 
 	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
-	std::cout << "size after mass erase: " << testVec.size() << std::endl;
-
-
-	std::cout << "  Clear TESTS\n";
-	std::cout << "vector contains: ";
+	std::cout << "vectorB contains: ";
+	std::cout << testVec2.size() << std::endl;
+	for (ft::vector<int>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+	std::cout << *it_testMemory << std::endl;
+	testVec.swap(testVec2);
+	std::cout << "vectorA after swap: ";
 	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
-	std::cout << "size before clear: " << testVec.size() << std::endl;
-	std::cout << "capacity before clear: " << testVec.capacity() << std::endl;
+	std::cout << "vectorB after swap: ";
+	for (ft::vector<int>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+	std::cout << *it_testMemory << std::endl;
+
+
+	ft::vector<int> copyVec(testVec);
+	tests << "  Clear TESTS\n";
+	tests << "vector contains: ";
+	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
+		tests << ' ' << *it;
+	tests << '\n';
+	tests << "size before clear: " << testVec.size() << std::endl;
+	tests << "capacity before clear: " << testVec.capacity() << std::endl;
 	testVec.clear();
-	std::cout << "size after clear: " << testVec.size() << std::endl;
-	std::cout << "capacity after clear: " << testVec.capacity() << std::endl;
-	std::cout << "vector after clear: ";
+	tests << "size after clear: " << testVec.size() << std::endl;
+	tests << "capacity after clear: " << testVec.capacity() << std::endl;
+	tests << "vector after clear: ";
 	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
+		tests << ' ' << *it;
+	tests << '\n';
+	testVec = copyVec;
+
+	std::cout << "  non-member TESTS\n";
+	ft::swap(testVec, testVec2);
+	std::cout << "vectorA contains: ";
+		std::cout << testVec.size() << std::endl; 
+	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+	std::cout << "vectorB contains: ";
+	std::cout << testVec2.size() << std::endl;
+	for (ft::vector<int>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';
 
@@ -265,4 +328,11 @@ void intVectorTests(std::ofstream& tests){
 	tests << "dereference and increment	" << *++rite << std::endl;
 	tests << "increment with five		" << *(rite + 5) << std::endl;
 	tests << "increment with eight		" << *(8 + rite) << std::endl;
+
+
+	tests << "------------------------------------------------" << std::endl;
+	tests << "------------------------------------------------" << std::endl;
+	tests << "------------------------------------------------" << std::endl;
+
+
 }
