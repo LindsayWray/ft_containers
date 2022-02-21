@@ -8,6 +8,7 @@ void	stringVectorTests(std::ofstream& tests);
 void	intVectorTests(std::ofstream& tests);
 void	intStackTests(std::ofstream& tests);
 void	stringStackTests(std::ofstream& tests);
+void	mapTests(std::ofstream& tests);
 
 // #if 1 //CREATE A REAL STL EXAMPLE
 // 	// #include <map>
@@ -137,6 +138,8 @@ int main(){
 
 	intStackTests(tests);
 	stringStackTests(tests);
+
+	mapTests(tests);
 
 	//system("leaks containers");
 
