@@ -1,7 +1,7 @@
 NAME := containers
 FT_NAME := ft_containers
-HEADERFILES := vector.hpp # map.hpp stack.hpp
-SRCS :=	main.cpp stringTests.cpp intTests.cpp
+HEADERFILES := vector.hpp stack.hpp # map.hpp 
+SRCS :=	main.cpp tests/stringVectorTests.cpp tests/intVectorTests.cpp tests/intStackTests.cpp #tests/stringStackTests.cpp 
 
 FLAGS := -Wall -Wextra -Werror -std=c++98
 OBJFILES := $(SRCS:%.cpp=obj/%.o)

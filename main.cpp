@@ -5,7 +5,10 @@
 #include <fstream>
 
 void	stringVectorTests(std::ofstream& tests);
-void intVectorTests(std::ofstream& tests);
+void	intVectorTests(std::ofstream& tests);
+void	intStackTests(std::ofstream& tests);
+void	stringStackTests(std::ofstream& tests);
+
 // #if 1 //CREATE A REAL STL EXAMPLE
 // 	// #include <map>
 // 	// #include <stack>
@@ -131,12 +134,16 @@ int main(){
 	std::ofstream tests(file, std::ios_base::trunc);
 	intVectorTests(tests);
 	stringVectorTests(tests);
+
+	intStackTests(tests);
+	// stringStackTests(tests);
+
 	//system("leaks containers");
 
 
 
 
-	int arr[10] = {1,2,3,4,5,6,7,8,9,0};
-	int* ret = std::find(&arr[0], &arr[9], 6);
-	std::cout << *ret << std::endl;
+	// int arr[10] = {1,2,3,4,5,6,7,8,9,0};
+	// int* ret = std::find(&arr[0], &arr[9], 6);
+	// std::cout << *ret << std::endl;
 }
