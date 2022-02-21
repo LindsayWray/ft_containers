@@ -192,8 +192,8 @@ namespace ft{
 
 		//  ------------  MODIFIERS   ------------
 
-		// template <class InputIterator>
-		void assign (iterator first, iterator last){
+		template <class InputIterator>
+		void assign (InputIterator first, InputIterator last){
 			this->clear();
 			this->insert(this->end(), first, last);
 		};

@@ -15,6 +15,21 @@
 #endif
 
 
+void printVector(ft::vector<int> testVec, std::ofstream& tests)
+{
+	for (ft::vector<int>::iterator ite = testVec.begin() ; ite != testVec.end(); ++ite)
+		tests << ' ' << *ite;
+	tests << '\n';
+}
+
+void printVectorTerminal(ft::vector<int> testVec)
+{
+	for (ft::vector<int>::iterator ite = testVec.begin() ; ite != testVec.end(); ++ite)
+		std::cout << ' ' << *ite;
+	std::cout << '\n';
+}
+
+
 void intVectorTests(std::ofstream& tests){
 
 
@@ -72,138 +87,100 @@ void intVectorTests(std::ofstream& tests){
 
 	testVec.resize(50);
 	tests << "vector contains:";
-	for (ft::vector<int>::iterator ite = testVec.begin() ; ite != testVec.end(); ++ite)
-		tests << ' ' << *ite;
-	tests << '\n';
+	printVector(testVec, tests);
 	
 
-
-
-
-	tests << "------------------------------------------------" << std::endl;
 
 	// SECOND VECTOR CONSTRUCTOR 
 	ft::vector<int> testVec2 (7,100);
 	tests << "vector constructor with input:";
-	for (ft::vector<int>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec2, tests);
 	tests << "capacity	" << testVec2.capacity() << std::endl;
 
 	tests << "------------------------------------------------" << std::endl;
 	//THIRD VECTOR CONSTRUCTOR
 	ft::vector<int> testVec3 (testVec2.begin(), (testVec2.end() - 3));
 	tests << "vector constructor with range contains:";
-	for (ft::vector<int>::iterator it = testVec3.begin(); it != (testVec3.end()) ; ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec3, tests);
 	tests << "size	" << testVec3.size() << std::endl;
 	tests << "capacity " << testVec3.capacity() << std::endl;
 	tests << "------------------------------------------------" << std::endl;
 
 	testVec.resize(10);
 	tests << "original state: ";
-	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 
 
 	testVec.insert(testVec.end(), 900);
 	tests << "vector after end insert:	";
-	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	ft::vector<int>::iterator iterat = testVec.begin();
 	iterat += 4;
 	testVec.insert(iterat, 300);
 	tests << "vector after middle insert: ";
-	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	testVec.insert(iterat, 3, 200);
 	tests << "vector after n inserts: ";
-	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	testVec.insert(iterat, testVec2.begin(), testVec2.end());
 	tests << "vector after iterator range insert:	";
-	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	testVec.pop_back();
 	tests << "vector pop_back:	";
-	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 
 
 	tests << "------------------------------------------------" << std::endl;
 
 	tests << "  Erase TESTS\n";
 	tests << "vector contains: ";
-	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	tests << "size before erase: " << testVec.size() << std::endl;
 	testVec.erase(testVec.begin() + 3);
 	tests << "vector contains: ";
-	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	tests << "size after erase: " << testVec.size() << std::endl;
 	testVec.erase((testVec.begin() + 4), (testVec.begin() + 10));
 	tests << "vector contains: ";
-	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	tests << "size after mass erase: " << testVec.size() << std::endl;
 
 	tests << "  Assign TESTS\n";
 	tests << "vector contains: ";
-	for (ft::vector<int>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec2, tests);
 	tests << "capacity before assign: " << testVec2.capacity() << std::endl;
 	testVec2.assign(testVec.begin(), testVec.end());
-	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	tests << "vector after assign: ";
-	for (ft::vector<int>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec2, tests);
 	tests << "capacity after assign: " << testVec2.capacity() << std::endl;
 	testVec2.assign(6, 33);
 	tests << "vector after assign: ";
-	for (ft::vector<int>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec2, tests);
 	tests << "capacity after assign: " << testVec2.capacity() << std::endl;
 
 
-	std::cout << "  Swap TESTS\n";
+	tests << "  Swap TESTS\n";
 	ft::vector<int>::iterator it_testMemory = testVec2.begin();
-	std::cout << "vectorA contains: ";
-		std::cout << testVec.size() << std::endl; 
+	tests << "vectorA contains: ";
+		tests << testVec.size() << std::endl; 
 	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
-	std::cout << "vectorB contains: ";
-	std::cout << testVec2.size() << std::endl;
-	for (ft::vector<int>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
-	std::cout << *it_testMemory << std::endl;
+		tests << ' ' << *it;
+	tests << '\n';
+	tests << "vectorB contains: ";
+	tests << testVec2.size() << std::endl;
+	printVector(testVec2, tests);
+	tests << *it_testMemory << std::endl;
 	testVec.swap(testVec2);
-	std::cout << "vectorA after swap: ";
+	tests << "vectorA after swap: ";
 	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
-	std::cout << "vectorB after swap: ";
+		tests << ' ' << *it;
+	tests << '\n';
+	tests << "vectorB after swap: ";
 	for (ft::vector<int>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
-	std::cout << *it_testMemory << std::endl;
+		tests << ' ' << *it;
+	tests << '\n';
+	tests << *it_testMemory << std::endl;
 
 
 	ft::vector<int> copyVec(testVec);
@@ -223,22 +200,19 @@ void intVectorTests(std::ofstream& tests){
 	tests << '\n';
 	testVec = copyVec;
 
-	std::cout << "  non-member TESTS\n";
+	tests << "  non-member TESTS\n";
 	ft::swap(testVec, testVec2);
-	std::cout << "vectorA contains: ";
-		std::cout << testVec.size() << std::endl; 
+	tests << "vectorA contains: ";
+		tests << testVec.size() << std::endl; 
 	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
-	std::cout << "vectorB contains: ";
-	std::cout << testVec2.size() << std::endl;
+		tests << ' ' << *it;
+	tests << '\n';
+	tests << "vectorB contains: ";
+	tests << testVec2.size() << std::endl;
 	for (ft::vector<int>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
+		tests << ' ' << *it;
+	tests << '\n';
 
-
-
-	std::cout << "------------------------------------------------" << std::endl;
 
 
 
@@ -330,9 +304,20 @@ void intVectorTests(std::ofstream& tests){
 	tests << "increment with eight		" << *(8 + rite) << std::endl;
 
 
-	tests << "------------------------------------------------" << std::endl;
-	tests << "------------------------------------------------" << std::endl;
-	tests << "------------------------------------------------" << std::endl;
-
-
+	printVectorTerminal(testVec);
+	printVectorTerminal(testVec2);
+	printVectorTerminal(testVec3);
+	printVectorTerminal(copyVec);
+	std::cout << "relational operators testing\n";
+	std::cout << "is equal			" << (testVec == copyVec) << std::endl;
+	// std::cout << "is equal			" << (testVec == testVec3) << std::endl;
+	// std::cout << "is not equal			" << (testVec != copyVec) << std::endl;
+	// std::cout << "is smaller			" << (testVec2 < testVec3) << std::endl;
+	// std::cout << "is bigger			" << (testVec3 > testVec) << std::endl;
+	// std::cout << "is bigger			" << (testVec2 > testVec) << std::endl;
+	// std::cout << "is smaller or equal		" << (rite <= testVec.rend()) << std::endl;
+	// std::cout << "is smaller or equal		" << (testVec.rend() <= testVec.rend()) << std::endl;
+	// std::cout << "is bigger or equal		" << (rite >= testVec.rend()) << std::endl;
+	// std::cout << "is bigger or equal		" << (rite >= rite) << std::estd::cout
+	
 }

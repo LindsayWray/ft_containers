@@ -136,7 +136,7 @@ int main(){
 	stringVectorTests(tests);
 
 	intStackTests(tests);
-	// stringStackTests(tests);
+	stringStackTests(tests);
 
 	//system("leaks containers");
 
