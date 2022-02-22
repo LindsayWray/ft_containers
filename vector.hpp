@@ -9,18 +9,47 @@
 # include "utilities.hpp"
 
 namespace ft{
-	template<class value_type, class Alloc = std::allocator<value_type> >
+	template<class T, class Alloc = std::allocator<T> >
 	class vector{
 	public:
-		typedef size_t								size_type;
-		typedef Alloc								allocator_type;
-		typedef ft::iterator<value_type>			iterator;
-		typedef ft::reverse_iterator<value_type>	reverse_iterator;
+		typedef size_t							size_type;
+		typedef Alloc							allocator_type;
+		typedef ft::iterator<T>					iterator;
+		typedef ft::reverse_iterator<T>			reverse_iterator;
+		typedef const ft::iterator<T>			const_iterator;
+		typedef	T								value_type;
+		typedef long							difference_type;
+
 	private:
 		value_type*					_array;
 		size_type					_size;
 		size_type					_allocSize;
 		allocator_type				_alloc;
+
+		//  ------------    HELPER FUNCTIONS   ------------
+		void increaseCapacity(size_type n){
+			_allocSize = n;
+			try{
+				value_type* _tempArray = _alloc.allocate(_allocSize);
+				for(size_type i = 0; i < _size; i++){
+					_alloc.construct(_tempArray + i, _array[i]);
+					_alloc.destroy(&_array[i]);
+				}
+				_alloc.deallocate(_array, _size);
+				_array = _tempArray;
+			}
+			catch(std::bad_alloc &e){
+				std::cerr << e.what() << std::endl;
+				exit(EXIT_FAILURE);
+			}
+		}
+		void increaseCapacity(){
+			if (_allocSize == 0)
+				_allocSize += 1;
+			else
+				_allocSize *= 2;
+			increaseCapacity(_allocSize);
+		}
 	public:
 		explicit vector(const allocator_type& alloc = allocator_type()) : _array(NULL), _size(0), _allocSize(0), _alloc(alloc){};
 		explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _array(NULL), _size(0), _alloc(alloc){
@@ -64,56 +93,30 @@ namespace ft{
 		}
 
 
-		//  ------------    HELPER FUNCTIONS   ------------
-		void increaseCapacity(size_type n){
-			_allocSize = n;
-			try{
-				value_type* _tempArray = _alloc.allocate(_allocSize);
-				for(size_type i = 0; i < _size; i++){
-					_alloc.construct(_tempArray + i, _array[i]);
-					_alloc.destroy(&_array[i]);
-				}
-				_alloc.deallocate(_array, _size);
-				_array = _tempArray;
-			}
-			catch(std::bad_alloc &e){
-				std::cerr << e.what() << std::endl;
-				exit(EXIT_FAILURE);
-			}
-		}
-		void increaseCapacity(){
-			if (_allocSize == 0)
-				_allocSize += 1;
-			else
-				_allocSize *= 2;
-			increaseCapacity(_allocSize);
-		}
-
-
 
 		//  ------------  ITERATOR FUNCTIONS  ------------
 		iterator begin() _NOEXCEPT {
 			return iterator(&_array[0]);
 		};
-		// const_iterator begin() const _NOEXCEPT {
-			
-		// };
+		const_iterator begin() const _NOEXCEPT {
+			return const_iterator(&_array[0]);
+		};
 		iterator end(){
 			return iterator(&_array[_size]);
 		};
-		// const_iterator end() const{
-
-		// };
+		const_iterator end() const{
+			return const_iterator(&_array[_size]);
+		};
 		reverse_iterator rbegin() _NOEXCEPT {
 			return reverse_iterator(&_array[_size - 1]);
 		};
-		// const_iterator begin() const _NOEXCEPT {
+		// const_iterator rbegin() const _NOEXCEPT {
 			
 		// };
 		reverse_iterator rend(){
 			return reverse_iterator(&_array[0] - 1);
 		};
-		// const_iterator end() const{
+		// const_iterator rend() const{
 
 		// };
 
@@ -317,7 +320,7 @@ namespace ft{
 	bool operator==(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
 		if (lhs.size() != rhs.size())
 			return false;
-		return equal(lhs.begin(), lhs.end(), rhs.begin());
+		return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
 	}
 	template <class T, class Alloc>
 	bool operator!=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
@@ -326,7 +329,7 @@ namespace ft{
 
 	template <class T, class Alloc>
 	bool operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
-		return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+		return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 	}
 
 	template <class T, class Alloc>

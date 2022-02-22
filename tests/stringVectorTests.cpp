@@ -14,6 +14,21 @@
 	#include "../vector.hpp"
 #endif
 
+
+void printVector(ft::vector<std::string> testVec, std::ofstream& tests)
+{
+	for (ft::vector<std::string>::iterator ite = testVec.begin() ; ite != testVec.end(); ++ite)
+		tests << ' ' << *ite;
+	tests << '\n';
+}
+
+void printVectorTerminal(ft::vector<std::string> testVec)
+{
+	for (ft::vector<std::string>::iterator ite = testVec.begin() ; ite != testVec.end(); ++ite)
+		std::cout << ' ' << *ite;
+	std::cout << '\n';
+}
+
 void	stringVectorTests(std::ofstream& tests){
 
 	tests << "\n--- STRING VECTOR GENERAL TESTS --" << std::endl;
@@ -99,131 +114,85 @@ void	stringVectorTests(std::ofstream& tests){
 	testVec.push_back("test");
 	tests << "reserve capacity		" << testVec.capacity() << std::endl;
 
-	// tests << "realvector contains:";
-	// for (ft::vector<std::string>::iterator it = testVec.begin() ; it != testVec.end(); ++it)
-	// 	tests << ' ' << *it;
-	// tests << '\n';
-
-
-
-	tests << "------------------------------------------------" << std::endl;
 
 	testVec.resize(15);
-	for (ft::vector<std::string>::iterator ite = testVec.begin() ; ite != testVec.end(); ++ite)
-		tests << ' ' << *ite;
-	tests << '\n';
-
+	printVector(testVec, tests);
 
 
 	// SECOND VECTOR CONSTRUCTOR 
 	ft::vector<std::string> testVec2 (4,"constructor_test");
 	tests << "vector constructor with input:";
-	for (ft::vector<std::string>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec2, tests);
 	tests << "capacity	" << testVec2.capacity() << std::endl;
 
-	//IN PROGRESS
-	// std::vector<std::string> testVec3 (testVec.begin(), testVec.end());
-	//	tests << "vector constructor with range contains:";
-	// for (std::vector<std::string>::iterator it = testVec3.begin(); it != testVec3.end(); ++it)
-	// 	tests << ' ' << *it;
-	//	tests << '\n';
+
+	ft::vector<std::string> testVec3 (testVec.begin(), testVec.end());
+		tests << "vector constructor with range contains:";
+	printVector(testVec3, tests);
 
 	ft::vector<std::string>::iterator iterat = testVec.begin();
 	iterat += 4;
 	testVec.insert(iterat, "inserted_string");
 	tests << "vector after single insert: ";
-	for (ft::vector<std::string>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	testVec.insert(testVec.end(), testVec2.begin(), testVec2.end());
 	
 	testVec.insert(iterat, 3, "more_inserts");
 	tests << "vector after n inserts: ";
-	for (ft::vector<std::string>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	tests << "vector after iterator insert: ";
-	for (ft::vector<std::string>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	testVec.pop_back();
 	tests << "vector pop_back:	";
-	for (ft::vector<std::string>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
-
-
+	printVector(testVec, tests);
 
 
 
 	tests << "  Erase TESTS\n";
 	tests << "vector contains: ";
-	for (ft::vector<std::string>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	tests << "size before erase: " << testVec.size() << std::endl;
 	testVec.erase(testVec.begin() + 3);
 	tests << "vector contains: ";
-	for (ft::vector<std::string>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	tests << "size after erase: " << testVec.size() << std::endl;
 	testVec.erase((testVec.begin() + 4), (testVec.begin() + 10));
 	tests << "vector contains: ";
-	for (ft::vector<std::string>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	tests << "size after mass erase: " << testVec.size() << std::endl;
 
 	tests << "  Assign TESTS\n";
 	tests << "vector contains: ";
-	for (ft::vector<std::string>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec2, tests);
 	tests << "capacity before assign: " << testVec2.capacity() << std::endl;
 	testVec2.assign(testVec.begin(), testVec.end());
-	for (ft::vector<std::string>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	tests << "vector after assign: ";
-	for (ft::vector<std::string>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec2, tests);
 	tests << "capacity after assign: " << testVec2.capacity() << std::endl;
 	testVec2.assign(6, "cats");
 	tests << "vector after assign: ";
-	for (ft::vector<std::string>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec2, tests);
 	tests << "capacity after assign: " << testVec2.capacity() << std::endl;
 
 
 	ft::vector<std::string> copyVec(testVec);
 	tests << "  Clear TESTS\n";
 	tests << "vector contains: ";
-	for (ft::vector<std::string>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	tests << "size before clear: " << testVec.size() << std::endl;
 	tests << "capacity before clear: " << testVec.capacity() << std::endl;
 	testVec.clear();
 	tests << "size after clear: " << testVec.size() << std::endl;
 	tests << "capacity after clear: " << testVec.capacity() << std::endl;
 	tests << "vector after clear: ";
-	for (ft::vector<std::string>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	testVec = copyVec;
 
 
 	//-------------------------------------------------------------------------------------------------------
 
 
-
-
-	tests << "------------------------------------------------" << std::endl;
 
 
 	tests << "\n--- STRING VECTOR ITERATOR TESTS --" << std::endl;
@@ -314,4 +283,19 @@ void	stringVectorTests(std::ofstream& tests){
 	tests << "subtract riterators		" << rite - testVec.rend() << std::endl;
 	
 
+	printVector(testVec, tests);
+	printVector(testVec2, tests);
+	printVector(testVec3, tests);
+	printVector(copyVec, tests);
+	tests << "rl operators testing string vector\n";
+	tests << "is equal			" << (testVec2 == copyVec) << std::endl;
+	tests << "is equal			" << (testVec == testVec3) << std::endl;
+	tests << "is not equal			" << (testVec != copyVec) << std::endl;
+	tests << "is smaller			" << (testVec2 < testVec3) << std::endl;
+	tests << "is bigger			" << (testVec3 > testVec) << std::endl;
+	tests << "is bigger			" << (testVec2 > testVec) << std::endl;
+	tests << "is smaller or equal		" << (testVec2 <= testVec2) << std::endl;
+	tests << "is smaller or equal		" << (testVec3 <= testVec) << std::endl;
+	tests << "is bigger or equal		" << (copyVec >= testVec) << std::endl;
+	tests << "is bigger or equal		" << (testVec3 >= testVec2) << std::endl;
 }

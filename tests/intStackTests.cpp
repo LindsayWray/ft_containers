@@ -27,6 +27,17 @@ void printStack(ft::stack<int> stack, std::ofstream& tests)
 	tests << '\n';
 }
 
+void printStackTerminal(ft::stack<int> stack)
+{
+	std::cout << "(" << stack.size() << " elements)\n";
+
+	while(!stack.empty()){
+		std::cout << stack.top() << " ";
+		stack.pop();
+	}
+	std::cout << '\n';
+}
+
 
 void intStackTests(std::ofstream& tests){
 
@@ -60,6 +71,18 @@ void intStackTests(std::ofstream& tests){
 
 
 	copyVec.pop();
-	tests << "vector pop_back:	";
+	tests << "vector after pop_back:	";
 	printStack(copyVec, tests);
+	copyVec.pop();
+	copyVec.push(10000);
+	printStack(copyVec, tests);
+	printStack(testStack, tests);
+
+	std::cout << "rl operators testing\n";
+	std::cout << "is equal			" << (testStack == copyVec) << std::endl;
+	std::cout << "is not equal			" << (testStack != copyVec) << std::endl;
+	std::cout << "is smaller			" << (copyVec < testStack) << std::endl;
+	std::cout << "is bigger			" << (copyVec > testStack) << std::endl;
+	std::cout << "is smaller or equal		" << (copyVec<= testStack) << std::endl;
+	std::cout << "is bigger or equal		" << (testStack >= testStack) << std::endl;
 }

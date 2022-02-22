@@ -69,6 +69,18 @@ void stringStackTests(std::ofstream& tests){
 
 
 	copyVec.pop();
-	tests << "vector pop_back:	";
+	tests << "vector after pop_back:	";
 	printStack(copyVec, tests);
+	copyVec.pop();
+	copyVec.push("hundred");
+	printStack(copyVec, tests);
+	printStack(testStack, tests);
+
+	std::cout << "rl operators testing\n";
+	std::cout << "is equal			" << (testStack == copyVec) << std::endl;
+	std::cout << "is not equal			" << (testStack != copyVec) << std::endl;
+	std::cout << "is smaller			" << (copyVec < testStack) << std::endl;
+	std::cout << "is bigger			" << (copyVec > testStack) << std::endl;
+	std::cout << "is smaller or equal		" << (copyVec<= testStack) << std::endl;
+	std::cout << "is bigger or equal		" << (testStack >= testStack) << std::endl;
 }

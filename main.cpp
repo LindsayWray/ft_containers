@@ -139,7 +139,7 @@ int main(){
 	intStackTests(tests);
 	stringStackTests(tests);
 
-	mapTests(tests);
+	//mapTests(tests);
 
 	//system("leaks containers");
 

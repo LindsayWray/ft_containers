@@ -5,14 +5,18 @@
 # include "vector.hpp"
 
 namespace ft{
-	template <class value_type, class Container = vector<value_type> >
+	template <class T, class Container = vector<T> >
 	class stack{
-	public:
-		//typedef 	Container					container_type;
-		//typedef  	ft::Container::value_type		value_type;
-		//typedef  	Container::size_type		size_type;
-		typedef  	size_t						size_type;
+		template <class T2, class Alloc>
+		friend bool operator==(const stack<T2,Alloc>& lhs, const stack<T2,Alloc>& rhs);
 
+		template <class T2, class Alloc>
+		friend bool operator<(const stack<T2,Alloc>& lhs, const stack<T2,Alloc>& rhs);
+		
+	public:
+		typedef 			Container					container_type;
+		typedef typename 	Container::value_type		value_type;
+		typedef typename	Container::size_type		size_type;
 
 	protected:
 		Container c;
@@ -52,9 +56,7 @@ namespace ft{
 
 	template <class T, class Alloc>
 	bool operator==(const stack<T,Alloc>& lhs, const stack<T,Alloc>& rhs){
-		if (lhs.size() != rhs.size())
-			return false;
-		return equal(lhs.begin(), lhs.end(), rhs.begin());
+		return lhs.c == rhs.c;
 	}
 	template <class T, class Alloc>
 	bool operator!=(const stack<T,Alloc>& lhs, const stack<T,Alloc>& rhs){
@@ -63,7 +65,7 @@ namespace ft{
 
 	template <class T, class Alloc>
 	bool operator<(const stack<T,Alloc>& lhs, const stack<T,Alloc>& rhs){
-		return lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+		return lhs.c < rhs.c;
 	}
 
 	template <class T, class Alloc>

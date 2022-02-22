@@ -173,45 +173,33 @@ void intVectorTests(std::ofstream& tests){
 	tests << *it_testMemory << std::endl;
 	testVec.swap(testVec2);
 	tests << "vectorA after swap: ";
-	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	tests << "vectorB after swap: ";
-	for (ft::vector<int>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec2, tests);
 	tests << *it_testMemory << std::endl;
 
 
 	ft::vector<int> copyVec(testVec);
 	tests << "  Clear TESTS\n";
 	tests << "vector contains: ";
-	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	tests << "size before clear: " << testVec.size() << std::endl;
 	tests << "capacity before clear: " << testVec.capacity() << std::endl;
 	testVec.clear();
 	tests << "size after clear: " << testVec.size() << std::endl;
 	tests << "capacity after clear: " << testVec.capacity() << std::endl;
 	tests << "vector after clear: ";
-	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	testVec = copyVec;
 
 	tests << "  non-member TESTS\n";
 	ft::swap(testVec, testVec2);
 	tests << "vectorA contains: ";
 		tests << testVec.size() << std::endl; 
-	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec, tests);
 	tests << "vectorB contains: ";
 	tests << testVec2.size() << std::endl;
-	for (ft::vector<int>::iterator it = testVec2.begin(); it != testVec2.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+	printVector(testVec2, tests);
 
 
 
@@ -304,20 +292,20 @@ void intVectorTests(std::ofstream& tests){
 	tests << "increment with eight		" << *(8 + rite) << std::endl;
 
 
-	printVectorTerminal(testVec);
-	printVectorTerminal(testVec2);
-	printVectorTerminal(testVec3);
-	printVectorTerminal(copyVec);
-	std::cout << "relational operators testing\n";
-	std::cout << "is equal			" << (testVec == copyVec) << std::endl;
-	// std::cout << "is equal			" << (testVec == testVec3) << std::endl;
-	// std::cout << "is not equal			" << (testVec != copyVec) << std::endl;
-	// std::cout << "is smaller			" << (testVec2 < testVec3) << std::endl;
-	// std::cout << "is bigger			" << (testVec3 > testVec) << std::endl;
-	// std::cout << "is bigger			" << (testVec2 > testVec) << std::endl;
-	// std::cout << "is smaller or equal		" << (rite <= testVec.rend()) << std::endl;
-	// std::cout << "is smaller or equal		" << (testVec.rend() <= testVec.rend()) << std::endl;
-	// std::cout << "is bigger or equal		" << (rite >= testVec.rend()) << std::endl;
-	// std::cout << "is bigger or equal		" << (rite >= rite) << std::estd::cout
-	
+	printVector(testVec, tests);
+	printVector(testVec2, tests);
+	printVector(testVec3, tests);
+	printVector(copyVec, tests);
+	tests << "relational operators testing\n";
+	tests << "is equal			" << (testVec2 == copyVec) << std::endl;
+	tests << "is equal			" << (testVec == testVec3) << std::endl;
+	tests << "is not equal			" << (testVec != copyVec) << std::endl;
+	tests << "is smaller			" << (testVec2 < testVec3) << std::endl;
+	tests << "is bigger			" << (testVec3 > testVec) << std::endl;
+	tests << "is bigger			" << (testVec2 > testVec) << std::endl;
+	tests << "is smaller or equal		" << (testVec2 <= testVec2) << std::endl;
+	tests << "is smaller or equal		" << (testVec3 <= testVec) << std::endl;
+	tests << "is bigger or equal		" << (copyVec >= testVec) << std::endl;
+	tests << "is bigger or equal		" << (testVec3 >= testVec2) << std::endl;
+
 }
