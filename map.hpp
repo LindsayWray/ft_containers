@@ -49,8 +49,8 @@ namespace ft {
 		}
 
 		void	AddLeaf(int key, node* ptr){
-			if(root == NULL){
-				root = CreateLeaf(key);
+			if(_root == NULL){
+				_root = CreateLeaf(key);
 			}
 			else if(key < ptr->key){
 				if(ptr->left != NULL){

@@ -58,7 +58,8 @@ namespace ft{
 				push_back(val);
 			}
 		};
-		vector(iterator begin, iterator end, const allocator_type& alloc = allocator_type()) : _array(NULL), _size(0), _allocSize(0), _alloc(alloc){
+		template <class InputIterator>
+		vector(InputIterator begin, InputIterator end, const allocator_type& alloc = allocator_type(), typename std::enable_if<!std::is_integral<InputIterator>::value, bool>::type = true) : _array(NULL), _size(0), _allocSize(0), _alloc(alloc){
 			increaseCapacity(end - begin);
 			insert(this->begin(), begin, end);
 		};
@@ -73,7 +74,6 @@ namespace ft{
 		};
 
 		vector& operator=(vector const& original){
-			//std::cout << "size: " << _size << std::endl;
 			for(size_type i = 0; i < _size; i++){
 				_alloc.destroy(&_array[i]);
 			}
@@ -196,12 +196,17 @@ namespace ft{
 		//  ------------  MODIFIERS   ------------
 
 		template <class InputIterator>
-		void assign (InputIterator first, InputIterator last){
+		typename enable_if<!is_integral<InputIterator>::value,void>::type assign (InputIterator first, InputIterator last){
 			this->clear();
+			increaseCapacity(last - first);
 			this->insert(this->end(), first, last);
 		};
 		void assign (size_type n, const value_type& val){
 			this->clear();
+			if (n < _size){
+				increaseCapacity(n);
+				//printf("SIZE is: %d", static_cast<int>(_size));
+			}
 			for(size_type i = 0; i < n; i++){
 				push_back(val);
 			}
@@ -210,6 +215,7 @@ namespace ft{
 		void	push_back(const value_type& val) {
 			if (_size == _allocSize){
 				increaseCapacity();
+				//printf("size is: %d", static_cast<int>(_size));
 			}
 			_alloc.construct(&_array[_size], val);
 			_size++;
@@ -226,7 +232,6 @@ namespace ft{
 				push_back(val);
 			}
 			else{
-				//std::cout << "psssing by\n" << std::endl;
 				value_type temp_val = val;
 				int pos = position - this->begin();
 				if (_size == _allocSize){
@@ -250,7 +255,6 @@ namespace ft{
 				position++;
 			}
 		};
-		//template <class InputIterator, typename std::enable_if<!std::is_integral<InputIterator>::value, bool>::type = true>
 		template <class InputIterator>
 		typename enable_if<!is_integral<InputIterator>::value,void>::type insert (iterator position, InputIterator first, InputIterator last){
 			for(InputIterator it = first; it != last; ++it){

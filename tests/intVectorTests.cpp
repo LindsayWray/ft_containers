@@ -106,6 +106,10 @@ void intVectorTests(std::ofstream& tests){
 	tests << "capacity " << testVec3.capacity() << std::endl;
 	tests << "------------------------------------------------" << std::endl;
 
+
+	// test SFINEA proofness of third constructor
+	ft::vector<int> testVecFaulty (200, 100);
+
 	testVec.resize(10);
 	tests << "original state: ";
 	printVector(testVec, tests);
@@ -130,7 +134,6 @@ void intVectorTests(std::ofstream& tests){
 	printVector(testVec, tests);
 
 
-	tests << "------------------------------------------------" << std::endl;
 
 	tests << "  Erase TESTS\n";
 	tests << "vector contains: ";

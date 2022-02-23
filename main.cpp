@@ -149,4 +149,7 @@ int main(){
 	// int arr[10] = {1,2,3,4,5,6,7,8,9,0};
 	// int* ret = std::find(&arr[0], &arr[9], 6);
 	// std::cout << *ret << std::endl;
+
+
+	std::vector<int> testVecFaulty (200, 100);
 }

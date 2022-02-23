@@ -76,11 +76,11 @@ void stringStackTests(std::ofstream& tests){
 	printStack(copyVec, tests);
 	printStack(testStack, tests);
 
-	std::cout << "rl operators testing\n";
-	std::cout << "is equal			" << (testStack == copyVec) << std::endl;
-	std::cout << "is not equal			" << (testStack != copyVec) << std::endl;
-	std::cout << "is smaller			" << (copyVec < testStack) << std::endl;
-	std::cout << "is bigger			" << (copyVec > testStack) << std::endl;
-	std::cout << "is smaller or equal		" << (copyVec<= testStack) << std::endl;
-	std::cout << "is bigger or equal		" << (testStack >= testStack) << std::endl;
+	tests << "rl operators testing\n";
+	tests << "is equal			" << (testStack == copyVec) << std::endl;
+	tests << "is not equal			" << (testStack != copyVec) << std::endl;
+	tests << "is smaller			" << (copyVec < testStack) << std::endl;
+	tests << "is bigger			" << (copyVec > testStack) << std::endl;
+	tests << "is smaller or equal		" << (copyVec<= testStack) << std::endl;
+	tests << "is bigger or equal		" << (testStack >= testStack) << std::endl;
 }
