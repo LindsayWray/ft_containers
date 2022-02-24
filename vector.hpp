@@ -26,40 +26,20 @@ namespace ft{
 		size_type					_allocSize;
 		allocator_type				_alloc;
 
-		//  ------------    HELPER FUNCTIONS   ------------
-		void increaseCapacity(size_type n){
-			_allocSize = n;
-			try{
-				value_type* _tempArray = _alloc.allocate(_allocSize);
-				for(size_type i = 0; i < _size; i++){
-					_alloc.construct(_tempArray + i, _array[i]);
-					_alloc.destroy(&_array[i]);
-				}
-				_alloc.deallocate(_array, _size);
-				_array = _tempArray;
-			}
-			catch(std::bad_alloc &e){
-				std::cerr << e.what() << std::endl;
-				exit(EXIT_FAILURE);
-			}
-		}
-		void increaseCapacity(){
-			if (_allocSize == 0)
-				_allocSize += 1;
-			else
-				_allocSize *= 2;
-			increaseCapacity(_allocSize);
-		}
 	public:
 		explicit vector(const allocator_type& alloc = allocator_type()) : _array(NULL), _size(0), _allocSize(0), _alloc(alloc){};
-		explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _array(NULL), _size(0), _alloc(alloc){
+		explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _array(NULL), _size(0), _allocSize(0), _alloc(alloc){
 			increaseCapacity(n);					// to emulate the exact capacity like the real vector
 			for(size_type i = 0; i < n; i++){
 				push_back(val);
 			}
 		};
 		template <class InputIterator>
-		vector(InputIterator begin, InputIterator end, const allocator_type& alloc = allocator_type(), typename std::enable_if<!std::is_integral<InputIterator>::value, bool>::type = true) : _array(NULL), _size(0), _allocSize(0), _alloc(alloc){
+		vector(InputIterator begin, InputIterator end, const allocator_type& alloc = allocator_type(),
+				typename std::enable_if<!std::is_integral<InputIterator>::value, bool>::type = true)
+				: _array(NULL), _size(0), _allocSize(0), _alloc(alloc){
+		// vector(InputIterator begin, InputIterator end, const allocator_type& alloc = allocator_type())
+		// 		: _array(NULL), _size(0), _allocSize(0), _alloc(alloc){
 			increaseCapacity(end - begin);
 			insert(this->begin(), begin, end);
 		};
@@ -137,8 +117,8 @@ namespace ft{
 				}
 			}
 			else {
-				while(n > _allocSize)
-					increaseCapacity();
+				if(n > _allocSize)
+					increaseCapacity(n);
 				for(size_type i = _size; i < n; i++) {
 					_alloc.construct(&_array[i], val);
 				}
@@ -203,10 +183,8 @@ namespace ft{
 		};
 		void assign (size_type n, const value_type& val){
 			this->clear();
-			if (n < _size){
-				increaseCapacity(n);
+			increaseCapacity(n);
 				//printf("SIZE is: %d", static_cast<int>(_size));
-			}
 			for(size_type i = 0; i < n; i++){
 				push_back(val);
 			}
@@ -308,6 +286,34 @@ namespace ft{
 		allocator_type get_allocator() const{
 			return _alloc;
 		};
+
+	private:
+		//  ------------    HELPER FUNCTIONS   ------------
+		void increaseCapacity(size_type n){
+			if (n < _allocSize)
+				return;
+			_allocSize = n;
+			try{
+				value_type* _tempArray = _alloc.allocate(_allocSize);
+				for(size_type i = 0; i < _size; i++){
+					_alloc.construct(_tempArray + i, _array[i]);
+					_alloc.destroy(&_array[i]);
+				}
+				_alloc.deallocate(_array, _size);
+				_array = _tempArray;
+			}
+			catch(std::bad_alloc &e){
+				std::cerr << e.what() << std::endl;
+				exit(EXIT_FAILURE);
+			}
+		}
+		void increaseCapacity(){
+			if (_allocSize == 0)
+				_allocSize += 1;
+			else
+				_allocSize *= 2;
+			increaseCapacity(_allocSize);
+		}
 	};
 	
 	// -------------  Non-member function overloads  -----------

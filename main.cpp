@@ -139,7 +139,7 @@ int main(){
 	intStackTests(tests);
 	stringStackTests(tests);
 
-	//mapTests(tests);
+	mapTests(tests);
 
 	//system("leaks containers");
 
@@ -150,6 +150,4 @@ int main(){
 	// int* ret = std::find(&arr[0], &arr[9], 6);
 	// std::cout << *ret << std::endl;
 
-
-	std::vector<int> testVecFaulty (200, 100);
 }

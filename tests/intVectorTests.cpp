@@ -80,10 +80,6 @@ void intVectorTests(std::ofstream& tests){
 	testVec.reserve(1000);
 	tests << "reserve capacity		" << testVec.capacity() << std::endl;
 	
-	// tests << "realvector contains:";
-	// for (ft::vector<int>::iterator it = testVec.begin() ; it != testVec.end(); ++it)
-	// 	tests << ' ' << *it;
-	// tests << '\n';
 
 	testVec.resize(50);
 	tests << "vector contains:";
@@ -107,8 +103,9 @@ void intVectorTests(std::ofstream& tests){
 	tests << "------------------------------------------------" << std::endl;
 
 
-	// test SFINEA proofness of third constructor
-	ft::vector<int> testVecFaulty (200, 100);
+	// test SFINAE proofness of third constructor
+	ft::vector<int> testVecFaulty ("hi", "hello");
+	std::cout << "BACK: " << testVecFaulty.front() << std::endl;
 
 	testVec.resize(10);
 	tests << "original state: ";

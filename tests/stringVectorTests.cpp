@@ -166,6 +166,7 @@ void	stringVectorTests(std::ofstream& tests){
 	tests << "  Assign TESTS\n";
 	std::cout << "vector contains: ";
 	printVectorTerminal(testVec2); //, tests);
+	std::cout << "capacity before resize: " << testVec2.capacity() << std::endl;
 	//testVec.resize(400);
 	//testVec2.resize(400);
 	std::cout << "capacity before assign: " << testVec2.capacity() << std::endl;
