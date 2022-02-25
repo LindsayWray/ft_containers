@@ -157,28 +157,28 @@ void	stringVectorTests(std::ofstream& tests){
 	printVector(testVec, tests);
 	tests << "size after erase: " << testVec.size() << std::endl;
 	testVec.erase((testVec.begin() + 4), (testVec.begin() + 10));
-	tests << "vector contains: ";
+	tests << "vector contains: ";	
 	printVector(testVec, tests);
 	tests << "size after mass erase: " << testVec.size() << std::endl;
 
 
 
 	tests << "  Assign TESTS\n";
-	std::cout << "vector contains: ";
-	printVectorTerminal(testVec2); //, tests);
-	std::cout << "capacity before resize: " << testVec2.capacity() << std::endl;
+	tests << "vector contains: ";
+	printVector(testVec2, tests);
+	tests << "capacity before resize: " << testVec2.capacity() << std::endl;
 	//testVec.resize(400);
 	//testVec2.resize(400);
-	std::cout << "capacity before assign: " << testVec2.capacity() << std::endl;
+	tests << "capacity before assign: " << testVec2.capacity() << std::endl;
 	testVec2.assign(testVec.begin(), testVec.end());
-	printVectorTerminal(testVec); //, tests);
-	std::cout << "vector after assign: ";
-	printVectorTerminal(testVec2); //, tests);
-	std::cout << "capacity after assign: " << testVec2.capacity() << std::endl;
+	printVector(testVec, tests);
+	tests << "vector after assign: ";
+	printVector(testVec2, tests);
+	tests << "capacity after assign: " << testVec2.capacity() << std::endl;
 	testVec2.assign(7, "cats");
-	std::cout << "vector after assign: ";
-	printVectorTerminal(testVec2); //, tests);
-	std::cout << "capacity after assign: " << testVec2.capacity() << std::endl << std::endl;
+	tests << "vector after assign: ";
+	printVector(testVec2, tests);
+	tests << "capacity after assign: " << testVec2.capacity() << std::endl << std::endl;
 
 
 	ft::vector<std::string> copyVec(testVec);

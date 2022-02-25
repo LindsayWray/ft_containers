@@ -171,14 +171,13 @@ namespace ft{
 		};
 
 
-
+ 
 
 		//  ------------  MODIFIERS   ------------
-
 		template <class InputIterator>
 		typename enable_if<!is_integral<InputIterator>::value,void>::type assign (InputIterator first, InputIterator last){
 			this->clear();
-			increaseCapacity(last - first);
+			increaseCapacity(last - first); ///
 			this->insert(this->end(), first, last);
 		};
 		void assign (size_type n, const value_type& val){
@@ -201,7 +200,8 @@ namespace ft{
 
 		void pop_back(){
 			_alloc.destroy(&_array[_size]);
-			_size--;
+			if (_size > 0)
+				_size--;
 		};
 
 		iterator insert(iterator position, const value_type& val){

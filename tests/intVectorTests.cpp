@@ -9,8 +9,6 @@
 	#include <vector>
 	namespace ft = std;
 #else
-	//#include <map.hpp>
-	//#include <stack.hpp>
 	#include "../vector.hpp"
 #endif
 
@@ -105,7 +103,7 @@ void intVectorTests(std::ofstream& tests){
 
 	// test SFINAE proofness of third constructor
 	ft::vector<int> testVecFaulty ("hi", "hello");
-	std::cout << "BACK: " << testVecFaulty.front() << std::endl;
+	tests << "value: " << testVecFaulty.front() << std::endl;
 
 	testVec.resize(10);
 	tests << "original state: ";
@@ -121,14 +119,20 @@ void intVectorTests(std::ofstream& tests){
 	tests << "vector after middle insert: ";
 	printVector(testVec, tests);
 	testVec.insert(iterat, 3, 200);
-	tests << "vector after n inserts: ";
+	std::cout << "vector after n inserts: ";
 	printVector(testVec, tests);
 	testVec.insert(iterat, testVec2.begin(), testVec2.end());
 	tests << "vector after iterator range insert:	";
 	printVector(testVec, tests);
+
 	testVec.pop_back();
 	tests << "vector pop_back:	";
 	printVector(testVec, tests);
+
+
+	ft::vector<int> poptest;
+	std::cout << " is empty: " << poptest.empty() << std::endl;
+	poptest.pop_back();
 
 
 
