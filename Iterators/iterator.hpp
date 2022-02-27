@@ -1,23 +1,31 @@
 #ifndef ITERATOR_HPP
 # define ITERATOR_HPP
 
+# include "bidirectional_iterator.hpp"
+
 namespace ft{
-	template<typename value_type>
-	class iterator{
+	template <class Category, class T, class Distance = std::ptrdiff_t,
+		class Pointer = T*, class Reference = T& >
+	class iterator {
 	public:
-		typedef size_t							size_type;
-		typedef long							difference_type;
-		typedef	value_type*						pointer;
-		typedef	value_type&						reference;
-		typedef std::random_access_iterator_tag	iterator_category;
+		typedef T								value_type;
+		typedef Distance						difference_type;
+		typedef	Pointer							pointer;
+		typedef	Reference						reference;
+		typedef Category						iterator_category;
+
 	private:
 		value_type* 	_ptr;
 		iterator() : _ptr(NULL){};
 	public:
-		
 		iterator(value_type* ptr) : _ptr(ptr){};
 		iterator(iterator const& original) : _ptr(original._ptr){};
 		~iterator(){};
+
+		iterator&	operator=(iterator const& original){
+			this->_ptr = original._ptr;
+			return *this;
+		}
 
 		inline bool operator==(const iterator& rhs) const{ 
 			return this->_ptr == rhs._ptr;
@@ -57,12 +65,12 @@ namespace ft{
 			return copy;
 		}
 		value_type& operator*(){
-			return *_ptr;
+			return *(this->_ptr);
 		}
 		value_type* operator->(){
-			return _ptr;
+			return this->_ptr;
 		}
-		value_type& operator[](size_type index) const{
+		value_type& operator[](difference_type index) const{
 			iterator copy(*this);
 			copy._ptr += index;
 			return *copy._ptr;

@@ -1,6 +1,12 @@
 NAME := containers
 FT_NAME := ft_containers
-HEADERFILES := vector.hpp stack.hpp map.hpp 
+HEADERFILES := 	vector.hpp\
+				stack.hpp\
+				map.hpp\
+				Iterators/iterator.hpp\
+				Iterators/iterator_traits.hpp\
+				Iterators/reverse_iterator.hpp\
+				Iterators/bidirectional_iterator.hpp
 SRCS :=	main.cpp tests/stringVectorTests.cpp tests/intVectorTests.cpp tests/intStackTests.cpp tests/stringStackTests.cpp tests/mapTests.cpp 
 
 FLAGS := -Wall -Wextra -Werror -std=c++98

@@ -1,7 +1,8 @@
 #ifndef MAP_HPP
 # define MAP_HPP
 
-
+# include "Iterators/reverse_iterator.hpp"
+# include "Iterators/bidirectional_iterator.hpp"
 # include "vector.hpp"
 
 namespace ft {
@@ -9,27 +10,25 @@ namespace ft {
 		class Key,
 		class T,
 		class Compare = std::less<Key>,
-		class Alloc = std::allocator<std::pair<const Key, T> >
+		class Alloc = std::allocator<ft::pair<const Key, T> >
 		>
 	class map {
 	public:
-		typedef	Key												key_type;
-		typedef	T												mapped_type;
-		typedef	std::pair<const Key, T>							value_type;
-		typedef	size_t											size_type;
-		typedef	long											difference_type;
-		typedef	Compare											key_compare;
-		typedef	Alloc											allocator_type;
-		typedef	value_type&										reference;
-		typedef	const value_type&								const_reference;
-		//typedef	BidirectionalIterator to value_type			iterator;
-		//typedef	BidirectionalIterator to const value_type	const_iterator;
-		//typedef	std::reverse_iterator<iterator>				reverse_iterator;
-		//typedef	std::reverse_iterator<const_iterator>		const_reverse_iterator;
+		typedef	Key																				key_type;
+		typedef	T																				mapped_type;
+		typedef	ft::pair<const Key, T>															value_type;
+		typedef	size_t																			size_type;
+		typedef	long																			difference_type;
+		typedef	Compare																			key_compare;
+		typedef	Alloc																			allocator_type;
+		typedef	value_type&																		reference;
+		typedef	const value_type&																const_reference;
+		typedef	ft::bidirectional_iterator<std::bidirectional_iterator_tag, value_type>			iterator;
+		typedef	ft::bidirectional_iterator<std::bidirectional_iterator_tag, const value_type>	const_iterator;
+		typedef	ft::reverse_iterator<iterator>													reverse_iterator;
+		typedef	ft::reverse_iterator<const_iterator>											const_reverse_iterator;
 	private:
 		struct node{
-			// key_type	key;
-			// mapped_type	value;
 			value_type*	pair;
 			node*		left;
 			node*		right;
@@ -75,10 +74,6 @@ namespace ft {
 
 		// reverse_iterator rend();
 		// const_reverse_iterator rend() const;
-
-
-
-
 
 
 
@@ -128,7 +123,7 @@ namespace ft {
 
     	// void erase(iterator position);
 		size_type erase (const key_type& key){
-			removeNode(findNode(key, this->_root)->pair, this->_root);
+			removeNode(key, this->_root);
 			return 1000;
 		};
      	// void erase(iterator first, iterator last);
@@ -186,16 +181,12 @@ namespace ft {
 			node* newNode = new node;
 			try{
 				newNode->pair = _alloc.allocate(1);
-				this->_alloc.construct(newNode->pair, std::make_pair(key, value));
-				// newNode->pair->first = key;
-				// newNode->pair->second = value;
+				this->_alloc.construct(newNode->pair, ft::make_pair(key, value));
 			}
 			catch(std::bad_alloc &e){
 				std::cerr << e.what() << std::endl;
 				exit(EXIT_FAILURE);
 			}
-			// newNode->key = key;
-			// newNode->value = value;
 			newNode->left = NULL;
 			newNode->right = NULL;
 
@@ -209,22 +200,19 @@ namespace ft {
 				_root = CreateLeaf(key, value);
 			else if(key < ptr->pair->first){
 				if(ptr->left != NULL)
-					addLeaf(key, ptr->left);
+					return addLeaf(key, ptr->left, value);
 				else
 					ptr->left = CreateLeaf(key, value);
 			}
 			else if(key > ptr->pair->first){
 				if(ptr->right != NULL)
-					addLeaf(key, ptr->right);
+					return addLeaf(key, ptr->right, value);
 				else
 					ptr->right = CreateLeaf(key, value);
 			}
-			else{
+			else
 				hasBeenAdded= false;
-				std::cout << "The key "<< key << " has already been added to the tree" << std::endl;
-			}
 			return hasBeenAdded;
-			
 		}
 
 		node*	findNode(const key_type& key, node* ptr){
@@ -242,6 +230,19 @@ namespace ft {
 				return NULL;
 		}
 
+		node*		FindSmallest(node* ptr){
+			if(ptr->left != NULL)
+				return FindSmallest(ptr->left);
+			else
+				return ptr;
+		}
+
+		node*	findParent(node* ptr, node* begin){
+			if(begin->left != ptr)
+				findParent(ptr, begin->left);
+			return ptr;
+		}
+
 		void	removeSubtree(node* ptr){
 			if(ptr != NULL){
 				if(ptr->left != NULL)
@@ -249,7 +250,7 @@ namespace ft {
 			if(ptr->right != NULL)
 				removeSubtree(ptr->right);
 
-			std::cout << "Deleting the node containing the key " << ptr->pair->first << std::endl;
+			//std::cout << "Deleting the node containing the key " << ptr->pair->first << std::endl;
 			this->_alloc.destroy(ptr->pair);
 			_alloc.deallocate(ptr->pair, 1);
 			delete ptr;
@@ -257,23 +258,23 @@ namespace ft {
 		}
 
 
-		void	removeNode(value_type* val, node* parent){
+		void	removeNode(key_type key, node* parent){
 			if(this->_root != NULL){
-				if(this->_root->pair == val)
+				if(this->_root->pair->first == key)
 					RemoveRootMatch();
 				else{
-					if(val->first < parent->pair->first && parent->left != NULL){
-						parent->left->pair->first == val->first ?
+					if(key < parent->pair->first && parent->left != NULL){
+						parent->left->pair->first == key ?
 						RemoveMatch(parent, parent->left, true)	:
-						removeNode(val, parent->left);
+						removeNode(key, parent->left);
 					}
-					else if(val->first > parent->pair->first && parent->right != NULL){
-						parent->right->pair->first == val->first ?
+					else if(key > parent->pair->first && parent->right != NULL){
+						parent->right->pair->first == key ?
 						RemoveMatch(parent, parent->right, false)	:
-						removeNode(val, parent->right);
+						removeNode(key, parent->right);
 					}
 					else
-						std::cout << "The key " << val->first << " was not found in this tree\n";
+						std::cout << "The key " << key << " was not found in this tree\n";
 				}
 			}
 			else
@@ -284,7 +285,7 @@ namespace ft {
 			if(this->_root != NULL){
 				node* delPtr = this->_root;
 				key_type rootKey = this->_root->pair->first;
-				key_type smallestInRightSubtree;
+				node* smallestInRightSubtree;
 
 				// case 0  - root node has zero children
 				if(this->_root->left == NULL && this->_root->right == NULL){
@@ -313,9 +314,16 @@ namespace ft {
 
 				// Case 2 - root node has two children
 				else{
-					//smallestInRightSubtree = FindSmallestPrivate(this->_root->right);
-					removeNode(smallestInRightSubtree, this->_root);
-					this->_root->pair = smallestInRightSubtree;
+					smallestInRightSubtree = FindSmallest(this->_root->right);
+					node* parent = findParent(smallestInRightSubtree, this->_root);
+					if (smallestInRightSubtree->left != NULL)
+						parent->left = smallestInRightSubtree->left;
+					else
+						parent->left = NULL;
+					smallestInRightSubtree->left = this->_root->left;
+					smallestInRightSubtree->right = this->_root->right;
+
+					destroyNode(this->_root);
 					std::cout	<< "The root key containing key " << rootKey <<
 								" was overwritten with key " << this->_root->pair->first << std::endl;
 				}
@@ -328,7 +336,7 @@ namespace ft {
 				if(this->_root != NULL){
 					node* delPtr;
 					key_type matchKey = match->pair->first;
-					key_type smallestInRightSubtree;
+					node* smallestInRightSubtree;
 
 					//Case 0 0 children
 					if(match->left == NULL && match->right == NULL){
@@ -348,8 +356,7 @@ namespace ft {
 						delete delPtr;
 						std::cout << "the node containing key " << matchKey << " was removed\n";
 					}
-
-						else if(match->left != NULL && match->right == NULL){
+					else if(match->left != NULL && match->right == NULL){
 						left == true ? parent->left = match->left : parent->right = match->left;
 						match->left = NULL;
 						delPtr = match;
@@ -359,13 +366,46 @@ namespace ft {
 
 					// Case 2 - node has 2 children
 					else{
-						smallestInRightSubtree = FindSmallestPrivate(match->right);
-						removeNode(smallestInRightSubtree, match);
-						match->pair.first = smallestInRightSubtree;
+						smallestInRightSubtree = FindSmallest(match->right);
+						node* parent = findParent(smallestInRightSubtree, this->_root);
+						if (smallestInRightSubtree->left != NULL)
+							parent->left = smallestInRightSubtree->left;
+						else
+							parent->left = NULL;
+						smallestInRightSubtree->left = match->left;
+						smallestInRightSubtree->right = match->right;
+
+						destroyNode(match);
+						std::cout	<< "The root key containing key " << matchKey <<
+									" was overwritten with key " << match->pair->first << std::endl;
 					}
 				}
 				else
 					std::cout << "Can not remove match. The tree is empty\n";
+			}
+
+			void	destroyNode(node* ptr){
+				std::cout << "Deleting the node containing the key " << ptr->pair->first << std::endl;
+				this->_alloc.destroy(ptr->pair);
+				_alloc.deallocate(ptr->pair, 1);
+				delete ptr;
+			}
+			void	printInOrder(node* ptr){
+				if(this->_root != NULL){
+					if(ptr->left != NULL)
+						printInOrder(ptr->left);
+					std::cout << "key: " << ptr->pair->first << "  with value: " << ptr->pair->second << std::endl;
+					if(ptr->right != NULL)
+						printInOrder(ptr->right);
+				}
+				else
+					std::cout << "The tree is empty\n" << std::endl;
+			}
+
+
+		public:
+			void	printInOrder(){
+				printInOrder(this->_root);
 			}
 		};
 	}

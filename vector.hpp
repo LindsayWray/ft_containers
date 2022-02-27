@@ -12,13 +12,13 @@ namespace ft{
 	template<class T, class Alloc = std::allocator<T> >
 	class vector{
 	public:
-		typedef size_t							size_type;
-		typedef Alloc							allocator_type;
-		typedef ft::iterator<T>					iterator;
-		typedef ft::reverse_iterator<T>			reverse_iterator;
-		typedef const ft::iterator<T>			const_iterator;
-		typedef	T								value_type;
-		typedef long							difference_type;
+		typedef size_t													size_type;
+		typedef Alloc													allocator_type;
+		typedef ft::iterator<std::random_access_iterator_tag, T>		iterator;
+		typedef ft::reverse_iterator<iterator>							reverse_iterator;
+		typedef const ft::iterator<std::random_access_iterator_tag,T>	const_iterator;
+		typedef	T														value_type;
+		typedef std::ptrdiff_t											difference_type;
 
 	private:
 		value_type*					_array;
@@ -88,13 +88,13 @@ namespace ft{
 			return const_iterator(&_array[_size]);
 		};
 		reverse_iterator rbegin() _NOEXCEPT {
-			return reverse_iterator(&_array[_size - 1]);
+			return reverse_iterator(this->end() - 1);
 		};
 		// const_iterator rbegin() const _NOEXCEPT {
 			
 		// };
 		reverse_iterator rend(){
-			return reverse_iterator(&_array[0] - 1);
+			return reverse_iterator(this->begin() - 1);
 		};
 		// const_iterator rend() const{
 
@@ -343,7 +343,7 @@ namespace ft{
 	}
 
 	template <class T, class Alloc>
-	bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
+	bool operator<=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
 		return !(rhs < lhs);
 	}
 
@@ -353,7 +353,7 @@ namespace ft{
 	}
 
 	template <class T, class Alloc>
-	bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
+	bool operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
 		return !(lhs < rhs);
 	}
 

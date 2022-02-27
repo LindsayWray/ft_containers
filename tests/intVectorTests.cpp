@@ -119,7 +119,7 @@ void intVectorTests(std::ofstream& tests){
 	tests << "vector after middle insert: ";
 	printVector(testVec, tests);
 	testVec.insert(iterat, 3, 200);
-	std::cout << "vector after n inserts: ";
+	tests << "vector after n inserts: ";
 	printVector(testVec, tests);
 	testVec.insert(iterat, testVec2.begin(), testVec2.end());
 	tests << "vector after iterator range insert:	";
@@ -131,7 +131,7 @@ void intVectorTests(std::ofstream& tests){
 
 
 	ft::vector<int> poptest;
-	std::cout << " is empty: " << poptest.empty() << std::endl;
+	tests << " is empty: " << poptest.empty() << std::endl;
 	poptest.pop_back();
 
 
@@ -294,6 +294,7 @@ void intVectorTests(std::ofstream& tests){
 	tests << "dereference and increment	" << *++rite << std::endl;
 	tests << "increment with five		" << *(rite + 5) << std::endl;
 	tests << "increment with eight		" << *(8 + rite) << std::endl;
+	tests << "subtract riterators		" << rite - testVec.rend() << std::endl;
 
 
 	printVector(testVec, tests);

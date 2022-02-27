@@ -11,8 +11,6 @@
 	namespace ft = std;
 #else
 	#include "../map.hpp"
-	//#include <stack.hpp>
-	//#include "../vector.hpp"
 #endif
 
 
@@ -47,23 +45,75 @@ void mapTests(std::ofstream& tests){
 	std::cout << std::boolalpha << "Is map empty: " << testMap.empty() << std::endl;
 
 	// Create a map of three (strings, int) pairs
+	testMap["K"] = 100;
 	testMap["A"] = 10;
-	testMap["B"] = 15;
+	testMap["P"] = 22;
+	testMap["R"] = 12;
+	testMap["V"] = 31;
 	testMap["C"] = 20;
-	std::cout << "Value B is: " << testMap["B"] << std::endl;
+	testMap["N"] = 28;
+	testMap["I"] = 1;
+	testMap["D"] = 3;
+	testMap["T"] = 14;
+	testMap["E"] = 12;
+	testMap["G"] = 14;
+	testMap["Q"] = 21;
+	testMap["Z"] = 45;
+	testMap["L"] = 45;
+	testMap["H"] = 31;
+	testMap["J"] = 7;
+	testMap["M"] = 14;
+	testMap["O"] = 45;
+	testMap["F"] = 30;
+	testMap["S"] = 30;
+	testMap["B"] = 15;
+	testMap["U"] = 21;
+	testMap["W"] = 7;
+
+
+
+	std::cout << "Value O is: " << testMap["O"] << std::endl;
 	std::cout << "The map size is: " << testMap.size() << std::endl;
 	std::cout << "The max size is: " << testMap.max_size() << std::endl;
 
 
-
-
-
-
 	 // first insert function version (single parameter):
-	testMap.insert(std::pair<std::string,int>("X", 100));
-	testMap.insert(std::pair<std::string,int>("Y", 200));
+	testMap.insert(ft::pair<std::string,int>("X", 100));
+	testMap.insert(ft::pair<std::string,int>("Y", 200));
+	std::cout << "Value X is: " << testMap["X"] << std::endl;
+	std::cout << "Value Y is: " << testMap["Y"] << std::endl;
 
-	testMap.erase("B");
+	testMap.erase("M");
+
+	//			testMap.printInOrder();
+
+
+
+	// PAIR CONSTRUCTOR TESTS
+	ft::pair <std::string,double> product1;                     // default constructor
+	ft::pair <std::string,double> product2 ("tomatoes",2.30);   // value init
+	ft::pair <std::string,double> product3 (product2);          // copy constructor
+
+	product1 = ft::make_pair(std::string("lightbulbs"),0.99);   // using make_pair (move)
+
+	product2.first = "shoes";                  // the type of first is string
+	product2.second = 39.90;                   // the type of second is double
+
+	std::cout << "The price of " << product1.first << " is $" << product1.second << '\n';
+	std::cout << "The price of " << product2.first << " is $" << product2.second << '\n';
+	std::cout << "The price of " << product3.first << " is $" << product3.second << '\n';
+
+	// PAIR RELATIONAL COMPARE
+	std::cout << std::boolalpha << "is equal		" << (product1 == product2) << std::endl;
+	ft::pair <std::string,double> product4 (product2);
+	std::cout << std::boolalpha << "is equal		" << (product4 == product2) << std::endl;
+	std::cout << std::boolalpha << "not equal		" << (product3 != product2) << std::endl;
+	std::cout << std::boolalpha << "is smaller		" << (product2 < product1) << std::endl;
+	std::cout << std::boolalpha << "is smaller or equal	" << (product4 <= product2) << std::endl;
+	std::cout << std::boolalpha << "is bigger		" << (product1 > product1) << std::endl;
+	std::cout << std::boolalpha << "is bigger or equal	" << (product2 >= product1) << std::endl;
+
+
 
 	// std::pair<std::map<std::string,int>::iterator,bool> ret;
 	// ret = testMap.insert(std::pair<std::string,int>("X", 500));
