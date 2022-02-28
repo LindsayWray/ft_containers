@@ -12,10 +12,10 @@ namespace ft{
 		typedef	Reference						reference;
 		typedef Category						iterator_category;
 	private:
-		value_type* 	_ptr;
+		node* 	_ptr;
 		bidirectional_iterator() : _ptr(NULL){};
 	public:
-		bidirectional_iterator(value_type* ptr) : _ptr(ptr){};
+		bidirectional_iterator(node* ptr) : _ptr(ptr){};
 		bidirectional_iterator(bidirectional_iterator const& original) : _ptr(original._ptr){};
 		~bidirectional_iterator(){};
 

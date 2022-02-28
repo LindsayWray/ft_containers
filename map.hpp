@@ -32,6 +32,7 @@ namespace ft {
 			value_type*	pair;
 			node*		left;
 			node*		right;
+			node*		parent;
 		};
 
 		size_type			_size;
@@ -63,7 +64,9 @@ namespace ft {
 
 
 		//  ------------  ITERATOR FUNCTIONS  ------------
-		// iterator begin();
+		iterator begin(){
+			return iterator(FindSmallest());
+		};
 		// const_iterator begin() const;
 
 		// iterator end();
@@ -74,6 +77,9 @@ namespace ft {
 
 		// reverse_iterator rend();
 		// const_reverse_iterator rend() const;
+
+
+
 
 
 
@@ -123,8 +129,9 @@ namespace ft {
 
     	// void erase(iterator position);
 		size_type erase (const key_type& key){
+			size_t size = _size;
 			removeNode(key, this->_root);
-			return 1000;
+			return size - _size;
 		};
      	// void erase(iterator first, iterator last);
 
@@ -177,7 +184,7 @@ namespace ft {
 	private:
 		//  ------------    HELPER FUNCTIONS   ------------
 		//node* CreateLeaf(const key_type& key, mapped_type value = mapped_type()){
-		node* CreateLeaf(const key_type& key, mapped_type value){
+		node* CreateLeaf(const key_type& key, mapped_type value, node* ptr){
 			node* newNode = new node;
 			try{
 				newNode->pair = _alloc.allocate(1);
@@ -189,6 +196,7 @@ namespace ft {
 			}
 			newNode->left = NULL;
 			newNode->right = NULL;
+			newNode->parent = ptr;
 
 			this->_size++;
 			return newNode;
@@ -197,18 +205,18 @@ namespace ft {
 		bool	addLeaf(const key_type& key, node* ptr, mapped_type value = mapped_type()){
 			bool hasBeenAdded = true;
 			if(_root == NULL)
-				_root = CreateLeaf(key, value);
+				_root = CreateLeaf(key, value, NULL);
 			else if(key < ptr->pair->first){
 				if(ptr->left != NULL)
 					return addLeaf(key, ptr->left, value);
 				else
-					ptr->left = CreateLeaf(key, value);
+					ptr->left = CreateLeaf(key, value, ptr);
 			}
 			else if(key > ptr->pair->first){
 				if(ptr->right != NULL)
 					return addLeaf(key, ptr->right, value);
 				else
-					ptr->right = CreateLeaf(key, value);
+					ptr->right = CreateLeaf(key, value, ptr);
 			}
 			else
 				hasBeenAdded= false;
@@ -237,11 +245,11 @@ namespace ft {
 				return ptr;
 		}
 
-		node*	findParent(node* ptr, node* begin){
-			if(begin->left != ptr)
-				findParent(ptr, begin->left);
-			return ptr;
-		}
+		// node*	findParent(node* ptr, node* begin){
+		// 	if(begin->left != ptr)
+		// 		findParent(ptr, begin->left);
+		// 	return ptr;
+		// }
 
 		void	removeSubtree(node* ptr){
 			if(ptr != NULL){
@@ -290,14 +298,13 @@ namespace ft {
 				// case 0  - root node has zero children
 				if(this->_root->left == NULL && this->_root->right == NULL){
 					this->_root = NULL;
-					delete delPtr;
+					destroyNode(delPtr);
 				}
 
 				// case 1 - root node has one child
 				else if(this->_root->left == NULL && this->_root->right != NULL){
 					this->_root = this->_root->right;
-					delPtr->right = NULL;  // perhaps optional, but is extra save
-					delete delPtr;
+					destroyNode(delPtr);
 					std::cout	<< "The root node with key " << rootKey 
 								<< " was deleted. The new root contains key "
 								<< this->_root->pair->first << std::endl;
@@ -305,8 +312,7 @@ namespace ft {
 
 				else if(this->_root->left != NULL && this->_root->right == NULL){
 					this->_root = this->_root->left;
-					delPtr->left = NULL;  // perhaps optional, but is extra save
-					delete delPtr;
+					destroyNode(delPtr);
 					std::cout	<< "The root node with key " << rootKey 
 								<< " was deleted. The new root contains key "
 								<< this->_root->pair->first << std::endl;
@@ -315,15 +321,17 @@ namespace ft {
 				// Case 2 - root node has two children
 				else{
 					smallestInRightSubtree = FindSmallest(this->_root->right);
-					node* parent = findParent(smallestInRightSubtree, this->_root);
-					if (smallestInRightSubtree->left != NULL)
-						parent->left = smallestInRightSubtree->left;
+					//node* parent = findParent(smallestInRightSubtree, this->_root);
+					if(smallestInRightSubtree->parent == this->_root)
+						smallestInRightSubtree->parent->right = smallestInRightSubtree->right;
 					else
-						parent->left = NULL;
+						smallestInRightSubtree->parent->left = smallestInRightSubtree->right;
 					smallestInRightSubtree->left = this->_root->left;
 					smallestInRightSubtree->right = this->_root->right;
+					smallestInRightSubtree->parent = NULL;
 
-					destroyNode(this->_root);
+					this->_root = smallestInRightSubtree;
+					destroyNode(delPtr);
 					std::cout	<< "The root key containing key " << rootKey <<
 								" was overwritten with key " << this->_root->pair->first << std::endl;
 				}
@@ -334,17 +342,15 @@ namespace ft {
 
 			void	RemoveMatch(node* parent, node* match, bool left){
 				if(this->_root != NULL){
-					node* delPtr;
 					key_type matchKey = match->pair->first;
 					node* smallestInRightSubtree;
 
 					//Case 0 0 children
 					if(match->left == NULL && match->right == NULL){
-						delPtr = match;
 						left == true ? parent->left = NULL : parent->right = NULL;
 
 						//more cleaning
-						delete delPtr;
+						destroyNode(match);
 						std::cout << "the node containing key " << matchKey << " was removed\n";
 					}
 
@@ -352,28 +358,27 @@ namespace ft {
 					else if(match->left == NULL && match->right != NULL){
 						left == true ? parent->left = match->right : parent->right = match->right;
 						match->right = NULL;
-						delPtr = match;
-						delete delPtr;
+						destroyNode(match);	
 						std::cout << "the node containing key " << matchKey << " was removed\n";
 					}
 					else if(match->left != NULL && match->right == NULL){
 						left == true ? parent->left = match->left : parent->right = match->left;
 						match->left = NULL;
-						delPtr = match;
-						delete delPtr;
+						destroyNode(match);		
 						std::cout << "the node containing key " << matchKey << " was removed\n";
 					}
 
 					// Case 2 - node has 2 children
 					else{
 						smallestInRightSubtree = FindSmallest(match->right);
-						node* parent = findParent(smallestInRightSubtree, this->_root);
+						//node* parent = findParent(smallestInRightSubtree, this->_root);
 						if (smallestInRightSubtree->left != NULL)
-							parent->left = smallestInRightSubtree->left;
+							smallestInRightSubtree->parent->left = smallestInRightSubtree->left;
 						else
-							parent->left = NULL;
+							smallestInRightSubtree->parent->left = NULL;
 						smallestInRightSubtree->left = match->left;
 						smallestInRightSubtree->right = match->right;
+						smallestInRightSubtree->parent = match->parent;
 
 						destroyNode(match);
 						std::cout	<< "The root key containing key " << matchKey <<
@@ -389,6 +394,7 @@ namespace ft {
 				this->_alloc.destroy(ptr->pair);
 				_alloc.deallocate(ptr->pair, 1);
 				delete ptr;
+				this->_size--;
 			}
 			void	printInOrder(node* ptr){
 				if(this->_root != NULL){

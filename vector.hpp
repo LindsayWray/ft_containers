@@ -12,13 +12,18 @@ namespace ft{
 	template<class T, class Alloc = std::allocator<T> >
 	class vector{
 	public:
-		typedef size_t													size_type;
-		typedef Alloc													allocator_type;
-		typedef ft::iterator<std::random_access_iterator_tag, T>		iterator;
-		typedef ft::reverse_iterator<iterator>							reverse_iterator;
-		typedef const ft::iterator<std::random_access_iterator_tag,T>	const_iterator;
 		typedef	T														value_type;
+		typedef Alloc													allocator_type;
+		typedef typename allocator_type::reference						reference;
+		typedef typename allocator_type::const_reference				const_reference;
+		typedef typename allocator_type::pointer						pointer;
+		typedef typename allocator_type::const_pointer					const_pointer;
+		typedef ft::iterator<std::random_access_iterator_tag, T>		iterator;
+		typedef const ft::iterator<std::random_access_iterator_tag,T>	const_iterator;
+		typedef ft::reverse_iterator<iterator>							reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 		typedef std::ptrdiff_t											difference_type;
+		typedef size_t													size_type;
 
 	private:
 		value_type*					_array;
@@ -38,8 +43,6 @@ namespace ft{
 		vector(InputIterator begin, InputIterator end, const allocator_type& alloc = allocator_type(),
 				typename std::enable_if<!std::is_integral<InputIterator>::value, bool>::type = true)
 				: _array(NULL), _size(0), _allocSize(0), _alloc(alloc){
-		// vector(InputIterator begin, InputIterator end, const allocator_type& alloc = allocator_type())
-		// 		: _array(NULL), _size(0), _allocSize(0), _alloc(alloc){
 			increaseCapacity(end - begin);
 			insert(this->begin(), begin, end);
 		};
@@ -81,26 +84,24 @@ namespace ft{
 		const_iterator begin() const _NOEXCEPT {
 			return const_iterator(&_array[0]);
 		};
-		iterator end(){
+		iterator end() _NOEXCEPT {
 			return iterator(&_array[_size]);
 		};
-		const_iterator end() const{
+		const_iterator end() const _NOEXCEPT {
 			return const_iterator(&_array[_size]);
 		};
 		reverse_iterator rbegin() _NOEXCEPT {
 			return reverse_iterator(this->end() - 1);
 		};
-		// const_iterator rbegin() const _NOEXCEPT {
-			
-		// };
-		reverse_iterator rend(){
+		const_reverse_iterator rbegin() const _NOEXCEPT {
+			return const_reverse_iterator(this->end() - 1);
+		};
+		reverse_iterator rend() _NOEXCEPT {
 			return reverse_iterator(this->begin() - 1);
 		};
-		// const_iterator rend() const{
-
-		// };
-
-
+		const_reverse_iterator rend() const _NOEXCEPT {
+			return const_reverse_iterator(this->begin() - 1);
+		};
 
 
 		//  ------------  CAPACITY  ------------ 
@@ -183,7 +184,6 @@ namespace ft{
 		void assign (size_type n, const value_type& val){
 			this->clear();
 			increaseCapacity(n);
-				//printf("SIZE is: %d", static_cast<int>(_size));
 			for(size_type i = 0; i < n; i++){
 				push_back(val);
 			}
@@ -192,7 +192,6 @@ namespace ft{
 		void	push_back(const value_type& val) {
 			if (_size == _allocSize){
 				increaseCapacity();
-				//printf("size is: %d", static_cast<int>(_size));
 			}
 			_alloc.construct(&_array[_size], val);
 			_size++;
