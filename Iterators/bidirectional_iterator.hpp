@@ -1,6 +1,8 @@
 #ifndef BIDIRECTIONAL_ITERATOR_HPP
 # define BIDIRECTIONAL_ITERATOR_HPP
 
+//# include "../map.hpp"
+
 namespace ft{
 	template <class Category, class T, class Distance = std::ptrdiff_t,
 		class Pointer = T*, class Reference = T& >
@@ -12,10 +14,10 @@ namespace ft{
 		typedef	Reference						reference;
 		typedef Category						iterator_category;
 	private:
-		node* 	_ptr;
+		value_type* 	_ptr;
 		bidirectional_iterator() : _ptr(NULL){};
 	public:
-		bidirectional_iterator(node* ptr) : _ptr(ptr){};
+		bidirectional_iterator(value_type* ptr) : _ptr(ptr){};
 		bidirectional_iterator(bidirectional_iterator const& original) : _ptr(original._ptr){};
 		~bidirectional_iterator(){};
 

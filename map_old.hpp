@@ -5,8 +5,6 @@
 # include "Iterators/bidirectional_iterator.hpp"
 # include "vector.hpp"
 
-# include "Btree.hpp"
-
 namespace ft {
 	template <
 		class Key,
@@ -37,16 +35,15 @@ namespace ft {
 		// 	node*		parent;
 		// };
 
-		Btree				tree;
 		size_type			_size;
-		// node*				_root;
+		node*				_root;
 		allocator_type		_alloc;
 		key_compare			_comp_func;
 
 
 	public:
 		explicit map (const key_compare& comp = key_compare(),
-			const allocator_type& alloc = allocator_type()) : tree<value_type>(), _size(0), _alloc(alloc), _comp_func(comp){};
+			const allocator_type& alloc = allocator_type()) : _size(0), _root(NULL), _alloc(alloc), _comp_func(comp){};
 
 		// template <class InputIterator>
 		// map (InputIterator first, InputIterator last,
@@ -55,7 +52,7 @@ namespace ft {
 		
 		// map (const map& original);
 		~map(){
-			tree.removeSubtree;
+			removeSubtree(this->_root);
 		};
 
 		//map& operator= (const map& original);
@@ -67,14 +64,14 @@ namespace ft {
 
 
 		//  ------------  ITERATOR FUNCTIONS  ------------
-								// iterator begin(){
-								// 	return iterator(FindSmallest());
-								// };
-								// // const_iterator begin() const;
+		iterator begin(){
+			return iterator(FindSmallest());
+		};
+		// const_iterator begin() const;
 
-								// iterator end(){
-								// 	return NULL;
-								// }
+		iterator end(){
+			return NULL;
+		}
 		// const_iterator end() const;
 
 		// reverse_iterator rbegin();
@@ -89,20 +86,20 @@ namespace ft {
 
 
 		//  ------------  CAPACITY  ------------
-						// bool empty() const _NOEXCEPT{
-						// 	if (this->_size == 0)
-						// 		return true;
-						// 	return false;
-						// };
-						
-						// size_type size() const _NOEXCEPT{
-						// 	return this->_size;
-						// };
-						
-						// size_type max_size() const _NOEXCEPT{
-						// 	return _alloc.max_size() / 2;
-						// 	//return std::numeric_limits<size_type>::max() / sizeof(value_type);
-						// };
+		bool empty() const _NOEXCEPT{
+			if (this->_size == 0)
+				return true;
+			return false;
+		};
+		
+		size_type size() const _NOEXCEPT{
+			return this->_size;
+		};
+		
+		size_type max_size() const _NOEXCEPT{
+			return _alloc.max_size() / 2;
+			//return std::numeric_limits<size_type>::max() / sizeof(value_type);
+		};
 
 
 
@@ -112,10 +109,10 @@ namespace ft {
 
 
 		//  ------------  ELEMENT ACCESS   ------------
-					// mapped_type& operator[] (const key_type& key) {	//look into exceptions
-					// 	addLeaf(key, this->_root);
-					// 	return findNode(key, this->_root)->pair->second;
-					// };
+		mapped_type& operator[] (const key_type& key) {	//look into exceptions
+			addLeaf(key, this->_root);
+			return findNode(key, this->_root)->pair->second;
+		};
 
 
 
@@ -124,20 +121,20 @@ namespace ft {
 
 		//  ------------  MODIFIERS   ------------
 		// pair<iterator,bool> insert (const value_type& val)
-					// bool insert(const value_type& val){  // first try without iterator
-					// 	return addLeaf(val.first, this->_root, val.second);
-					// };
+		bool insert(const value_type& val){  // first try without iterator
+			return addLeaf(val.first, this->_root, val.second);
+		};
 
 		// iterator insert(iterator position, const value_type& val);
 		// template <class InputIterator>
   		// void insert(InputIterator first, InputIterator last);
 
     	// void erase(iterator position);
-						// size_type erase (const key_type& key){
-						// 	size_t size = _size;
-						// 	removeNode(key, this->_root);
-						// 	return size - _size;
-						// };
+		size_type erase (const key_type& key){
+			size_t size = _size;
+			removeNode(key, this->_root);
+			return size - _size;
+		};
      	// void erase(iterator first, iterator last);
 
 		//void swap(map& x);
@@ -183,16 +180,6 @@ namespace ft {
 
 		//  ------------  ALLOCATOR   ------------
 		// allocator_type get_allocator() const;
-
-
-
-
-
-
-
-
-
-
 
 
 

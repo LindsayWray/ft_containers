@@ -3,6 +3,7 @@ FT_NAME := ft_containers
 HEADERFILES := 	vector.hpp\
 				stack.hpp\
 				map.hpp\
+				Btree.hpp\
 				Iterators/iterator.hpp\
 				Iterators/iterator_traits.hpp\
 				Iterators/reverse_iterator.hpp\
