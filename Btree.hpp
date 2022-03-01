@@ -1,27 +1,32 @@
 #ifndef BTREE_HPP
 # define BTREE_HPP
 
-#include "map.hpp"
-
-class MAP
-
 namespace ft {
-	template<class T>
+	template<class T, class Alloc = std::allocator<T> >
 	class Btree {
 	public:
-		typedef T 	value_type;
+		typedef T								pair_type;
+		typedef typename pair_type::first_type	key_type;
+		typedef typename pair_type::second_type	mapped_type;
+		typedef	Alloc							allocator_type;
+		typedef	size_t							size_type;
 
 		struct node{
-			value_type*		pair;
+			pair_type*		pair;
 			node*			left;
 			node*			right;
 			node*			parent;
 		};
 
-		node*		_root;
+		node*				_root;
+		allocator_type		_alloc;
+		size_type			_size;
 
-		Btree() : _root(NULL) {};
+		Btree(allocator_type alloc) : _root(NULL), _alloc(alloc), _size(0) {};
 
+		size_type	getSize() const{
+			return this->_size;
+		}
 
 		node* CreateLeaf(const key_type& key, mapped_type value, node* ptr){
 			node* newNode = new node;
@@ -41,7 +46,11 @@ namespace ft {
 			return newNode;
 		}
 
-		bool	addLeaf(const key_type& key, node* ptr, mapped_type value = mapped_type()){
+		bool	addLeaf(const key_type& key, mapped_type value = mapped_type()){
+			return addLeaf(key, this->_root, value);
+		}
+
+		bool	addLeaf(const key_type& key, node* ptr, mapped_type value){
 			bool hasBeenAdded = true;
 			if(_root == NULL)
 				_root = CreateLeaf(key, value, NULL);
@@ -60,6 +69,10 @@ namespace ft {
 			else
 				hasBeenAdded= false;
 			return hasBeenAdded;
+		}
+
+		node*	findNode(const key_type& key){
+			return findNode(key, this->_root);
 		}
 
 		node*	findNode(const key_type& key, node* ptr){
@@ -90,8 +103,8 @@ namespace ft {
 		// 	return ptr;
 		// }
 
-		void	removeSubtree(){
-			removeSubtree(this_root);
+		void	removeTree(){
+			removeSubtree(this->_root);
 		}
 
 		void	removeSubtree(node* ptr){
@@ -108,6 +121,9 @@ namespace ft {
 			}
 		}
 
+		void	removeNode(const key_type& key){
+			removeNode(key, this->_root);
+		}
 
 		void	removeNode(key_type key, node* parent){
 			if(this->_root != NULL){
