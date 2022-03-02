@@ -44,7 +44,8 @@ void mapTests(std::ofstream& tests){
 
 	std::cout << std::boolalpha << "Is map empty: " << testMap.empty() << std::endl;
 
-	//Create a map of (strings, int) pairs
+	// Create a map of (strings, int) pairs
+	// using operator[] with non-existent key always performs an insert
 	testMap["K"] = 100;
 	testMap["A"] = 10;
 	testMap["P"] = 22;
@@ -75,17 +76,19 @@ void mapTests(std::ofstream& tests){
 	std::cout << "Value O is: " << testMap["O"] << std::endl;
 	std::cout << "The map size is: " << testMap.size() << std::endl;
 	std::cout << "The max size is: " << testMap.max_size() << std::endl;
-
+	std::cout << "Value A before: " << testMap["A"] << std::endl;
+	testMap["A"] = 25;  // update an existing value
+	std::cout << "Value A after: " << testMap["A"] << std::endl;
 
 		// first insert function version (single parameter):
 	testMap.insert(ft::pair<std::string,int>("X", 100));
 	testMap.insert(ft::pair<std::string,int>("Y", 200));
-	std::cout << "Value X is: " << testMap["X"] << std::endl;
+	std::cout << "Value X is: " << testMap["X"] << std::endl; // insert a new value
 	std::cout << "Value Y is: " << testMap["Y"] << std::endl;
 
 	testMap.erase("M");
 
-	//			testMap.printInOrder();
+	//	testMap.printInOrder();
 
 
 
@@ -115,6 +118,38 @@ void mapTests(std::ofstream& tests){
 
 
 
+	//-------------------------------------------------------------------------------------------------------
+
+
+	std::cout << "\n--- MAP ITERATOR TESTS --" << std::endl;
+	ft::map<std::string, int>::iterator it = testMap.begin();
+	ft::pair <std::string, int> testPair = *it;
+	std::cout << "points to key: " << it->first << std::endl;
+	std::cout << "points to value: " << it->second << std::endl;
+	++it;
+	std::cout << "points to key: " << it->first << std::endl;
+	std::cout << "points to value: " << it->second << std::endl;
+	it++;
+	std::cout << "points to key: " << it->first << std::endl;
+	std::cout << "points to value: " << it->second << std::endl;
+
+
+
+
+	std::cout << "Map contains" << std::endl;
+	//for (ft::map<std::string, int>::iterator it = testMap.begin(); it != testMap.end(); it++) {
+		std::cout << it->first << " = " << it->second << "; ";
+		it++;
+		std::cout << it->first << " = " << it->second << "; ";
+	//}
+	std::cout << '\n';
+
+
+
+
+
+
+
 	// std::pair<std::map<std::string,int>::iterator,bool> ret;
 	// ret = testMap.insert(std::pair<std::string,int>("X", 500));
 	// if(ret.second == false) {
@@ -128,28 +163,8 @@ void mapTests(std::ofstream& tests){
 	// 	//std::cout << " with a value of " << ret.first->second << '\n';
 	// }
 
-
-
-
-
-	// printMapterminal("1) Initial map: ", testMap);
-
-	// testMap["A"] = 25;  // update an existing value
-	// testMap["D"] = 30;  // insert a new value
-	// printMapterminal("2) Updated map: ", testMap);
-
-	// // using operator[] with non-existent key always performs an insert
-	// std::cout << "3) m[X] = " << testMap["X"] << '\n';
-	// printMapterminal("4) Updated map: ", testMap);
-
-	// testMap.erase("B");
-	// printMapterminal("5) After erase: ", testMap);
-
-	// testMap.clear();
-	//std::cout << std::boolalpha << "8) Map is empty: " << testMap.empty() << '\n';
-
-
-
+	testMap.clear();
+	std::cout << std::boolalpha << "Map empty after clear: " << testMap.empty() << '\n';
 
 }
 

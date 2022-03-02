@@ -1,8 +1,10 @@
 #ifndef BTREE_HPP
 # define BTREE_HPP
 
+# include "utilities.hpp"
+
 namespace ft {
-	template<class T, class Alloc = std::allocator<T> >
+	template<class T, class compare, class Alloc = std::allocator<T> >
 	class Btree {
 	public:
 		typedef T								pair_type;
@@ -10,6 +12,7 @@ namespace ft {
 		typedef typename pair_type::second_type	mapped_type;
 		typedef	Alloc							allocator_type;
 		typedef	size_t							size_type;
+
 
 		struct node{
 			pair_type*		pair;
@@ -21,14 +24,82 @@ namespace ft {
 		node*				_root;
 		allocator_type		_alloc;
 		size_type			_size;
+		compare				_compare_func;
 
-		Btree(allocator_type alloc) : _root(NULL), _alloc(alloc), _size(0) {};
+		Btree(allocator_type alloc) : _root(NULL), _alloc(alloc), _size(0), _compare_func() {}; //default compare func
 
-		size_type	getSize() const{
+		size_type	getSize() const {
 			return this->_size;
 		}
+		void	setSize(size_type newSize) {
+			this->_size = newSize;
+		}
 
-		node* CreateLeaf(const key_type& key, mapped_type value, node* ptr){
+
+
+		// void previous() {
+		// if (this->_node->left) {
+		// 	this->_node = this->_node->left;
+		// 	while (this->_node->right)
+		// 		this->_node = this->_node->right;
+		// }
+		// else
+		// 	this->_node = this->_node->parent;
+		// }
+
+		// void next() {
+		// 	printf("test\n");
+		// 	if (this->_node->right) {
+		// 		printf("testing if\n");
+		// 		this->_node = this->_node->right;
+		// 		while (this->_node->left)
+		// 			this->_node = this->_node->left;
+		// 	}
+		// 	else {
+		// 		printf("testing else\n");
+		// 		node* tmp = this->_node;
+		// 		this->_node = this->_node->parent;
+		// 		while (this->_node->left != tmp) {
+		// 			tmp = this->_node;
+		// 			this->_node = this->_node->parent;
+		// 		}
+		// 	}
+		// }
+
+
+		// void previous(node *ptr) {
+		// if (ptr->left) {
+		// 	ptr = ptr->left;
+		// 	while (ptr->right)
+		// 		ptr = ptr->right;
+		// }
+		// else
+		// 	ptr = ptr->parent;
+		// }
+
+		// void next(node *ptr) {
+		// 	//printf("test\n");
+		// 	if (ptr->right) {
+		// 		printf("testing if\n");
+		// 		ptr = ptr->right;
+		// 		while (ptr->left)
+		// 			ptr = ptr->left;
+		// 	}
+		// 	else {
+		// 		//printf("testing else\n");
+		// 		node* tmp = ptr;
+		// 		ptr = ptr->parent;
+		// 		while (ptr->left != tmp) {
+		// 			tmp = ptr;
+		// 			ptr = ptr->parent;
+		// 		}
+		// 	}
+		// }
+
+
+
+
+		node* CreateLeaf(const key_type& key, mapped_type value, node* ptr) {
 			node* newNode = new node;
 			try{
 				newNode->pair = _alloc.allocate(1);
@@ -46,11 +117,11 @@ namespace ft {
 			return newNode;
 		}
 
-		bool	addLeaf(const key_type& key, mapped_type value = mapped_type()){
+		bool	addLeaf(const key_type& key, mapped_type value = mapped_type()) {
 			return addLeaf(key, this->_root, value);
 		}
 
-		bool	addLeaf(const key_type& key, node* ptr, mapped_type value){
+		bool	addLeaf(const key_type& key, node* ptr, mapped_type value) {
 			bool hasBeenAdded = true;
 			if(_root == NULL)
 				_root = CreateLeaf(key, value, NULL);
@@ -71,11 +142,11 @@ namespace ft {
 			return hasBeenAdded;
 		}
 
-		node*	findNode(const key_type& key){
+		node*	findNode(const key_type& key) {
 			return findNode(key, this->_root);
 		}
 
-		node*	findNode(const key_type& key, node* ptr){
+		node*	findNode(const key_type& key, node* ptr) {
 			if(ptr != NULL){
 				if(ptr->pair->first == key)
 					return ptr;
@@ -85,14 +156,36 @@ namespace ft {
 					else
 						return findNode(key, ptr->right);
 				}
+				// else{
+				// 	if(bool comp = _compare_func(key, ptr->pair->first))
+				// 		return findNode(key, ptr->left);
+				// 	else
+				// 		return findNode(key, ptr->right);
+				// }
 			}
 			else
 				return NULL;
 		}
 
-		node*		FindSmallest(node* ptr){
+
+		node*		FindSmallest() {
+			return FindSmallest(this->_root);
+		}
+
+		node*		FindSmallest(node* ptr) {
 			if(ptr->left != NULL)
 				return FindSmallest(ptr->left);
+			else
+				return ptr;
+		}
+
+		node*		FindLargest() {
+			return FindSmallest(this->_root);
+		}
+
+		node*		FindLargest(node* ptr) {
+			if(ptr->right != NULL)
+				return FindSmallest(ptr->right);
 			else
 				return ptr;
 		}
@@ -105,6 +198,7 @@ namespace ft {
 
 		void	removeTree(){
 			removeSubtree(this->_root);
+			this->_root = NULL;			//clearing an empty map
 		}
 
 		void	removeSubtree(node* ptr){
@@ -118,7 +212,16 @@ namespace ft {
 			this->_alloc.destroy(ptr->pair);
 			_alloc.deallocate(ptr->pair, 1);
 			delete ptr;
+						//ptr = NULL;
 			}
+		}
+
+		void	destroyNode(node* ptr){
+				std::cout << "Deleting the node containing the key " << ptr->pair->first << std::endl;
+				this->_alloc.destroy(ptr->pair);
+				_alloc.deallocate(ptr->pair, 1);
+				delete ptr;
+				this->_size--;
 		}
 
 		void	removeNode(const key_type& key){
@@ -248,13 +351,6 @@ namespace ft {
 					std::cout << "Can not remove match. The tree is empty\n";
 			}
 
-			void	destroyNode(node* ptr){
-				std::cout << "Deleting the node containing the key " << ptr->pair->first << std::endl;
-				this->_alloc.destroy(ptr->pair);
-				_alloc.deallocate(ptr->pair, 1);
-				delete ptr;
-				this->_size--;
-			}
 			void	printInOrder(node* ptr){
 				if(this->_root != NULL){
 					if(ptr->left != NULL)
@@ -270,7 +366,6 @@ namespace ft {
 			void	printInOrder(){
 				printInOrder(this->_root);
 			}
-
 	};
 }
 

@@ -93,7 +93,6 @@ namespace ft {
 		
 		size_type max_size() const _NOEXCEPT{
 			return _alloc.max_size() / 2;
-			//return std::numeric_limits<size_type>::max() / sizeof(value_type);
 		};
 
 
@@ -134,7 +133,10 @@ namespace ft {
 
 		//void swap(map& x);
 
-		//void clear();
+		void clear(){
+			_tree.removeTree();
+			_tree.setSize(0);
+		};
 
 
 
