@@ -65,7 +65,7 @@ namespace ft {
 		// const_iterator begin() const;
 
 		iterator end(){
-			return NULL;
+			return iterator(NULL);
 		}
 		// const_iterator end() const;
 

@@ -4,7 +4,7 @@
 # include "utilities.hpp"
 
 namespace ft {
-	template<class T, class compare, class Alloc = std::allocator<T> >
+	template<class T, class Alloc = std::allocator<T>, class Compare = std::less<typename T::first_type> >
 	class Btree {
 	public:
 		typedef T								pair_type;
@@ -24,9 +24,9 @@ namespace ft {
 		node*				_root;
 		allocator_type		_alloc;
 		size_type			_size;
-		compare				_compare_func;
+		Compare				_compare;
 
-		Btree(allocator_type alloc) : _root(NULL), _alloc(alloc), _size(0), _compare_func() {}; //default compare func
+		Btree(allocator_type alloc) : _root(NULL), _alloc(alloc), _size(0), _compare() {};
 
 		size_type	getSize() const {
 			return this->_size;
@@ -41,7 +41,8 @@ namespace ft {
 		// if (this->_node->left) {
 		// 	this->_node = this->_node->left;
 		// 	while (this->_node->right)
-		// 		this->_node = this->_node->right;
+		// 		this->_node = this->_node->right;-
+
 		// }
 		// else
 		// 	this->_node = this->_node->parent;
@@ -205,14 +206,12 @@ namespace ft {
 			if(ptr != NULL){
 				if(ptr->left != NULL)
 					removeSubtree(ptr->left);
-			if(ptr->right != NULL)
-				removeSubtree(ptr->right);
-
-			//std::cout << "Deleting the node containing the key " << ptr->pair->first << std::endl;
-			this->_alloc.destroy(ptr->pair);
-			_alloc.deallocate(ptr->pair, 1);
-			delete ptr;
-						//ptr = NULL;
+				if(ptr->right != NULL)
+					removeSubtree(ptr->right);
+				//std::cout << "Deleting the node containing the key " << ptr->pair->first << std::endl;
+				this->_alloc.destroy(ptr->pair);
+				_alloc.deallocate(ptr->pair, 1);
+				delete ptr;
 			}
 		}
 
