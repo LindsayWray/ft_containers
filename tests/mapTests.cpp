@@ -49,27 +49,27 @@ void mapTests(std::ofstream& tests){
 	testMap["K"] = 100;
 	testMap["A"] = 10;
 	testMap["P"] = 22;
-	testMap["R"] = 12;
-	testMap["V"] = 31;
-	testMap["C"] = 20;
-	testMap["N"] = 28;
-	testMap["I"] = 1;
-	testMap["D"] = 3;
-	testMap["T"] = 14;
-	testMap["E"] = 12;
-	testMap["G"] = 14;
-	testMap["Q"] = 21;
-	testMap["Z"] = 45;
-	testMap["L"] = 45;
-	testMap["H"] = 31;
-	testMap["J"] = 7;
-	testMap["M"] = 14;
-	testMap["O"] = 45;
-	testMap["F"] = 30;
-	testMap["S"] = 30;
-	testMap["B"] = 15;
-	testMap["U"] = 21;
-	testMap["W"] = 7;
+	// testMap["R"] = 12;
+	// testMap["V"] = 31;
+	// testMap["C"] = 20;
+	// testMap["N"] = 28;
+	// testMap["I"] = 1;
+	// testMap["D"] = 3;
+	// testMap["B"] = 15;
+	// testMap["T"] = 14;
+	// testMap["E"] = 12;
+	// testMap["G"] = 14;
+	// testMap["Q"] = 21;
+	// testMap["Z"] = 45;
+	// testMap["L"] = 45;
+	// testMap["H"] = 31;
+	// testMap["J"] = 7;
+	// testMap["M"] = 14;
+	// testMap["O"] = 45;
+	// testMap["F"] = 30;
+	// testMap["S"] = 30;
+	// testMap["U"] = 21;
+	// testMap["W"] = 7;
 
 
 
@@ -86,11 +86,7 @@ void mapTests(std::ofstream& tests){
 	std::cout << "Value X is: " << testMap["X"] << std::endl; // insert a new value
 	std::cout << "Value Y is: " << testMap["Y"] << std::endl;
 
-	testMap.erase("M");
-
-	//	testMap.printInOrder();
-
-
+	//testMap.erase("M");
 
 	// PAIR CONSTRUCTOR TESTS
 	ft::pair <std::string,double> product1;                     // default constructor
@@ -124,25 +120,62 @@ void mapTests(std::ofstream& tests){
 	std::cout << "\n--- MAP ITERATOR TESTS --" << std::endl;
 	ft::map<std::string, int>::iterator it = testMap.begin();
 	ft::pair <std::string, int> testPair = *it;
+	std::cout << "--- TEST INCREMENT --" << std::endl;
 	std::cout << "points to key: " << it->first << std::endl;
 	std::cout << "points to value: " << it->second << std::endl;
 	++it;
 	std::cout << "points to key: " << it->first << std::endl;
 	std::cout << "points to value: " << it->second << std::endl;
+	//it += 4;	doesn't exist
+	it++;
+	it++;
 	it++;
 	std::cout << "points to key: " << it->first << std::endl;
 	std::cout << "points to value: " << it->second << std::endl;
+	// std::cout << "--- TEST DECREMENT --" << std::endl;
+	// it--;
+	// std::cout << "points to key: " << it->first << std::endl;
+	// std::cout << "points to value: " << it->second << std::endl;
+	// it--;
+	// std::cout << "points to key: " << it->first << std::endl;
+	// std::cout << "points to value: " << it->second << std::endl;
+	// it--;
+	// std::cout << "points to key: " << it->first << std::endl;
+	// std::cout << "points to value: " << it->second << std::endl;
 
 
 
 
-	std::cout << "Map contains" << std::endl;
-	//for (ft::map<std::string, int>::iterator it = testMap.begin(); it != testMap.end(); it++) {
-		std::cout << it->first << " = " << it->second << "; ";
-		it++;
-		std::cout << it->first << " = " << it->second << "; ";
-	//}
-	std::cout << '\n';
+	// std::cout << "Map contains" << std::endl;
+	// for (ft::map<std::string, int>::iterator it = testMap.begin(); it != testMap.end(); it++) {
+	// 	std::cout << it->first << " = " << it->second << "; ";
+	// 	it++;
+	// 	std::cout << it->first << " = " << it->second << "; ";
+	// }
+	// std::cout << '\n';
+
+
+	ft::map<std::string, int>::iterator ite = testMap.begin();
+	std::cout << ite->first << " = " << ite->second << "; \n";
+	ft::map<std::string, int>::iterator iter = testMap.end();
+	iter--;
+	std::cout << iter->first << " = " << iter->second << "; \n";
+
+	//testMap.printInOrder();
+
+	// std::cout << "--- CONTENTS TESTMAP --" << std::endl;
+	// for (ft::map<std::string, int>::iterator it = testMap.begin(); it != testMap.end(); it++) {
+	// 	std::cout << it->first << " = " << it->second << "; ";
+	// }
+	// std::cout << '\n';
+
+
+	// std::cout << "--- TEST SECOND CONSTRUCTOR (fill with iterator range) --" << std::endl;
+	// ft::map<std::string,int> testMap2 (it, testMap.end());
+	// for (ft::map<std::string, int>::iterator it = testMap2.begin(); it != testMap2.end(); it++) {
+	// 	std::cout << it->first << " = " << it->second << "; ";
+	// }
+	// std::cout << '\n';
 
 
 
@@ -165,6 +198,8 @@ void mapTests(std::ofstream& tests){
 
 	testMap.clear();
 	std::cout << std::boolalpha << "Map empty after clear: " << testMap.empty() << '\n';
+
+
 
 }
 

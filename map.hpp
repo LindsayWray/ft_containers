@@ -37,14 +37,15 @@ namespace ft {
 
 
 	public:
-		explicit map (const key_compare& comp = key_compare(),
-			const allocator_type& alloc = allocator_type()) : _tree(alloc), _alloc(alloc), _comp_func(comp){};
+		explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) 
+			: _tree(alloc), _alloc(alloc), _comp_func(comp){};				//tree only alloc
 
 		// template <class InputIterator>
-		// map (InputIterator first, InputIterator last,
-		// const key_compare& comp = key_compare(),
-		// const allocator_type& alloc = allocator_type());
+		// map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) 
+		// 	:  _tree(alloc), _alloc(alloc), _comp_func(comp){};
 		
+
+
 		// map (const map& original);
 		~map(){
 			_tree.removeTree();
@@ -65,7 +66,7 @@ namespace ft {
 		// const_iterator begin() const;
 
 		iterator end(){
-			return iterator(NULL);
+			return iterator(_tree.FindLargest());
 		}
 		// const_iterator end() const;
 
@@ -177,6 +178,12 @@ namespace ft {
 
 		//  ------------  ALLOCATOR   ------------
 		// allocator_type get_allocator() const;
+
+
+
+		void	printInOrder(){
+				_tree.printInOrder();
+		}
 
 
 

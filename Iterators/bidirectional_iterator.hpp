@@ -21,15 +21,20 @@ namespace ft{
 		bidirectional_iterator() : _node(NULL){};
 
 
-		void previous(node *ptr) {
+		node* previous(node *ptr) {
 			if (ptr->left) {
 				ptr = ptr->left;
 				while (ptr->right)
 					ptr = ptr->right;
 			}
-			else
+			else {
+				node* tmp = ptr;
 				ptr = ptr->parent;
+				if (ptr->left == tmp)
+					ptr = ptr->parent;    // perhaps while condition??
 			}
+			return ptr;
+		}
 
 		node* next(node *ptr) {
 			if (ptr->right) {;
@@ -76,12 +81,12 @@ namespace ft{
 			return copy;
 		}
 		bidirectional_iterator& operator--(){
-			this->_node--;
+			this->_node = previous(this->_node);
 			return *this;
 		}
 		bidirectional_iterator operator--(int){
 			bidirectional_iterator copy(*this);
-			this->_node--;
+			this->_node = previous(this->_node);
 			return copy;
 		}
 		reference operator*(){
