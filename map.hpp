@@ -44,8 +44,7 @@ namespace ft {
 				}
 		};
 
-	public:
-		typedef RBtree<value_type, Alloc, value_compare>									tree_type;
+		typedef RBtree<value_type, Alloc, value_compare>		tree_type;
 
 	private:
 		tree_type							_tree;
@@ -53,8 +52,6 @@ namespace ft {
 		key_compare							_comp_func;
 
 	public:
-
-
 		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) 
 			: _tree(alloc, value_compare(comp)), _alloc(alloc), _comp_func(comp){};
 

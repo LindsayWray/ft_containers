@@ -43,7 +43,10 @@ namespace ft{
 		vector(InputIterator begin, InputIterator end, const allocator_type& alloc = allocator_type(),
 				typename std::enable_if<!std::is_integral<InputIterator>::value, bool>::type = true)
 				: _array(NULL), _size(0), _allocSize(0), _alloc(alloc){
-			increaseCapacity(end - begin);
+			//increaseCapacity(end - begin);
+			int count = 0;
+			for(InputIterator it = begin; it != end; it++, count++);
+			increaseCapacity(count);
 			insert(this->begin(), begin, end);
 		};
 		vector(vector const& original) : _array(NULL), _size(0), _allocSize(0){

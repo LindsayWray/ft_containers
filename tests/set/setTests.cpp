@@ -11,6 +11,7 @@
 	namespace ft = std;
 #else
 	#include "../../set.hpp"
+	#include "../../vector.hpp"
 #endif
 
 template<class T>
@@ -74,4 +75,22 @@ void setTests(std::ofstream& tests){
 	ft::set<int> testSet3(ite, testSet.end());
 	printSet(testSet3, tests);
 
+
+
+
+
+	tests << "--- TEST: construct set with vector range iterators --" << std::endl;
+	ft::vector<int> testvec;
+	for(int i = 300; i > 0; i--){
+		testvec.push_back(i);
+		testvec.push_back(i);
+	}
+
+	ft::set<int> testSet4(testvec.begin(), testvec.end());
+	tests << " Set filled by vector iterator range";
+	printSet(testSet4, tests);
+	ft::vector<int> testvec2(testSet4.begin(), testSet4.end());
+	for(ft::vector<int>::iterator it = testvec2.begin(); it != testvec2.end(); it++)
+		tests << *it << "; ";
+	tests << std::endl;
 }

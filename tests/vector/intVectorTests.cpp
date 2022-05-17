@@ -45,11 +45,9 @@ void intVectorTests(std::ofstream& tests){
 	tests << "as const		" << static_cast<const ft::vector<int> >(testVec).back() << std::endl;
 	tests << "[] operator		" << testVec[10] << std::endl;
 	tests << "as const		" << static_cast<const ft::vector<int> >(testVec)[100] << std::endl;
-	tests << "out of bounds		" << testVec[500] << std::endl;
 	try{
 		tests << "at func test		" << testVec.at(10) << std::endl;
 		tests << "as const		" << static_cast<const ft::vector<int> >(testVec).at(100) << std::endl;
-		tests << "out of bounds		" << tests << testVec.at(301) << std::endl;
 	}
 	catch(std::out_of_range& e){
 		tests << e.what() << std::endl;
@@ -263,7 +261,7 @@ void intVectorTests(std::ofstream& tests){
 	tests << "\n--- INT VECTOR REVERSE ITERATOR TESTS --" << std::endl;
 	ft::vector<int>::reverse_iterator rite = testVec.rbegin();
 	tests << "begin value " << *rite << std::endl;
-	tests << "end value " << *(testVec.rend()) << std::endl;
+	tests << "end value " << *(--testVec.rend()) << std::endl;
 
 
 	tests << "vector contains:";

@@ -1,8 +1,6 @@
 #ifndef ITERATOR_HPP
 # define ITERATOR_HPP
 
-# include "bidirectional_iterator.hpp"
-
 namespace ft{
 	template <	class T, class Pointer = T*, class Reference = T&,
 				class Category = std::random_access_iterator_tag, class Distance = std::ptrdiff_t>

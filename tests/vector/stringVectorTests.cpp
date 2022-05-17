@@ -55,11 +55,10 @@ void	stringVectorTests(std::ofstream& tests){
 	tests << "as const		" << static_cast<const ft::vector<std::string> >(testVec).back() << std::endl;
 	tests << "[] operator		" << testVec[10] << std::endl;
 	tests << "as const		" << static_cast<const ft::vector<std::string> >(testVec)[100] << std::endl;
-	//tests << "out of bounds		" << testVec[500] << std::endl;
+
 	try{
 		tests << "at func test		" << testVec.at(10) << std::endl;
 		tests << "as const		" << static_cast<const ft::vector<std::string> >(testVec).at(100) << std::endl;
-		tests << "out of bounds		" << testVec.at(301) << std::endl;
 	}
 	catch(std::out_of_range& e){
 		tests << e.what() << std::endl;
