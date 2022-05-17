@@ -33,13 +33,10 @@ namespace ft {
 		typedef RBtree<value_type, Alloc, Compare>											tree_type;
 
 	private:
-
 		tree_type			_tree;
 		allocator_type		_alloc;
 		key_compare			_comp_func;
 		
-
-
 	public:
 		explicit set(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) 
 			: _tree(alloc, comp), _alloc(alloc), _comp_func(comp){};
@@ -66,54 +63,6 @@ namespace ft {
 			insert(original.begin(), original.end());
 			return *this;
 		};
-
-
-
-
-		//  ------------  ITERATOR FUNCTIONS  ------------
-		// iterator begin() _NOEXCEPT{
-		// 	return iterator(_tree.findSmallest(), &_tree);
-		// };
-		// const_iterator begin() const _NOEXCEPT{
-		// 	return const_iterator(_tree.findSmallest(), &_tree);
-		// }
-
-		// iterator end() _NOEXCEPT{
-		// 	return iterator(NULL, &_tree);
-		// }
-		// const_iterator end() const _NOEXCEPT{
-		// 	return const_iterator(NULL, &_tree);
-		// }
-
-		// reverse_iterator rbegin() _NOEXCEPT{
-		// 	return reverse_iterator(iterator(_tree.findLargest(), &_tree));
-		// }
-		// const_reverse_iterator rbegin() const _NOEXCEPT{
-		// 	return const_reverse_iterator(const_iterator(_tree.findLargest(), &_tree));
-		// }
-
-		// reverse_iterator rend() _NOEXCEPT{
-		// 	return reverse_iterator(iterator(NULL, &_tree));
-		// }
-		// const_reverse_iterator rend() const _NOEXCEPT{
-		// 	return const_reverse_iterator(const_iterator(NULL, &_tree));
-		// }
-
-
-
-
-
-
-		// //  ------------  CAPACITY  ------------
-		// bool empty() const _NOEXCEPT{
-		// 	if (_tree.getSize() == 0)
-		// 		return true;
-		// 	return false;
-		// };
-		
-		// size_type size() const _NOEXCEPT{
-		// 	return _tree.getSize();
-		// };
 		
 		size_type max_size() const _NOEXCEPT{
 			return _alloc.max_size() / 8;
@@ -176,19 +125,12 @@ namespace ft {
 			_tree.removeTree();
 		};
 
-
-
 		// //  ------------  OBSERVERS   ------------
-		
-		// key_compare key_comp() const{
-		// 	return _comp_func;
-		// };
 
 		value_compare value_comp() const{
 			return _comp_func;
 		};
 	
-
 		// //  ------------  OPERATIONS   ------------
 		iterator find(const key_type& k){
 			return iterator(_tree.findNode(k), &_tree);
@@ -202,47 +144,6 @@ namespace ft {
 				return 1;
 			return 0;
 		};
-
-		// iterator lower_bound(const key_type& k){
-		// 	for(iterator it = begin(); it != end(); it++){
-		// 		if(!_comp_func(it->first, k))
-		// 			return it;
-		// 	}
-		// 	return end();
-		// };
-		
-		// const_iterator lower_bound(const key_type& k) const{
-		// 	for(const_iterator it = begin(); it != end(); it++){
-		// 		if(!_comp_func(it->first, k))
-		// 			return it;
-		// 	}
-		// 	return end();
-		// };
-
-		// iterator upper_bound(const key_type& k){
-		// 	iterator it = lower_bound(k);
-		// 	if (it != end() && k == it->first)
-		// 		return ++it;
-		// 	return it;
-		// };
-		// const_iterator upper_bound(const key_type& k) const{
-		// 	const_iterator it = lower_bound(k);
-		// 	if (it != end() && k == it->first)
-		// 		return ++it;
-		// 	return it;
-		// };
-
-		// pair<iterator,iterator>	equal_range(const key_type& k){
-		// 	return ft::make_pair(lower_bound(k), upper_bound(k));
-		// };
-		// pair<const_iterator,const_iterator> equal_range(const key_type& k) const{
-		// 	return ft::make_pair<const_iterator, const_iterator>(lower_bound(k), upper_bound(k));
-		// };
-		
-		// //  ------------  ALLOCATOR   ------------
-		// allocator_type get_allocator() const{
-		// 	return _alloc;
-		// };
 
 		private:
 		const Itree<value_type>& getTree() const{

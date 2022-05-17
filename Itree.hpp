@@ -13,13 +13,12 @@ namespace ft {
 		typedef node<data_type>					node;	
 
 	public:
+		virtual ~Itree(){};
+		
 		virtual node*		findSmallest() const = 0;
 		virtual node*		findLargest() const = 0;
-
 		virtual size_type	getSize() const = 0;
 
-
-		virtual ~Itree(){};
 	};
 }
 #endif

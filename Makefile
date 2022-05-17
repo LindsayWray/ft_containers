@@ -17,7 +17,8 @@ SRCS :=	main.cpp\
 		tests/vector/stringVectorTests.cpp tests/vector/intVectorTests.cpp\
 		tests/stack/intStackTests.cpp tests/stack/stringStackTests.cpp\
 		tests/map/mapTests.cpp\
-		tests/set/setTests.cpp
+		tests/set/setTests.cpp\
+		tests/speed/speed.cpp
 
 FLAGS := -Wall -Wextra -Werror -std=c++98
 OBJFILES := $(SRCS:%.cpp=obj/%.o)

@@ -133,7 +133,7 @@ void mapTests(std::ofstream& tests){
 	testMap2.erase(16);
 	//testMap2.printInOrder();
 	testMap2.erase(16);
-	// testMap2.printInOrder();
+	//testMap2.printTree();
 
 
 

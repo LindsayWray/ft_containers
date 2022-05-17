@@ -11,6 +11,7 @@ void	intStackTests(std::ofstream& tests);
 void	stringStackTests(std::ofstream& tests);
 void	mapTests(std::ofstream& tests);
 void	setTests(std::ofstream& tests);
+void 	speedTest();
 
 #if STD_CONTAINER
 	#include <map>
@@ -77,7 +78,8 @@ int main(){
 
 	{
 		Timer timer("map speed: ");
-		mapTests(tests);
+		speedTest();
+		//mapTests(tests);
 	}
 
 	{

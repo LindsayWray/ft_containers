@@ -7,13 +7,12 @@ namespace ft {
 	template<class T, class Alloc, class Compare >
 	class RBtree : public Itree<T> {
 	public:
-		typedef Itree<T>										Itree;
-		typedef typename Itree::data_type						data_type;
-		//typedef typename T::first_type							key_type;
+		typedef Itree<T>											Itree;
+		typedef typename Itree::data_type							data_type;
 		typedef typename Alloc::template rebind<data_type>::other	allocator_type;
-		typedef	size_t											size_type;
-		typedef typename  Itree::node							node;
-		typedef typename Alloc::template rebind<node>::other	node_allocator_type;
+		typedef typename Itree::node								node;
+		typedef typename Alloc::template rebind<node>::other		node_allocator_type;
+		typedef	size_t												size_type;
 
 
 	private:
@@ -36,7 +35,6 @@ namespace ft {
 			return *this;
 		}
 
-
 		//  		************** ADD FUNCTIONS **************
 
 		node* CreateLeaf(node* ptr, data_type& data) {
@@ -46,13 +44,12 @@ namespace ft {
 				this->_nodeAlloc.construct(newNode, node(ptr));
 				newNode->data = _alloc.allocate(1);
 				this->_alloc.construct(newNode->data, data);
+				this->_size++;
 			}
 			catch(std::bad_alloc &e){
 				std::cerr << e.what() << std::endl;	
 				exit(EXIT_FAILURE);
 			}
-
-			this->_size++;
 			return newNode;
 		}
 
@@ -86,17 +83,6 @@ namespace ft {
 				hasBeenAdded = false;
 			return hasBeenAdded;
 		}
-
-
-
-
-
-		
-
-
-
-
-
 
 		// 	 ************** REMOVAL FUNCTIONS **************
 
@@ -180,11 +166,13 @@ namespace ft {
 				else {
 					isNILnode = true;
 
-					nilNode = _nodeAlloc.allocate(1);
-					this->_nodeAlloc.construct(nilNode, node(NULL));
-					nilNode->data = _alloc.allocate(1);
-					this->_alloc.construct(nilNode->data, data_type());
-					this->_size++;
+					data_type nilData = data_type();
+					nilNode = CreateLeaf(NULL, nilData);
+					// nilNode = _nodeAlloc.allocate(1);
+					// this->_nodeAlloc.construct(nilNode, node(NULL));
+					// nilNode->data = _alloc.allocate(1);
+					// this->_alloc.construct(nilNode->data, data_type());
+					// this->_size++;
 
 					nilNode->color = BLACK;
 					replaceParentsChild(smallestInRightSubtree->parent, smallestInRightSubtree, nilNode);
@@ -196,9 +184,6 @@ namespace ft {
 					match->left->parent = smallestInRightSubtree;
 				}
 				else{
-					// if (smallestInRightSubtree->right) 
-					// 	smallestInRightSubtree->right->parent = smallestInRightSubtree->parent;
-					// smallestInRightSubtree->parent->left = smallestInRightSubtree->right;
 					if (smallestInRightSubtree->right) {
 						smallestInRightSubtree->right->parent = smallestInRightSubtree->parent;
 						smallestInRightSubtree->parent->left = smallestInRightSubtree->right;
@@ -213,22 +198,16 @@ namespace ft {
 				deletedNodeColor = smallestInRightSubtree->color;
 				smallestInRightSubtree->color = match->color;
 				destroyNode(match);
-				//std::swap(match->data, smallestInRightSubtree->data);						// swap data and call function recursively to clean up outer node
-				//return RemoveMatch(smallestInRightSubtree->parent, smallestInRightSubtree);
 			}
 			if (deletedNodeColor == BLACK){
 				fixRedBlackPropertiesAfterDelete(movedUpNode);
 			}
 				
 			if(isNILnode){
-				// replaceParentsChild(movedUpNode->parent, movedUpNode, NULL);
-				// destroyNode(match);
 				replaceParentsChild(nilNode->parent, nilNode, NULL);
 				destroyNode(nilNode);
 			}
 		}
-
-
 
 
 		//  ************** FAMILY HANDLERS **************
@@ -301,13 +280,9 @@ namespace ft {
 				return parent->left;
 		}
 
-
-
-
 		// 			 ************** ROTATIONS **************
 
 		void rotateRight(node* ptr) {
-			//std::cout << "ROTATE RIGHT \n";
 			node* parent = ptr->parent;
 			node* leftChild = ptr->left;
 
@@ -323,7 +298,6 @@ namespace ft {
 		}
 
 		void rotateLeft(node* ptr) {
-			//std::cout << "ROTATE LEFT \n";
 			node* parent = ptr->parent;
 			node* rightChild = ptr->right;
 
@@ -336,8 +310,6 @@ namespace ft {
 			ptr->parent = rightChild;
 			replaceParentsChild(parent, ptr, rightChild);
 		}
-
-
 
 
 		// 			 ************** FIXER FUNCTIONS **************
@@ -372,8 +344,6 @@ namespace ft {
 				// Case 3a: aunt is black and node is left->right "inner child" of its grandparent
 				if (newNode == parent->right) {
 					rotateLeft(parent);
-					// Let "parent" point to the new root node of the rotated sub-tree.
-					// It will be recolored in the next step, which we're going to fall-through to.
 					parent = newNode;
 				}
 
@@ -389,14 +359,10 @@ namespace ft {
 				// Case 3b: aunt is black and node is right->left "inner child" of its grandparent
 				if (newNode == parent->left) {
 					rotateRight(parent);
-
-					// Let "parent" point to the new root node of the rotated sub-tree.
-					// It will be recolored in the next step, which we're going to fall-through to.
 					parent = newNode;
 				}
 				// Case 5b: aunt is black and node is right->right "outer child" of its grandparent
 				rotateLeft(grandparent);
-				// Recolor original parent and grandparent
 				parent->color = BLACK;
 				grandparent->color = RED;
 			}
@@ -420,9 +386,8 @@ namespace ft {
 			if (isBlack(sibling->left) && isBlack(sibling->right)) {
 				sibling->color = RED;
 				// Case 3: Black sibling with two black children + red parent
-				if (movedNode->parent->color == RED) {
+				if (movedNode->parent->color == RED)
 					movedNode->parent->color = BLACK;
-				}
 				// Case 4: Black sibling with two black children + black parent
 				else
 					fixRedBlackPropertiesAfterDelete(movedNode->parent);
@@ -431,8 +396,6 @@ namespace ft {
 			else
 				handleBlackSiblingWithAtLeastOneRedChild(movedNode, sibling);
 		}
-
-
 
 
 
@@ -480,6 +443,7 @@ namespace ft {
 		}
 
 
+		// 			************** UTILS **************
 
 		bool isBlack(node* ptr) {
 			return ptr == NULL || ptr->color == BLACK;
@@ -503,36 +467,31 @@ namespace ft {
 			return true;
 		}
 
-		// node*	getRoot(){
-		// 	return this->_root;
-		// }
-
 		size_type	getSize() const {
 			return this->_size;
 		}
 
 
-
 		//   *******  PRINT FUNCTIONS *******
 
-		// void	printInOrder(node* ptr, int depth = 0){
-		// 	if(this->_root != NULL){
-		// 		if(ptr->left != NULL)
-		// 			printInOrder(ptr->left, depth + 1);
-		// 		for (int i = 0; i < depth; i++)
-		// 			std::cout << "- ";
-		// 		std::cout << "key: " << ptr->data->first << "	value: " << ptr->data->second << "	color: " << (ptr->color == RED ? "RED" : "BLACK") << std::endl;
-		// 		if(ptr->right != NULL)
-		// 			printInOrder(ptr->right, depth + 1);
-		// 	}
-		// 	else
-		// 		std::cout << "The tree is empty\n" << std::endl;
-		// }
+		void	printInOrder(node* ptr, int depth = 0){
+			if(this->_root != NULL){
+				if(ptr->left != NULL)
+					printInOrder(ptr->left, depth + 1);
+				for (int i = 0; i < depth; i++)
+					std::cout << "- ";
+				std::cout << "key: " << ptr->data->first << "	value: " << ptr->data->second << "	color: " << (ptr->color == RED ? "RED" : "BLACK") << std::endl;
+				if(ptr->right != NULL)
+					printInOrder(ptr->right, depth + 1);
+			}
+			else
+				std::cout << "The tree is empty\n" << std::endl;
+		}
 
-		// void	printInOrder(){
-		// 	std::cout << "Root is: " << this->_root->data->first << std::endl;
-		// 	printInOrder(this->_root);
-		// }
+		void	printInOrder(){
+			std::cout << "Root is: " << *(this->_root->data) << std::endl;
+			printInOrder(this->_root);
+		}
 	};
 }
 
