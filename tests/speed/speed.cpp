@@ -17,12 +17,12 @@
 
 void speedTestVector(){
 	ft::vector<int> largeIntVec;
-	for(int i = 0; i < 10000; i++){
+	for(int i = 0; i < 10000000; i++){
 		largeIntVec.push_back(i);
 	}
 
 	ft::vector<std::string> largeStringVec;
-	for(int i = 0; i < 10000; i++){
+	for(int i = 0; i < 10000000; i++){
 		largeStringVec.push_back("TEST");
 	}
 
@@ -47,14 +47,14 @@ void speedTestVector(){
 void speedTestMap(){
 
 	ft::map<int, int> testBigMap;
-	for(int i = 0, j = 10000; i < 10000; i++, j--){
+	for(long i = 0, j = 100000; i < 100000; i++, j--){
 		testBigMap[i] = j;
 	}
 
 	ft::map<int, int> copyBigMap(testBigMap);
 
 	ft::map<std::string, std::string> testBigMap2;
-	for(int i = 0; i < 10000; i++){
+	for(long i = 0; i < 100000; i++){
 		testBigMap2["test"] = "TEST";
 	}
 

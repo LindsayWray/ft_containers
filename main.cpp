@@ -11,7 +11,7 @@ void	intStackTests(std::ofstream& tests);
 void	stringStackTests(std::ofstream& tests);
 void	mapTests(std::ofstream& tests);
 void	setTests(std::ofstream& tests);
-void 	speedTest();
+void 	speedTestMap();
 void	speedTestVector();
 
 #if STD_CONTAINER
@@ -59,7 +59,7 @@ int main(){
 
 	{
 		Timer timer("Vector speed: ");
-		void speedTestVector();
+		speedTestVector();
 	}
 	
 	{
@@ -79,7 +79,7 @@ int main(){
 
 	{
 		Timer timer("Map speed: ");
-		void speedTestMap();
+		speedTestMap();
 	}
 
 	{
