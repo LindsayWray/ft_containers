@@ -72,7 +72,7 @@ void intVectorTests(std::ofstream& tests){
 	tests << "[] operator		" << testVec[399] << std::endl;
 	tests << "[] operator		" << testVec[300] << std::endl;
 
-	tests << "max capacity		" << testVec.max_size() << std::endl;
+	//tests << "max capacity		" << testVec.max_size() << std::endl;
 	testVec.reserve(300);
 	tests << "reserve capacity		" << testVec.capacity() << std::endl;
 	testVec.reserve(1000);

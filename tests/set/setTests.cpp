@@ -25,6 +25,7 @@ void printSet(ft::set<T>& set, std::ofstream& tests){
 
 void setTests(std::ofstream& tests){
 	tests << "******************** SET TESTS ********************\n";
+	tests << "******************** SET INT TESTS ********************\n";
 	//(void)tests;
 	ft::set<int> testSet;
 
@@ -41,6 +42,36 @@ void setTests(std::ofstream& tests){
 	printSet(testSet, tests);
 
 	tests << "current size " << testSet.size() << std::endl;
-	tests << "max size " << testSet.max_size() << std::endl;
+	//tests << "max size " << testSet.max_size() << std::endl;
+
+
+
+	tests << "******************** SET STRING TESTS ********************\n";
+	ft::set<std::string> testSet2;
+
+	tests << std::boolalpha << "Is set empty: " << testSet2.empty() << std::endl;
+	ft::set<std::string>::iterator empty_it2 = testSet2.begin();
+	if(empty_it2 == testSet2.end())
+		tests << "iterator on empty set\n";
+	
+	testSet2.insert("test");
+	testSet2.insert("test more"); // double test
+	testSet2.insert("TEST");
+	testSet2.insert("testetestests");
+	testSet2.insert("STET");
+	testSet2.insert("test");
+	testSet2.insert("testets");
+	testSet2.insert("testing more");
+	printSet(testSet2, tests);
+
+	tests << "current size " << testSet2.size() << std::endl;
+	//tests << "max size " << testSet2.max_size() << std::endl;
+
+
+	tests << "--- TEST SECOND CONSTRUCTOR (fill with iterator range) --" << std::endl;
+	ft::set<int>::iterator ite = testSet.begin();
+	ite++, ite++;
+	ft::set<int> testSet3(ite, testSet.end());
+	printSet(testSet3, tests);
 
 }

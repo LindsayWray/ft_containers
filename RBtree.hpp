@@ -168,12 +168,6 @@ namespace ft {
 
 					data_type nilData = data_type();
 					nilNode = CreateLeaf(NULL, nilData);
-					// nilNode = _nodeAlloc.allocate(1);
-					// this->_nodeAlloc.construct(nilNode, node(NULL));
-					// nilNode->data = _alloc.allocate(1);
-					// this->_alloc.construct(nilNode->data, data_type());
-					// this->_size++;
-
 					nilNode->color = BLACK;
 					replaceParentsChild(smallestInRightSubtree->parent, smallestInRightSubtree, nilNode);
 					movedUpNode = nilNode;

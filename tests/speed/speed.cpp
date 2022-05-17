@@ -10,16 +10,48 @@
 	#include <iostream>
 	namespace ft = std;
 #else
+	#include "../../vector.hpp"
 	#include "../../map.hpp"
 #endif
 
 
-void speedTest(){
+void speedTestVector(){
+	ft::vector<int> largeIntVec;
+	for(int i = 0; i < 10000; i++){
+		largeIntVec.push_back(i);
+	}
+
+	ft::vector<std::string> largeStringVec;
+	for(int i = 0; i < 10000; i++){
+		largeStringVec.push_back("TEST");
+	}
+
+	int val = largeIntVec.size();
+	val = largeIntVec.capacity();
+	val = largeIntVec.front();
+	std::string val_str = largeStringVec.front();
+	val = largeIntVec.back();
+	val_str = largeStringVec[10];
+
+	ft::vector<std::string> copyVecString(largeStringVec);
+	ft::vector<int> copyVecInt(largeIntVec);
+
+
+	for (ft::vector<int>::const_iterator ite = largeIntVec.begin() ; ite != largeIntVec.end(); ){ ++ite; }
+	for (ft::vector<std::string>::const_iterator ite = largeStringVec.begin() ; ite != largeStringVec.end(); ){ ++ite; }
+
+	largeIntVec.resize(800);
+	largeStringVec.resize(800);
+}
+
+void speedTestMap(){
 
 	ft::map<int, int> testBigMap;
 	for(int i = 0, j = 10000; i < 10000; i++, j--){
 		testBigMap[i] = j;
 	}
+
+	ft::map<int, int> copyBigMap(testBigMap);
 
 	ft::map<std::string, std::string> testBigMap2;
 	for(int i = 0; i < 10000; i++){
@@ -141,152 +173,23 @@ void speedTest(){
 		it++;
 	}
 
-	// //testMap3.printInOrder();
-
-	// tests << "--- TEST ERASE WITH ITERATORS--" << std::endl;
-	// ft::map<int, char>::iterator iter = testMap3.begin();
-	// iter++, iter++;
-	// testMap3.erase(iter, testMap3.end());
-	// for (ft::map<int, char>::iterator it = testMap3.begin(); it != testMap3.end(); it++) {
-	// 	tests << it->first << " = " << it->second << "; ";
-	// }
-	// tests << '\n';
-
-	// //testMap3.printInOrder();
 
 
-
-	// ft::pair<ft::map<std::string,int>::iterator,bool> ret;
-	// ret = testMap.insert(ft::pair<std::string,int>("X", 500));
-	// if(ret.second == false) {
-	// 	tests << "element 'X' already existed";
-	// 	tests << " with a value of " << ret.first->second << '\n';
-	// }
-
-
-	// tests << "  Swap TESTS\n";
-	// ft::map<int, char>::iterator it_testMemory = testMap2.begin();
-	// tests << "begin map 2 before swap: " << it_testMemory->first << ", " << it_testMemory->second << std::endl;
-	// tests << "Size map 2 before swap: " << testMap2.size() << std::endl;
-	// tests << "Map 2 before swap: ";
-	// for (ft::map<int, char>::iterator it = testMap2.begin(); it != testMap2.end(); it++) {
-	// 	tests << it->first << " = " << it->second << "; ";
-	// }
-	// tests << '\n';
-	// ft::map<int, char>::iterator it_testMemory2 = testMap3.begin();
-	// tests << "begin map 3 before swap: " << it_testMemory2->first << ", " << it_testMemory2->second << std::endl;
-	// tests << "Size map 3 before swap: " << testMap3.size() << std::endl;
-	// tests << "Map 3 before swap:";
-	// for (ft::map<int, char>::iterator it = testMap3.begin(); it != testMap3.end(); it++) {
-	// 	tests << it->first << " = " << it->second << "; ";
-	// }
-	// tests << '\n';
-	// testMap2.swap(testMap3);
-	// tests << "begin map 2 after swap: " << it_testMemory->first << ", " << it_testMemory->second << std::endl;
-	// tests << "Size map 2 after swap: " << testMap2.size() << std::endl;
-	// tests << "Map 2 after swap: ";
-	// for (ft::map<int, char>::iterator it = testMap2.begin(); it != testMap2.end(); it++) {
-	// 	tests << it->first << " = " << it->second << "; ";
-	// }
-	// tests << '\n';
-	// tests << "begin map 3 after swap: " << it_testMemory2->first << ", " << it_testMemory2->second << std::endl;
-	// tests << "Size map 3 after swap: " << testMap3.size() << std::endl;
-	// tests << "Map 3 after swap:";
-	// for (ft::map<int, char>::iterator it = testMap3.begin(); it != testMap3.end(); it++) {
-	// 	tests << it->first << " = " << it->second << "; ";
-	// }
-	// tests << '\n';
-
-
-	// tests << "Value Compare TEST:\n";
-	// ft::map<char,int> mymap;
-	// mymap['x']=1001;
-	// mymap['y']=2002;
-	// mymap['z']=3003;
-	// ft::pair<char,int> highest = *mymap.rbegin();
-	// for(ft::map<char,int>::iterator it = mymap.begin(); it != mymap.end(); it++){
-	// 	tests << std::boolalpha << mymap.value_comp()(*it, highest);
-	// 	tests << " " << it->first << " => " << it->second << '\n';
-	// }
-
-
-
-	// tests << "Operations TESTS" << std::endl;
-	// tests << "Testmap 3 contains: ";
-	// for (ft::map<int, char>::iterator it = testMap3.begin(); it != testMap3.end(); it++) {
-	// 	tests << it->first << " = " << it->second << "; ";
-	// }
-	// ft::map<int, char>::iterator test_it = testMap3.find(10);  			//should be in tree
-	// tests << "found key " << test_it->first << " value: " << test_it->second << std::endl;
-	// test_it = testMap3.find(-1);  //is not in this tree
-	// if(test_it != testMap3.end())
-	// 	tests << "found key " << test_it->first << " value: " << test_it->second << std::endl;
-	// else
-	// 	tests << "key was not found\n";
-	// ft::map<int, char>::const_iterator test_const_it = testMap3.find(10);
-	// tests << "found key " << test_const_it->first << " value: " << test_const_it->second << std::endl;
-
-	// tests << "is key in map: " << testMap3.count(10) << std::endl;
-	// tests << "is key in map: " << testMap3.count(-1) << std::endl;
-
-	// test_it = testMap3.lower_bound(25);
-	// tests << "lowerbound of key " << test_it->first << " value: " << test_it->second << std::endl;
-	// 	test_it = testMap3.lower_bound(32);
-	// tests << "lowerbound of key " << test_it->first << " value: " << test_it->second << std::endl;
-	// 	test_const_it = testMap3.lower_bound(32);
-	// tests << "compare it and const it: " << std::boolalpha << (test_it == test_const_it) << std::endl;
-	// tests << "lowerbound of key " << test_const_it->first << " value: " << test_const_it->second << std::endl;
-	// test_it = testMap3.lower_bound(80);
-	// if(test_it != testMap3.end())
-	// 	tests << "lowerbound of key " << test_it->first << " value: " << test_it->second << std::endl;
-	// else
-	// 	tests << "No lowerbound for this key\n";
-
-	// test_it = testMap3.upper_bound(25);
-	// tests << "upper_bound of key " << test_it->first << " value: " << test_it->second << std::endl;
-	// 	test_it = testMap3.upper_bound(32);
-	// tests << "upper_bound of key " << test_it->first << " value: " << test_it->second << std::endl;
-	// test_it = testMap3.upper_bound(80);
-	// if(test_it != testMap3.end())
-	// 	tests << "upper_bound of key " << test_it->first << " value: " << test_it->second << std::endl;
-	// else
-	// 	tests << "No upper_bound for this key\n";
-
-	
-	// ft::pair<ft::map<int, char>::iterator, ft::map<int, char>::iterator> pair_of_its = testMap3.equal_range(25);
-	// tests << "range from key " << pair_of_its.first->first << " to key: " << pair_of_its.second->first << std::endl;
-	// pair_of_its = testMap3.equal_range(32);		//key not in tree, so range 0
-	// tests << "range from key " << pair_of_its.first->first << " to key: " << pair_of_its.second->first << std::endl;
-	// ft::pair<ft::map<int, char>::const_iterator, ft::map<int, char>::const_iterator> pair_of_const_its = testMap3.equal_range(7);
-	// tests << "range from key " << pair_of_const_its.first->first << " to key: " << pair_of_const_its.second->first << std::endl;
-
-
-	// tests << "Assignment operator and Copy constructor" << std::endl;
-	// tests << "Map 2 before assignment\n";
-	// printMap(testMap2, tests);
-	// tests << "Map 3 before assignment\n";
-	// printMap(testMap3, tests);
-	// testMap3 = testMap2;
-	// tests << "Map 3 after assignment\n";
-	// printMap(testMap3, tests);
-	// testMap3.erase(10);
-	// tests << "Map 3 after erase\n";
-	// printMap(testMap3, tests);
-	// tests << "element map 2 has not been erased\n";
-	// printMap(testMap2, tests);
-
-	// testMap2[30] = 'o'; testMap2[-90] = 'H'; testMap2[6000] = 'p';
-	// ft::map<int, char> copyMap(testMap2);
-	// tests << "Map 2 contains\n";
-	// printMap(testMap2, tests);
-	// tests << "CopyMap contains\n";
-	// printMap(copyMap, tests);
-	// copyMap.erase(-90);
-	// tests << "CopyMap after erase\n";
-	// printMap(copyMap, tests);
-	// tests << "Map 2 not affected by erase\n";
-	// printMap(testMap2, tests);
-
+	// Swap TESTS\n";
+	ft::map<int, char>::iterator it_testMemory = testMap2.begin();
+	val = it_testMemory->first;
+	char val_char = it_testMemory->second;
+	val = testMap2.size();
+	for (ft::map<int, char>::iterator it = testMap2.begin(); it != testMap2.end(); ) {
+		it++;
+	}
+	ft::map<int, char>::iterator it_testMemory2 = testMap3.begin();
+	val = it_testMemory2->first;
+	val_char = it_testMemory2->second;
+	val = testMap3.size();
+	for (ft::map<int, char>::iterator it = testMap3.begin(); it != testMap3.end(); ){
+		it++;
+	}
 
 	testMap.clear();
 }

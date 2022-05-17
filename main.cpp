@@ -12,6 +12,7 @@ void	stringStackTests(std::ofstream& tests);
 void	mapTests(std::ofstream& tests);
 void	setTests(std::ofstream& tests);
 void 	speedTest();
+void	speedTestVector();
 
 #if STD_CONTAINER
 	#include <map>
@@ -57,8 +58,8 @@ int main(){
 	std::ofstream tests(file, std::ios_base::trunc);
 
 	{
-		Timer timer("int vector speed: ");
-		intVectorTests(tests);
+		Timer timer("Vector speed: ");
+		void speedTestVector();
 	}
 	
 	{
@@ -77,9 +78,8 @@ int main(){
 	}
 
 	{
-		Timer timer("map speed: ");
-		speedTest();
-		//mapTests(tests);
+		Timer timer("Map speed: ");
+		void speedTestMap();
 	}
 
 	{
@@ -87,6 +87,8 @@ int main(){
 		setTests(tests);
 	}
 
+	intVectorTests(tests);
+	mapTests(tests);
 	//system("leaks ft_containers");
 
 	// int arr[10] = {1,2,3,4,5,6,7,8,9,0};
