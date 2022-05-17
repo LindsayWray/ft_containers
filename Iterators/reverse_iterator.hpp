@@ -6,8 +6,8 @@
 namespace ft{
 	template<class Iter>
 	class reverse_iterator {
-		template <class Iterator>
-		friend bool operator==(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs);
+		template <class Iterator1, class Iterator2>
+		friend bool operator==(const reverse_iterator<Iterator1>& lhs, const reverse_iterator<Iterator2>& rhs);
 
 		template <class Iterator>
 		friend bool operator<(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs);
@@ -32,7 +32,7 @@ namespace ft{
 		explicit reverse_iterator (iterator_type it) : _iter(it){};
 
 		template <class Iterator>
-		reverse_iterator (const reverse_iterator<Iterator>& original) : _iter(original._iter){};
+		reverse_iterator (const reverse_iterator<Iterator>& original) : _iter(original.getIter()){};
 
 		iterator_type base() const{
 			iterator_type copy(_iter);
@@ -85,15 +85,18 @@ namespace ft{
 			copy._iter -= index;
 			return *copy._iter;
 		}
+		Iter	getIter() const{
+			return this->_iter;
+		}
 		
 	};
 		//	relational operators (reverse_iterator)
-		template <class Iterator>
-		bool operator==(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs){ 
-			return lhs._iter == rhs._iter;
+		template <class Iterator1, class Iterator2>
+		bool operator==(const reverse_iterator<Iterator1>& lhs, const reverse_iterator<Iterator2>& rhs){ 
+			return lhs.getIter() == rhs.getIter();
 		}
-		template <class Iterator>
-		bool operator!=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs){ 
+		template <class Iterator1, class Iterator2>
+		bool operator!=(const reverse_iterator<Iterator1>& lhs, const reverse_iterator<Iterator2>& rhs){ 
 			return !(lhs == rhs);
 		}
 		template <class Iterator>

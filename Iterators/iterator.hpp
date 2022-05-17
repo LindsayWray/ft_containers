@@ -4,8 +4,9 @@
 # include "bidirectional_iterator.hpp"
 
 namespace ft{
-	template <class Category, class T, class Distance = std::ptrdiff_t,
-		class Pointer = T*, class Reference = T& >
+	template <	class T, class Pointer = T*, class Reference = T&,
+				class Category = std::random_access_iterator_tag, class Distance = std::ptrdiff_t>
+		
 	class iterator {
 	public:
 		typedef T								value_type;
@@ -19,7 +20,9 @@ namespace ft{
 		iterator() : _ptr(NULL){};
 	public:
 		iterator(value_type* ptr) : _ptr(ptr){};
-		iterator(iterator const& original) : _ptr(original._ptr){};
+
+		template <class ptr, class ref>
+		iterator(iterator<T, ptr, ref> const& original) : _ptr(original.get_pos()){};
 		~iterator(){};
 
 		iterator&	operator=(iterator const& original){
@@ -64,13 +67,13 @@ namespace ft{
 			this->_ptr--;
 			return copy;
 		}
-		value_type& operator*(){
+		reference operator*(){
 			return *(this->_ptr);
 		}
-		value_type* operator->(){
+		pointer operator->(){
 			return this->_ptr;
 		}
-		value_type& operator[](difference_type index) const{
+		reference operator[](difference_type index) const{
 			iterator copy(*this);
 			copy._ptr += index;
 			return *copy._ptr;
@@ -98,6 +101,10 @@ namespace ft{
 		iterator& operator-=(const int &b){
 			this->_ptr -= b;
 			return *this;
+		}
+
+		value_type* get_pos() const{
+			return this->_ptr;
 		}
 	};
 }

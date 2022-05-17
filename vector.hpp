@@ -12,18 +12,18 @@ namespace ft{
 	template<class T, class Alloc = std::allocator<T> >
 	class vector{
 	public:
-		typedef	T														value_type;
-		typedef Alloc													allocator_type;
-		typedef typename allocator_type::reference						reference;
-		typedef typename allocator_type::const_reference				const_reference;
-		typedef typename allocator_type::pointer						pointer;
-		typedef typename allocator_type::const_pointer					const_pointer;
-		typedef ft::iterator<std::random_access_iterator_tag, T>		iterator;
-		typedef const ft::iterator<std::random_access_iterator_tag,T>	const_iterator;
-		typedef ft::reverse_iterator<iterator>							reverse_iterator;
-		typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
-		typedef std::ptrdiff_t											difference_type;
-		typedef size_t													size_type;
+		typedef	T													value_type;
+		typedef Alloc												allocator_type;
+		typedef typename allocator_type::reference					reference;
+		typedef typename allocator_type::const_reference			const_reference;
+		typedef typename allocator_type::pointer					pointer;
+		typedef typename allocator_type::const_pointer				const_pointer;
+		typedef ft::iterator<T>										iterator;
+		typedef ft::iterator<T, const_pointer, const_reference>		const_iterator;
+		typedef ft::reverse_iterator<iterator>						reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
+		typedef std::ptrdiff_t										difference_type;
+		typedef size_t												size_type;
 
 	private:
 		value_type*					_array;
@@ -74,7 +74,6 @@ namespace ft{
 			std::memcpy(_array, original._array, _size * sizeof(value_type));
 			return *this;
 		}
-
 
 
 		//  ------------  ITERATOR FUNCTIONS  ------------
@@ -267,10 +266,21 @@ namespace ft{
 		};
 
 		void swap (vector& x){
-			ft::vector<value_type> temp;
-			temp = *this;
-			*this = x;
-			x = temp;
+			value_type* temp = this->_array;
+			this->_array = x._array;
+			x._array = temp;
+
+			size_type tempSize = this->_size;
+			this->_size = x._size;
+			x._size = tempSize;
+
+			size_type tempAllocSize = this->_allocSize;
+			this->_allocSize = x._allocSize;
+			x._allocSize = tempAllocSize;
+
+			allocator_type tempAlloc= this->_alloc;
+			this->_alloc = x._alloc;
+			x._alloc = tempAlloc;
 		};
 
 		void clear(){

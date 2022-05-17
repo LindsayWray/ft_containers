@@ -1,27 +1,28 @@
 #ifndef BIDIRECTIONAL_ITERATOR_HPP
 # define BIDIRECTIONAL_ITERATOR_HPP
 
-# include "../Btree.hpp"
+# include "../Itree.hpp"
 
 namespace ft{
-	template <class Category, class T, class Distance = std::ptrdiff_t,
-		class Pointer = T*, class Reference = T& >
+	template <class T, class Pointer = T*, class Reference = T&,
+				class Distance = std::ptrdiff_t, class Category = std::bidirectional_iterator_tag>
 	class bidirectional_iterator{
 	public:
-		typedef T									pair_type;
-		typedef typename pair_type::first_type		key_type;
-		typedef typename pair_type::second_type		mapped_type;
+		typedef T									value_type;
 		typedef Distance							difference_type;
 		typedef	Pointer								pointer;
 		typedef	Reference							reference;
 		typedef Category							iterator_category;
-		typedef typename Btree<pair_type>::node			node;
+		typedef node<value_type>					node;
+
 	private:
 		node*	_node;
-		bidirectional_iterator() : _node(NULL){};
-
+		const Itree<value_type>*	_tree;
 
 		node* previous(node *ptr) {
+			if(ptr == NULL){	//end node
+				return _tree->findLargest();
+			}
 			if (ptr->left) {
 				ptr = ptr->left;
 				while (ptr->right)
@@ -30,13 +31,18 @@ namespace ft{
 			else {
 				node* tmp = ptr;
 				ptr = ptr->parent;
-				if (ptr->left == tmp)
-					ptr = ptr->parent;    // perhaps while condition??
+				while (ptr && ptr->right != tmp){
+					tmp = ptr;
+					ptr = ptr->parent;
+				}
 			}
 			return ptr;
 		}
 
 		node* next(node *ptr) {
+			if(ptr == NULL){	//rend node
+				return _tree->findSmallest();
+			}
 			if (ptr->right) {;
 				ptr = ptr->right;
 				while (ptr->left)
@@ -45,7 +51,7 @@ namespace ft{
 			else {
 				node* tmp = ptr;
 				ptr = ptr->parent;
-				while (ptr->left != tmp) {
+				while (ptr && ptr->left != tmp) {
 					tmp = ptr;
 					ptr = ptr->parent;
 				}
@@ -53,10 +59,13 @@ namespace ft{
 			return ptr;
 		}
 
-
 	public:
-		bidirectional_iterator(node* node) : _node(node){};
-		bidirectional_iterator(bidirectional_iterator const& original) : _node(original._node){};
+		bidirectional_iterator(node* ptr, const Itree<value_type>* tree) : _node(ptr), _tree(tree) {};
+		bidirectional_iterator() : _node(NULL), _tree(NULL){};
+
+		template <class ptr, class ref>
+		bidirectional_iterator(bidirectional_iterator<T, ptr, ref> const& original) : _node( original.getNode() ), _tree( original.getTree() ){};
+
 		~bidirectional_iterator(){};
 
 		bidirectional_iterator&	operator=(bidirectional_iterator const& original){
@@ -90,13 +99,19 @@ namespace ft{
 			return copy;
 		}
 		reference operator*(){
-			return *this->_node->pair;
+			return *this->_node->data;
 		}
 		pointer operator->(){
-			return this->_node->pair;
+			return this->_node->data;
 		}
 		pointer operator->() const{
-			return this->_node->pair;
+			return this->_node->data;
+		}
+		node*	getNode() const{
+			return this->_node;
+		}
+		const Itree<value_type>*	getTree() const{
+			return this->_tree;
 		}
 	};
 }

@@ -3,12 +3,21 @@ FT_NAME := ft_containers
 HEADERFILES := 	vector.hpp\
 				stack.hpp\
 				map.hpp\
-				Btree.hpp\
+				set.hpp\
+				Aordered.hpp\
+				RBtree.hpp\
+				Itree.hpp\
+				node.hpp\
+				utilities.hpp\
 				Iterators/iterator.hpp\
 				Iterators/iterator_traits.hpp\
 				Iterators/reverse_iterator.hpp\
 				Iterators/bidirectional_iterator.hpp
-SRCS :=	main.cpp tests/stringVectorTests.cpp tests/intVectorTests.cpp tests/intStackTests.cpp tests/stringStackTests.cpp tests/mapTests.cpp 
+SRCS :=	main.cpp\
+		tests/vector/stringVectorTests.cpp tests/vector/intVectorTests.cpp\
+		tests/stack/intStackTests.cpp tests/stack/stringStackTests.cpp\
+		tests/map/mapTests.cpp\
+		tests/set/setTests.cpp
 
 FLAGS := -Wall -Wextra -Werror -std=c++98
 OBJFILES := $(SRCS:%.cpp=obj/%.o)
@@ -31,11 +40,14 @@ ft_obj/%.o: %.cpp $(HEADERFILES)
 
 clean:
 	rm -f $(OBJFILES)
+	rm -f $(FT_OBJFILES)
 
 fclean: clean
 	rm -f $(NAME)
+	rm -f $(FT_NAME)
 
 re: fclean all
 
 test: all
-	diff TestOutput/myVectorOutput TestOutput/realVectorOutput
+	./containers && ./ft_containers
+	diff TestOutput/my_output TestOutput/std_output
