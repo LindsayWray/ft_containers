@@ -15,15 +15,15 @@
 
 
 template<class T1, class T2>
-void printMap(ft::map<T1, T2>& map, std::ofstream& tests){
+void printTree(ft::map<T1, T2>& map, std::ofstream& tests){
 	(void)tests;
-	for (typename ft::map<T1, T2>::iterator it = map.begin(); it != map.end(); it++) {
+	for (typename ft::map<T1, T2>::const_iterator it = map.begin(); it != map.end(); it++) {
 		tests << it->first << " = " << it->second << "; ";
 	}
 	tests << '\n';
 }
 
-// void printMapterminal(std::string_view comment, const std::map<std::string, int>& m)
+// void printTreeterminal(std::string_view comment, const std::map<std::string, int>& m)
 // {
 // 	tests << comment ;
 // 	for (std::map<std::string, int>::const_iterator it = m.begin(); it != m.end(); it++) {
@@ -69,7 +69,7 @@ void mapTests(std::ofstream& tests){
 	testMap["U"] = 21;
 	testMap["W"] = 7;
 
-	//testMap.printInOrder();
+	//testMap.printTree();
 
 	tests << "Value O is: " << testMap["O"] << std::endl;
 	tests << "The map size is: " << testMap.size() << std::endl;
@@ -129,9 +129,9 @@ void mapTests(std::ofstream& tests){
 	
 
 
-	//testMap2.printInOrder();
+	//testMap2.printTree();
 	testMap2.erase(16);
-	//testMap2.printInOrder();
+	//testMap2.printTree();
 	testMap2.erase(16);
 	//testMap2.printTree();
 
@@ -193,6 +193,19 @@ void mapTests(std::ofstream& tests){
 	tests << '\n';
 
 
+
+
+	tests << "\n--- CONST ITERATOR COMPARE --" << std::endl;
+	ft::map<std::string, int>::iterator const_it = testMap.begin(); 
+	it = testMap.begin();
+	it++, it++, it++;
+	tests << std::boolalpha << "is equal			" << (it == const_it) << std::endl;
+	tests << std::boolalpha << "is not equal			" << (it != const_it) << std::endl;
+	tests << std::boolalpha << "is equal			" << (const_it == it) << std::endl;
+	tests << std::boolalpha << "is not equal			" << (const_it != it) << std::endl;
+	tests << "look up key  " << const_it->first << " and value " << const_it->second << std::endl;
+
+
 	tests << "--- TEST SECOND CONSTRUCTOR (fill with iterator range) --" << std::endl;
 	ft::map<int, char>::iterator ite = testMap2.begin();
 	ite++, ite++, ite++;
@@ -202,7 +215,7 @@ void mapTests(std::ofstream& tests){
 	}
 	tests << '\n';
 
-	//testMap3.printInOrder();
+	//testMap3.printTree();
 
 	tests << "--- TEST ERASE WITH ITERATORS--" << std::endl;
 	ft::map<int, char>::iterator iter = testMap3.begin();
@@ -213,7 +226,7 @@ void mapTests(std::ofstream& tests){
 	}
 	tests << '\n';
 
-	//testMap3.printInOrder();
+	//testMap3.printTree();
 
 
 
@@ -230,33 +243,23 @@ void mapTests(std::ofstream& tests){
 	tests << "begin map 2 before swap: " << it_testMemory->first << ", " << it_testMemory->second << std::endl;
 	tests << "Size map 2 before swap: " << testMap2.size() << std::endl;
 	tests << "Map 2 before swap: ";
-	for (ft::map<int, char>::iterator it = testMap2.begin(); it != testMap2.end(); it++) {
-		tests << it->first << " = " << it->second << "; ";
-	}
-	tests << '\n';
+	printTree(testMap2, tests);
 	ft::map<int, char>::iterator it_testMemory2 = testMap3.begin();
 	tests << "begin map 3 before swap: " << it_testMemory2->first << ", " << it_testMemory2->second << std::endl;
 	tests << "Size map 3 before swap: " << testMap3.size() << std::endl;
 	tests << "Map 3 before swap:";
-	for (ft::map<int, char>::iterator it = testMap3.begin(); it != testMap3.end(); it++) {
-		tests << it->first << " = " << it->second << "; ";
-	}
-	tests << '\n';
+	printTree(testMap3, tests);
+
 	testMap2.swap(testMap3);
 	tests << "begin map 2 after swap: " << it_testMemory->first << ", " << it_testMemory->second << std::endl;
 	tests << "Size map 2 after swap: " << testMap2.size() << std::endl;
 	tests << "Map 2 after swap: ";
-	for (ft::map<int, char>::iterator it = testMap2.begin(); it != testMap2.end(); it++) {
-		tests << it->first << " = " << it->second << "; ";
-	}
-	tests << '\n';
+	printTree(testMap2, tests);
+
 	tests << "begin map 3 after swap: " << it_testMemory2->first << ", " << it_testMemory2->second << std::endl;
 	tests << "Size map 3 after swap: " << testMap3.size() << std::endl;
 	tests << "Map 3 after swap:";
-	for (ft::map<int, char>::iterator it = testMap3.begin(); it != testMap3.end(); it++) {
-		tests << it->first << " = " << it->second << "; ";
-	}
-	tests << '\n';
+	printTree(testMap3, tests);
 
 
 	tests << "Value Compare TEST:\n";
@@ -324,29 +327,29 @@ void mapTests(std::ofstream& tests){
 
 	tests << "Assignment operator and Copy constructor" << std::endl;
 	tests << "Map 2 before assignment\n";
-	printMap(testMap2, tests);
+	printTree(testMap2, tests);
 	tests << "Map 3 before assignment\n";
-	printMap(testMap3, tests);
+	printTree(testMap3, tests);
 	testMap3 = testMap2;
 	tests << "Map 3 after assignment\n";
-	printMap(testMap3, tests);
+	printTree(testMap3, tests);
 	testMap3.erase(10);
 	tests << "Map 3 after erase\n";
-	printMap(testMap3, tests);
+	printTree(testMap3, tests);
 	tests << "element map 2 has not been erased\n";
-	printMap(testMap2, tests);
+	printTree(testMap2, tests);
 
 	testMap2[30] = 'o'; testMap2[-90] = 'H'; testMap2[6000] = 'p';
 	ft::map<int, char> copyMap(testMap2);
 	tests << "Map 2 contains\n";
-	printMap(testMap2, tests);
+	printTree(testMap2, tests);
 	tests << "CopyMap contains\n";
-	printMap(copyMap, tests);
+	printTree(copyMap, tests);
 	copyMap.erase(-90);
 	tests << "CopyMap after erase\n";
-	printMap(copyMap, tests);
+	printTree(copyMap, tests);
 	tests << "Map 2 not affected by erase\n";
-	printMap(testMap2, tests);
+	printTree(testMap2, tests);
 
 
 	testMap.clear();

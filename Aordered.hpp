@@ -28,14 +28,13 @@ namespace ft {
 		typedef	ft::bidirectional_iterator<value_type, const_pointer, const_reference>		const_iterator;
 		typedef	ft::reverse_iterator<iterator>												reverse_iterator;
 		typedef	ft::reverse_iterator<const_iterator>										const_reverse_iterator;
-		typedef Itree<value_type>											tree_type;
+		typedef Itree<value_type>															tree_type;
 
 	protected:
 		allocator_type		_alloc;
 		key_compare			_comp_func;
 		
 	public:
-		//Aordered(){};
 		virtual ~Aordered(){};
 
 		//  ------------  ITERATOR FUNCTIONS  ------------
@@ -68,7 +67,6 @@ namespace ft {
 		}
 
 
-
 		// //  ------------  CAPACITY  ------------
 		bool empty() const _NOEXCEPT{
 			if (getTree().getSize() == 0)
@@ -81,17 +79,13 @@ namespace ft {
 		};
 	
 
-
-
 		// //  ------------  OBSERVERS   ------------
-		
 		key_compare key_comp() const{
 			return _comp_func;
 		};
 	
 
 		// //  ------------  OPERATIONS   ------------
-
 		iterator lower_bound(const key_type& k){
 			for(iterator it = begin(); it != end(); it++){
 				if(!_comp_func(it->first, k))
@@ -128,7 +122,7 @@ namespace ft {
 			return ft::make_pair<const_iterator, const_iterator>(lower_bound(k), upper_bound(k));
 		};
 		
-		// //  ------------  ALLOCATOR   ------------
+		//  ------------  ALLOCATOR   ------------
 		allocator_type get_allocator() const{
 			return _alloc;
 		};
@@ -136,7 +130,6 @@ namespace ft {
 		protected:
 		virtual const Itree<value_type>& getTree() const = 0;
 	};
-
 }
 
 #endif

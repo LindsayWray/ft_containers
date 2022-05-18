@@ -145,6 +145,11 @@ namespace ft {
 			return 0;
 		};
 
+		//		*********************	Print Tree Structure     *********************
+		void	printTree(){
+			_tree.printSetStructure();
+		};
+
 		private:
 		const Itree<value_type>& getTree() const{
 			return _tree;

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string>
 #include <fstream>
+#include <list>
 
 #if STD_CONTAINER
 	#include <map>
@@ -13,19 +14,17 @@
 #endif
 
 
-void printVector(ft::vector<int> testVec, std::ofstream& tests)
-{
-	for (ft::vector<int>::const_iterator ite = testVec.begin() ; ite != testVec.end(); ++ite)
-		tests << ' ' << *ite;
+void printVector(ft::vector<int> testVec, std::ofstream& tests) {
+	for (ft::vector<int>::const_iterator it = testVec.begin() ; it != testVec.end(); ++it)
+		tests << ' ' << *it;
 	tests << '\n';
 }
 
-void printVectorTerminal(ft::vector<int> testVec)
-{
-	for (ft::vector<int>::iterator ite = testVec.begin() ; ite != testVec.end();  ++ite)
-		std::cout << ' ' << *ite;
-	std::cout << '\n';
-}
+// void printVector(ft::vector<int> testVec, std::ofstream& tests) {
+// 	for (ft::vector<int>::iterator it = testVec.begin() ; it != testVec.end();  ++it)
+// 		std::cout << ' ' << *it;
+// 	std::cout << '\n';
+// }
 
 
 void intVectorTests(std::ofstream& tests){
@@ -83,14 +82,14 @@ void intVectorTests(std::ofstream& tests){
 	
 
 
-	// SECOND VECTOR CONSTRUCTOR 
+	tests << "SECOND VECTOR CONSTRUCTOR\n"; 
 	ft::vector<int> testVec2 (7,100);
 	tests << "vector constructor with input:";
 	printVector(testVec2, tests);
 	tests << "capacity	" << testVec2.capacity() << std::endl;
 
 	tests << "------------------------------------------------" << std::endl;
-	//THIRD VECTOR CONSTRUCTOR
+	tests << "THIRD VECTOR CONSTRUCTOR\n";
 	ft::vector<int> testVec3 (testVec2.begin(), (testVec2.end() - 3));
 	tests << "vector constructor with range contains:";
 	printVector(testVec3, tests);
@@ -99,7 +98,7 @@ void intVectorTests(std::ofstream& tests){
 	tests << "------------------------------------------------" << std::endl;
 
 
-	// test SFINAE proofness of third constructor
+	tests << "test SFINAE proofness of third constructor\n";
 	ft::vector<int> testVecFaulty ("hi", "hello");
 	tests << "value: " << testVecFaulty.front() << std::endl;
 
@@ -165,10 +164,8 @@ void intVectorTests(std::ofstream& tests){
 	tests << "  Swap TESTS\n";
 	ft::vector<int>::iterator it_testMemory = testVec2.begin();
 	tests << "vectorA contains: ";
-		tests << testVec.size() << std::endl; 
-	for (ft::vector<int>::iterator it = testVec.begin(); it != testVec.end(); ++it)
-		tests << ' ' << *it;
-	tests << '\n';
+		tests << testVec.size() << std::endl;
+	printVector(testVec, tests);
 	tests << "vectorB contains: ";
 	tests << testVec2.size() << std::endl;
 	printVector(testVec2, tests);
@@ -253,8 +250,19 @@ void intVectorTests(std::ofstream& tests){
 
 
 
+	tests << "\n--- CONST ITERATOR COMPARE --" << std::endl;
+	ft::vector<int>::iterator const_it = testVec.begin();
+	ite = testVec.begin() + 5;
 
-	//-------------------------------------------------------------------------------------------------------
+	tests << std::boolalpha << "is equal			" << (ite == const_it) << std::endl;
+	tests << std::boolalpha << "is not equal			" << (ite != const_it) << std::endl;
+	tests << std::boolalpha << "is smaller			" << (const_it < ite) << std::endl;
+	tests << std::boolalpha << "is bigger			" << (const_it > ite) << std::endl;
+	tests << std::boolalpha << "is smaller or equal		" << (const_it + 5 <= testVec.end()) << std::endl;
+	tests << std::boolalpha << "is bigger or equal		" << (const_it >= testVec.end()) << std::endl;
+	tests << "look up index		" << const_it[2] << std::endl;
+	tests << "subtract iterators		" << ite - const_it << std::endl;
+	tests << "subtract iterators		" << const_it - ite << std::endl;
 
 
 
@@ -310,5 +318,60 @@ void intVectorTests(std::ofstream& tests){
 	tests << "is smaller or equal		" << (testVec3 <= testVec) << std::endl;
 	tests << "is bigger or equal		" << (copyVec >= testVec) << std::endl;
 	tests << "is bigger or equal		" << (testVec3 >= testVec2) << std::endl;
+
+
+	{
+		std::list<int> lst;
+		std::list<int>::iterator lst_it;
+		for (int i = 1; i < 5; ++i)
+			lst.push_back(i * 3);
+
+		ft::vector<int> vct(lst.begin(), lst.end());
+		std::cout << "size " << vct.size() << std::endl;
+
+		lst_it = lst.begin();
+		for (int i = 1; lst_it != lst.end(); ++i)
+			*lst_it++ = i * 5;
+		vct.assign(lst.begin(), lst.end());
+		std::cout << "size " << vct.size() << std::endl;
+
+		vct.insert(vct.end(), lst.rbegin(), lst.rend());
+		std::cout << "size " << vct.size() << std::endl;
+	}
+	
+
+	{
+		// ft::vector<int> vct(10);
+		// ft::vector<int> vct2;
+
+		// for (unsigned long int i = 0; i < vct.size(); ++i)
+		// 	vct[i] = (vct.size() - i) * 3;
+		// std::cout << "size " << vct.size() << std::endl;
+
+		// vct2.insert(vct2.end(), 42);
+
+		// for (ft::vector<int>::iterator it = vct2.begin() ; it != vct2.end();  ++it)
+		// 	std::cout << ' ' << *it;
+		// std::cout << '\n';
+
+		// vct2.insert(vct2.begin(), 2, 21);
+		// std::cout << "size " << vct2.size() << std::endl;
+
+		// vct2.insert(vct2.end() - 2, 42);
+		// std::cout << "size " << vct2.size() << std::endl;
+
+		// vct2.insert(vct2.end(), 2, 84);
+		// std::cout << "size " << vct2.size() << std::endl;
+
+		// vct2.resize(4);
+		// std::cout << "size " << vct2.size() << std::endl;
+
+		// vct2.insert(vct2.begin() + 2, vct.begin(), vct.end());
+		// vct.clear();
+		// std::cout << "size " << vct2.size() << std::endl;
+
+		// std::cout << "size " << vct.size() << std::endl;
+	}
+	std::cout << std::endl;
 
 }

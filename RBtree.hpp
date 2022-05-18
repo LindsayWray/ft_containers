@@ -35,28 +35,13 @@ namespace ft {
 			return *this;
 		}
 
-		//  		************** ADD FUNCTIONS **************
 
-		node* CreateLeaf(node* ptr, data_type& data) {
-			node* newNode;
-			try{
-				newNode = _nodeAlloc.allocate(1);
-				this->_nodeAlloc.construct(newNode, node(ptr));
-				newNode->data = _alloc.allocate(1);
-				this->_alloc.construct(newNode->data, data);
-				this->_size++;
-			}
-			catch(std::bad_alloc &e){
-				std::cerr << e.what() << std::endl;	
-				exit(EXIT_FAILURE);
-			}
-			return newNode;
-		}
-
+		//  		**************   ADD FUNCTIONS   **************
 		bool	addLeaf(data_type data) {
 			return addLeaf(this->_root, data);
 		}
 
+		private:
 		bool	addLeaf(node* ptr, data_type& data) {
 			bool hasBeenAdded = true;
 			if(_root == NULL){
@@ -84,14 +69,56 @@ namespace ft {
 			return hasBeenAdded;
 		}
 
-		// 	 ************** REMOVAL FUNCTIONS **************
+		node* CreateLeaf(node* ptr, data_type& data) {
+			node* newNode;
+			try{
+				newNode = _nodeAlloc.allocate(1);
+				this->_nodeAlloc.construct(newNode, node(ptr));
+				newNode->data = _alloc.allocate(1);
+				this->_alloc.construct(newNode->data, data);
+				this->_size++;
+			}
+			catch(std::bad_alloc &e){
+				std::cerr << e.what() << std::endl;	
+				exit(EXIT_FAILURE);
+			}
+			return newNode;
+		}
 
+
+
+		// 	 ************** REMOVAL FUNCTIONS **************
+		public:
 		void	removeTree(){
 			removeSubtree(this->_root);
 			this->_root = NULL;			//clearing an empty map
 			this->_size = 0;
 		}
 
+		void	removeNode(const data_type& data){
+			removeNode(data, this->_root);
+		}
+
+		private:
+		void	removeNode(const data_type& data, node* parent){
+			if(this->_root != NULL){
+				if(isEqual(*(_root->data), data))
+					RemoveMatch(NULL, _root);
+				else{
+					if(_compare(data, *(parent->data)) && parent->left != NULL){
+						isEqual(*(parent->left->data), data) ?
+						RemoveMatch(parent, parent->left)	:
+						removeNode(data, parent->left);
+					}
+					else if(_compare(*(parent->data), data) && parent->right != NULL){
+						isEqual(*(parent->right->data), data) ?
+						RemoveMatch(parent, parent->right)	:
+						removeNode(data, parent->right);
+					}
+				}
+			}
+		}
+		
 		void	removeSubtree(node* ptr){
 			if(ptr != NULL){
 				if(ptr->left != NULL)
@@ -112,32 +139,6 @@ namespace ft {
 				_nodeAlloc.deallocate(ptr, 1);
 				this->_size--;
 		}
-
-
-		void	removeNode(const data_type& data){
-			removeNode(data, this->_root);
-		}
-
-		void	removeNode(const data_type& data, node* parent){
-			if(this->_root != NULL){
-				if(isEqual(*(_root->data), data))
-					RemoveMatch(NULL, _root);
-				else{
-					if(_compare(data, *(parent->data)) && parent->left != NULL){
-						isEqual(*(parent->left->data), data) ?
-						RemoveMatch(parent, parent->left)	:
-						removeNode(data, parent->left);
-					}
-					else if(_compare(*(parent->data), data) && parent->right != NULL){
-						isEqual(*(parent->right->data), data) ?
-						RemoveMatch(parent, parent->right)	:
-						removeNode(data, parent->right);
-					}
-				}
-			}
-		}
-
-
 
 		void	RemoveMatch(node* parent, node* match){
 			node* movedUpNode = match;
@@ -246,10 +247,9 @@ namespace ft {
 		}
 
 		void replaceParentsChild(node* parent, node* oldChild, node* newChild) {
-			if (parent == NULL){
+			if (parent == NULL)
 				_root = newChild;
-			}
-				
+
 			else if (parent->left == oldChild)
 				parent->left = newChild;
 			else if (parent->right == oldChild) 
@@ -275,7 +275,6 @@ namespace ft {
 		}
 
 		// 			 ************** ROTATIONS **************
-
 		void rotateRight(node* ptr) {
 			node* parent = ptr->parent;
 			node* leftChild = ptr->left;
@@ -307,7 +306,6 @@ namespace ft {
 
 
 		// 			 ************** FIXER FUNCTIONS **************
-
 		void fixRedBlackPropertiesAfterInsert(node* newNode) {
 			node* parent = newNode->parent;
 
@@ -393,12 +391,22 @@ namespace ft {
 
 
 
-		// 			************** FINDERS **************
 
+		// 			************** FINDERS **************
+		public:
 		node*	findNode(const data_type& data) const{
 			return findNode(data, this->_root);
 		}
 
+		node*		findSmallest() const{
+			return findSmallest(this->_root);
+		}
+		
+		node*		findLargest() const{
+			return findLargest(this->_root);
+		}
+
+		private:
 		node*	findNode(const data_type& data, node* ptr) const{
 			if(ptr != NULL){
 				if(isEqual(*(ptr->data), data))
@@ -414,19 +422,11 @@ namespace ft {
 				return NULL;
 		}
 
-		node*		findSmallest() const{
-			return findSmallest(this->_root);
-		}
-
 		node*		findSmallest(node* ptr) const{
 			if(ptr && ptr->left != NULL)
 				return findSmallest(ptr->left);
 			else
 				return ptr;
-		}
-
-		node*		findLargest() const{
-			return findLargest(this->_root);
 		}
 
 		node*		findLargest(node* ptr) const{
@@ -437,20 +437,10 @@ namespace ft {
 		}
 
 
-		// 			************** UTILS **************
 
+		// 			************** UTILS **************
 		bool isBlack(node* ptr) {
 			return ptr == NULL || ptr->color == BLACK;
-		}
-
-		void swapTrees(RBtree& tree){
-			node* tempRoot = this->_root;
-			this->_root = tree._root;
-			tree._root = tempRoot;
-
-			size_type tempSize = this->_size;
-			this->_size = tree._size;
-			tree._size = tempSize;
 		}
 
 		bool	isEqual(const data_type& x, const data_type& y) const{
@@ -461,30 +451,60 @@ namespace ft {
 			return true;
 		}
 
+		public:
 		size_type	getSize() const {
 			return this->_size;
 		}
+		
+		void swapTrees(RBtree& tree){
+			node* tempRoot = this->_root;
+			this->_root = tree._root;
+			tree._root = tempRoot;
+
+			size_type tempSize = this->_size;
+			this->_size = tree._size;
+			tree._size = tempSize;
+		}
+
 
 
 		//   *******  PRINT FUNCTIONS *******
-
-		void	printInOrder(node* ptr, int depth = 0){
+		void	printMapStructure(node* ptr, int depth = 0){
 			if(this->_root != NULL){
 				if(ptr->left != NULL)
-					printInOrder(ptr->left, depth + 1);
+					printMapStructure(ptr->left, depth + 1);
 				for (int i = 0; i < depth; i++)
 					std::cout << "- ";
 				std::cout << "key: " << ptr->data->first << "	value: " << ptr->data->second << "	color: " << (ptr->color == RED ? "RED" : "BLACK") << std::endl;
 				if(ptr->right != NULL)
-					printInOrder(ptr->right, depth + 1);
+					printMapStructure(ptr->right, depth + 1);
 			}
 			else
 				std::cout << "The tree is empty\n" << std::endl;
 		}
 
-		void	printInOrder(){
+		void	printMapStructure(){
+			std::cout << "Root is: " << this->_root->data->first << std::endl;
+			printMapStructure(this->_root);
+		}
+
+		void	printSetStructure(node* ptr, int depth = 0){
+			if(this->_root != NULL){
+				if(ptr->left != NULL)
+					printSetStructure(ptr->left, depth + 1);
+				for (int i = 0; i < depth; i++)
+					std::cout << "+ ";
+				std::cout << "	value: " << *(ptr->data) << "	color: " << (ptr->color == RED ? "RED" : "BLACK") << std::endl;
+				if(ptr->right != NULL)
+					printSetStructure(ptr->right, depth + 1);
+			}
+			else
+				std::cout << "The tree is empty\n" << std::endl;
+		}
+
+		void	printSetStructure(){
 			std::cout << "Root is: " << *(this->_root->data) << std::endl;
-			printInOrder(this->_root);
+			printSetStructure(this->_root);
 		}
 	};
 }

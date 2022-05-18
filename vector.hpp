@@ -180,7 +180,10 @@ namespace ft{
 		template <class InputIterator>
 		typename enable_if<!is_integral<InputIterator>::value,void>::type assign (InputIterator first, InputIterator last){
 			this->clear();
-			increaseCapacity(last - first); ///
+			//increaseCapacity(last - first); ///
+			int count = 0;
+			for(InputIterator it = first; it != last; it++, count++);
+			increaseCapacity(count);
 			this->insert(this->end(), first, last);
 		};
 		void assign (size_type n, const value_type& val){

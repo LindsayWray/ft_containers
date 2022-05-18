@@ -13,19 +13,17 @@
 #endif
 
 
-void printVector(ft::vector<std::string> testVec, std::ofstream& tests)
-{
-	for (ft::vector<std::string>::iterator ite = testVec.begin() ; ite != testVec.end(); ++ite)
-		tests << ' ' << *ite;
+void printVector(ft::vector<std::string> testVec, std::ofstream& tests){
+	for (ft::vector<std::string>::iterator it = testVec.begin() ; it != testVec.end(); ++it)
+		tests << ' ' << *it;
 	tests << '\n';
 }
 
-void printVectorTerminal(ft::vector<std::string> testVec)
-{
-	for (ft::vector<std::string>::iterator ite = testVec.begin() ; ite != testVec.end(); ++ite)
-		std::cout << ' ' << *ite;
-	std::cout << '\n';
-}
+// void printVector(ft::vector<std::string> testVec, std::ofstream& tests){
+// 	for (ft::vector<std::string>::iterator it = testVec.begin() ; it != testVec.end(); ++it)
+// 		std::cout << ' ' << *it;
+// 	std::cout << '\n';
+// }
 
 void	stringVectorTests(std::ofstream& tests){
 
@@ -79,7 +77,6 @@ void	stringVectorTests(std::ofstream& tests){
 	tests << "capacity after smaller resize	" << testVec.capacity() << std::endl;
 	try{
 		tests << "on index 49			" << testVec.at(49) << std::endl;
-		//tests << "on index 50			" << testVec.at(50) << std::endl;
 	}
 	catch(std::out_of_range& e){
 		tests << e.what() << std::endl;
@@ -116,7 +113,7 @@ void	stringVectorTests(std::ofstream& tests){
 	printVector(testVec, tests);
 
 
-	// SECOND VECTOR CONSTRUCTOR 
+	tests << "SECOND VECTOR CONSTRUCTOR\n";
 	ft::vector<std::string> testVec2 (3,"test");
 	tests << "vector constructor with input:";
 	printVector(testVec2, tests);
@@ -243,7 +240,7 @@ void	stringVectorTests(std::ofstream& tests){
 	
 	
 	
-	tests << "\n--- STRING VECTOR CONST ITERATOR COMPARE --" << std::endl;
+	tests << "\n--- CONST ITERATOR COMPARE --" << std::endl;
 	ft::vector<std::string>::iterator const_it = testVec.begin();
 	ite = testVec.begin() + 5;
 
@@ -252,34 +249,11 @@ void	stringVectorTests(std::ofstream& tests){
 	tests << std::boolalpha << "is smaller			" << (const_it < ite) << std::endl;
 	tests << std::boolalpha << "is bigger			" << (const_it > ite) << std::endl;
 	tests << std::boolalpha << "is smaller or equal		" << (const_it + 5 <= testVec.end()) << std::endl;
-	// tests << "is bigger or equal		" << (ite >= testVec.end()) << std::endl;
-	// tests << "is bigger or equal		" << (ite >= ite) << std::endl;
-	// tests << "the value is			" << *ite << std::endl;
-	// ++ite;
-	// ite++;
-	// tests << "the value after increment	" << *ite << std::endl;
-	// --ite;
-	// ite--;
-	// tests << "the value after decrement	" << *ite << std::endl;
-	// tests << "dereference and increment	" << *ite++ << std::endl;
-	// tests << "dereference and increment	" << *++ite << std::endl;
-	// tests << "increment with five		" << *(ite + 5) << std::endl;
-	// tests << "std::string first increment		" << *(8 + ite) << std::endl;
-
-	// ft::vector<std::string>::iterator iter = testVec.begin();
-	// tests << "size				" << testVec.size() << std::endl;
-	// ite += 8;
-	// iter += 3;
-	// tests << "value				" << *ite << std::endl;
-	// tests << "value				" << *iter << std::endl;
-	// tests << "subtract iterators		" << ite - iter << std::endl;
-	// tests << "subtract iterators		" << iter - ite << std::endl;
-	// tests << "decrement	eight		" << *(ite - 8) << std::endl;
-	// ite -= 9;
-	// tests << "after decrement			" << *ite << std::endl;
-	// ite += 5;
-	// tests << "after increment			" << *ite << std::endl;
-	// tests << "look at index eight		" << ite[8] << std::endl;
+	tests << std::boolalpha << "is bigger or equal		" << (const_it >= testVec.end()) << std::endl;
+	tests << "look up index		" << const_it[2] << std::endl;
+	tests << "subtract iterators		" << ite - const_it << std::endl;
+	tests << "subtract iterators		" << const_it - ite << std::endl;
+	
 
 
 	//-------------------------------------------------------------------------------------------------------
@@ -293,9 +267,9 @@ void	stringVectorTests(std::ofstream& tests){
 	tests << *rite++ << std::endl;	
 
 
-	tests << "vector contains:";
-	for (ft::vector<std::string>::reverse_iterator rite = testVec.rbegin(); rite != testVec.rend(); ++rite){
-		tests << ' ' << *rite;
+	tests << "vector in reverse:";
+	for (ft::vector<std::string>::reverse_iterator rit = testVec.rbegin(); rit != testVec.rend(); ++rit){
+		tests << ' ' << *rit;
 	}
 	tests << '\n';
 
