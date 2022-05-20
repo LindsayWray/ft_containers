@@ -27,6 +27,16 @@ void printVector(ft::vector<int> testVec, std::ofstream& tests) {
 // }
 
 
+
+
+
+
+
+
+
+
+
+
 void intVectorTests(std::ofstream& tests){
 
 
@@ -327,16 +337,16 @@ void intVectorTests(std::ofstream& tests){
 			lst.push_back(i * 3);
 
 		ft::vector<int> vct(lst.begin(), lst.end());
-		std::cout << "size " << vct.size() << std::endl;
+		tests << "size " << vct.size() << std::endl;
 
 		lst_it = lst.begin();
 		for (int i = 1; lst_it != lst.end(); ++i)
 			*lst_it++ = i * 5;
 		vct.assign(lst.begin(), lst.end());
-		std::cout << "size " << vct.size() << std::endl;
+		tests << "size " << vct.size() << std::endl;
 
 		vct.insert(vct.end(), lst.rbegin(), lst.rend());
-		std::cout << "size " << vct.size() << std::endl;
+		tests << "size " << vct.size() << std::endl;
 	}
 	
 
@@ -373,5 +383,6 @@ void intVectorTests(std::ofstream& tests){
 		// std::cout << "size " << vct.size() << std::endl;
 	}
 	std::cout << std::endl;
+
 
 }

@@ -33,6 +33,141 @@ void printTree(ft::map<T1, T2>& map, std::ofstream& tests){
 // }
 
 
+
+
+#include <list>
+typedef ft::pair<const int, std::string> T3;
+
+static int iter = 0;
+
+template <typename MAP, typename U>
+void	ft_erase(MAP &mp, U param) {
+	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
+	mp.erase(param);
+	std::cout << "size map *-*-* " << mp.size() << std::endl;
+}
+
+template <typename MAP, typename U, typename V>
+void	ft_erase(MAP &mp, U param, V param2) {
+	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
+	mp.erase(param, param2);
+	std::cout << "size map **** " << mp.size() << std::endl;
+}
+
+void		erase_test() {
+	std::list<T3> lst;
+	unsigned int lst_size = 10;
+	for (unsigned int i = 0; i < lst_size; ++i)
+		lst.push_back(T3(i, std::string((lst_size - i), i + 65)));
+	ft::map<int, std::string> mp(lst.begin(), lst.end());
+
+	std::cout << "size map * " << mp.size() << std::endl;
+
+	ft_erase(mp, ++mp.begin());
+
+	ft_erase(mp, mp.begin());
+	ft_erase(mp, --mp.end());
+
+	ft_erase(mp, mp.begin(), ++(++(++mp.begin())));
+	//ft_erase(mp, --(--(--mp.end())), --mp.end());
+
+	mp[10] = "Hello";
+	mp[11] = "Hi there";
+
+	std::cout << "size map ** " << mp.size() << std::endl;
+	// ft_erase(mp, --(--(--mp.end())), mp.end());
+
+	mp[12] = "ONE";
+	mp[13] = "TWO";
+	mp[14] = "THREE";
+	mp[15] = "FOUR";
+
+	std::cout << "size map*** " << mp.size() << std::endl;
+	ft_erase(mp, mp.begin(), mp.end());
+
+}
+
+
+
+
+
+
+
+
+template <typename T>
+class foo {
+	public:
+		typedef T	value_type;
+
+		foo(void) : value(), _verbose(false) { };
+		foo(value_type src, const bool verbose = false) : value(src), _verbose(verbose) { };
+		foo(foo const &src, const bool verbose = false) : value(src.value), _verbose(verbose) { };
+		~foo(void) { if (this->_verbose) std::cout << "~foo::foo()" << std::endl; };
+		void m(void) { std::cout << "foo::m called [" << this->value << "]" << std::endl; };
+		void m(void) const { std::cout << "foo::m const called [" << this->value << "]" << std::endl; };
+		foo &operator=(value_type src) { this->value = src; return *this; };
+		foo &operator=(foo const &src) {
+			if (this->_verbose || src._verbose)
+				std::cout << "foo::operator=(foo) CALLED" << std::endl;
+			this->value = src.value;
+			return *this;
+		};
+		value_type	getValue(void) const { return this->value; };
+		void		switchVerbose(void) { this->_verbose = !(this->_verbose); };
+
+		operator value_type(void) const {
+			return value_type(this->value);
+		}
+	private:
+		value_type	value;
+		bool		_verbose;
+};
+
+
+
+
+
+
+// #define T1 char
+// #define T2 foo<float>
+// typedef ft::map<T1, T2> _map;
+// typedef _map::const_iterator const_it;
+
+// static unsigned int i = 0;
+
+// void	ft_comp(const _map &mp, const const_it &it1, const const_it &it2) {
+// 	bool res[2];
+
+// 	std::cout << "\t-- [" << ++i << "] --" << std::endl;
+// 	res[0] = mp.key_comp()(it1->first, it2->first);
+// 	res[1] = mp.value_comp()(*it1, *it2);
+// 	std::cout << "with [" << it1->first << " and " << it2->first << "]: ";
+// 	std::cout << "key_comp: " << res[0] << " | " << "value_comp: " << res[1] << std::endl;
+// }
+
+
+// void		test_comp() {
+// 	_map	mp;
+
+// 	mp['a'] = 2.3;
+// 	mp['b'] = 1.4;
+// 	mp['c'] = 0.3;
+// 	mp['d'] = 4.2;
+// 	//printSize(mp);
+// 	std::cout << "size map: " << mp.size() << std::endl;
+
+// 	for (const_it it1 = mp.begin(); it1 != mp.end(); ++it1)
+// 		for (const_it it2 = mp.begin(); it2 != mp.end(); ++it2)
+// 			ft_comp(mp, it1, it2);
+
+// 	//printSize(mp);
+// 	std::cout << "size map: " << mp.size() << std::endl;
+// }
+
+
+
+
+
 void mapTests(std::ofstream& tests){
 
 	tests << "\n--- MAP GENERAL TESTS --" << std::endl;
@@ -354,6 +489,9 @@ void mapTests(std::ofstream& tests){
 
 	testMap.clear();
 	tests << std::boolalpha << "Map empty after clear: " << testMap.empty() << '\n';
+
+	//test_comp();
+	erase_test();
 
 }
 
