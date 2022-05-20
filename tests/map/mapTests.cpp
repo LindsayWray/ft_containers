@@ -169,28 +169,28 @@ void mapTests(std::ofstream& tests){
 
 
 
-	tests << "Map contains" << std::endl;
-	for (ft::map<std::string, int>::iterator it = testMap.begin(); it != testMap.end(); it++) {
-		tests << it->first << " = " << it->second << "; ";
-	}
-	tests << '\n';
-	tests << "Map backwards" << std::endl;
-	for (ft::map<std::string, int>::reverse_iterator it = testMap.rbegin(); it != testMap.rend(); it++) {
-		tests << it->first << " = " << it->second << "; ";
-	}
-	tests << '\n';
+	// tests << "Map contains" << std::endl;
+	// for (ft::map<std::string, int>::iterator it = testMap.begin(); it != testMap.end(); it++) {
+	// 	tests << it->first << " = " << it->second << "; ";
+	// }
+	// tests << '\n';
+	// tests << "Map backwards" << std::endl;
+	// for (ft::map<std::string, int>::reverse_iterator it = testMap.rbegin(); it != testMap.rend(); it++) {
+	// 	tests << it->first << " = " << it->second << "; ";
+	// }
+	// tests << '\n';
 
 
-	tests << "Const iterate" << std::endl;
-	for (ft::map<std::string, int>::const_iterator it = testMap.begin(); it != testMap.end(); it++) {
-		tests << it->first << " = " << it->second << "; ";
-	}
-	tests << '\n';
-	tests << "Const iterate backwards" << std::endl;
-	for (ft::map<std::string, int>::const_reverse_iterator it = testMap.rbegin(); it != testMap.rend(); it++) {
-		tests << it->first << " = " << it->second << "; ";
-	}
-	tests << '\n';
+	// tests << "Const iterate" << std::endl;
+	// for (ft::map<std::string, int>::const_iterator it = testMap.begin(); it != testMap.end(); it++) {
+	// 	tests << it->first << " = " << it->second << "; ";
+	// }
+	// tests << '\n';
+	// tests << "Const iterate backwards" << std::endl;
+	// for (ft::map<std::string, int>::const_reverse_iterator it = testMap.rbegin(); it != testMap.rend(); it++) {
+	// 	tests << it->first << " = " << it->second << "; ";
+	// }
+	// tests << '\n';
 
 
 

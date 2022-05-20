@@ -66,6 +66,11 @@ namespace ft{
 		template <class ptr, class ref>
 		bidirectional_iterator(bidirectional_iterator<T, ptr, ref> const& original) : _node( original.getNode() ), _tree( original.getTree() ){};
 
+		// template <class U>
+		// bidirectional_iterator(bidirectional_iterator<U, U*, U&> const& original) : _node( original.getNode() ), _tree( original.getTree() ){};
+
+
+
 		~bidirectional_iterator(){};
 
 		bidirectional_iterator&	operator=(bidirectional_iterator const& original){
