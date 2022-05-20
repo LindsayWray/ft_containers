@@ -95,22 +95,22 @@ void setTests(std::ofstream& tests){
 
 	tests << "Set contains" << std::endl;
 	printSet(testSet, tests);
-	tests << "Set backwards" << std::endl;
-	for (ft::set<int>::reverse_iterator it = testSet.rbegin(); it != testSet.rend(); it++) {
-		tests << *it << "; ";
-	}
-	tests << '\n';
+	// tests << "Set backwards" << std::endl;
+	// for (ft::set<int>::reverse_iterator it = testSet.rbegin(); it != testSet.rend(); it++) {
+	// 	tests << *it << "; ";
+	// }
+	// tests << '\n';
 
-	tests << "Const iterate" << std::endl;
-	for (ft::set<std::string>::const_iterator it = testSet2.begin(); it != testSet2.end(); it++) {
-		tests << *it << "; ";
-	}
-	tests << '\n';
-	tests << "Const iterate backwards" << std::endl;
-	for (ft::set<std::string>::const_reverse_iterator it = testSet2.rbegin(); it != testSet2.rend(); it++) {
-		tests << *it << "; ";
-	}
-	tests << '\n';
+	// tests << "Const iterate" << std::endl;
+	// for (ft::set<std::string>::const_iterator it = testSet2.begin(); it != testSet2.end(); it++) {
+	// 	tests << *it << "; ";
+	// }
+	// tests << '\n';
+	// tests << "Const iterate backwards" << std::endl;
+	// for (ft::set<std::string>::const_reverse_iterator it = testSet2.rbegin(); it != testSet2.rend(); it++) {
+	// 	tests << *it << "; ";
+	// }
+	// tests << '\n';
 
 
 	tests << "\n--- CONST ITERATOR COMPARE --" << std::endl;

@@ -41,7 +41,7 @@ namespace ft{
 		};
 		template <class InputIterator>
 		vector(InputIterator begin, InputIterator end, const allocator_type& alloc = allocator_type(),
-				typename std::enable_if<!std::is_integral<InputIterator>::value, bool>::type = true)
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value, bool>::type = true)
 				: _array(NULL), _size(0), _allocSize(0), _alloc(alloc){
 			//increaseCapacity(end - begin);
 			int count = 0;
@@ -178,7 +178,7 @@ namespace ft{
 
 		//  ------------  MODIFIERS   ------------
 		template <class InputIterator>
-		typename enable_if<!is_integral<InputIterator>::value,void>::type assign (InputIterator first, InputIterator last){
+		typename ft::enable_if<!ft::is_integral<InputIterator>::value,void>::type assign (InputIterator first, InputIterator last){
 			this->clear();
 			//increaseCapacity(last - first); ///
 			int count = 0;
@@ -186,6 +186,7 @@ namespace ft{
 			increaseCapacity(count);
 			this->insert(this->end(), first, last);
 		};
+
 		void assign (size_type n, const value_type& val){
 			this->clear();
 			increaseCapacity(n);
@@ -219,6 +220,7 @@ namespace ft{
 				if (_size == _allocSize){
 					increaseCapacity();
 				}
+				position = this->begin() - pos;
 				while(position <= this->end()){
 					value_type temp = _array[pos];
 					_alloc.destroy(&_array[pos]);
@@ -238,12 +240,16 @@ namespace ft{
 			}
 		};
 		template <class InputIterator>
-		typename enable_if<!is_integral<InputIterator>::value,void>::type insert (iterator position, InputIterator first, InputIterator last){
-			for(InputIterator it = first; it != last; ++it){
+		typename ft::enable_if<!ft::is_integral<InputIterator>::value,void>::type insert (iterator position, InputIterator first, InputIterator last){
+			// int count = 0;
+			// for(InputIterator it = first; it != last; it++, count++);
+			// increaseCapacity(count + _size);
+			for(InputIterator it = first; it != last; it++){
 				position = insert(position, *it);
 				position++;
 			}
 		};
+
 
 
 		iterator erase (iterator position){

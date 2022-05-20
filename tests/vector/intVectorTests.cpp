@@ -13,6 +13,42 @@
 	#include "../../vector.hpp"
 #endif
 
+void	prepost_incdec(ft::vector<int> &vct);
+
+
+
+// template <typename T>
+// class foo {
+// 	public:
+// 		typedef T	value_type;
+
+// 		foo(void) : value(), _verbose(false) { };
+// 		foo(value_type src, const bool verbose = false) : value(src), _verbose(verbose) { };
+// 		foo(foo const &src, const bool verbose = false) : value(src.value), _verbose(verbose) { };
+// 		~foo(void) { if (this->_verbose) tests << "~foo::foo()" << std::endl; };
+// 		void m(void) { tests << "foo::m called [" << this->value << "]" << std::endl; };
+// 		void m(void) const { tests << "foo::m const called [" << this->value << "]" << std::endl; };
+// 		foo &operator=(value_type src) { this->value = src; return *this; };
+// 		foo &operator=(foo const &src) {
+// 			if (this->_verbose || src._verbose)
+// 				tests << "foo::operator=(foo) CALLED" << std::endl;
+// 			this->value = src.value;
+// 			return *this;
+// 		};
+// 		value_type	getValue(void) const { return this->value; };
+// 		void		switchVerbose(void) { this->_verbose = !(this->_verbose); };
+
+// 		operator value_type(void) const {
+// 			return value_type(this->value);
+// 		}
+// 	private:
+// 		value_type	value;
+// 		bool		_verbose;
+// };
+
+
+
+
 
 void printVector(ft::vector<int> testVec, std::ofstream& tests) {
 	for (ft::vector<int>::const_iterator it = testVec.begin() ; it != testVec.end(); ++it)
@@ -22,8 +58,8 @@ void printVector(ft::vector<int> testVec, std::ofstream& tests) {
 
 // void printVector(ft::vector<int> testVec, std::ofstream& tests) {
 // 	for (ft::vector<int>::iterator it = testVec.begin() ; it != testVec.end();  ++it)
-// 		std::cout << ' ' << *it;
-// 	std::cout << '\n';
+// 		tests << ' ' << *it;
+// 	tests << '\n';
 // }
 
 
@@ -243,14 +279,13 @@ void intVectorTests(std::ofstream& tests){
 
 	ft::vector<int>::iterator iter = testVec.begin();
 	tests << "size				" << testVec.size() << std::endl;
-	ite += 30;
 	iter += 3;
 	tests << "value				" << *ite << std::endl;
 	tests << "value				" << *iter << std::endl;
 	tests << "subtract iterators		" << ite - iter << std::endl;
 	tests << "subtract iterators		" << iter - ite << std::endl;
+	ite += 2;
 	tests << "decrement with three		" << *(ite - 3) << std::endl;
-	ite += 10;
 	tests << "after increment ten		" << *ite << std::endl;
 	ite -= 4;
 	tests << "after decrement four		" << *ite << std::endl;
@@ -351,38 +386,125 @@ void intVectorTests(std::ofstream& tests){
 	
 
 	{
-		// ft::vector<int> vct(10);
-		// ft::vector<int> vct2;
+		ft::vector<int> vct(10);
+		ft::vector<int> vct2;
 
-		// for (unsigned long int i = 0; i < vct.size(); ++i)
-		// 	vct[i] = (vct.size() - i) * 3;
-		// std::cout << "size " << vct.size() << std::endl;
+		for (unsigned long int i = 0; i < vct.size(); ++i)
+			vct[i] = (vct.size() - i) * 3;
+		tests << "size " << vct.size() << std::endl;
 
-		// vct2.insert(vct2.end(), 42);
+		vct2.insert(vct2.end(), 42);
 
-		// for (ft::vector<int>::iterator it = vct2.begin() ; it != vct2.end();  ++it)
-		// 	std::cout << ' ' << *it;
-		// std::cout << '\n';
+		vct2.insert(vct2.begin(), 2, 21);
+		tests << "size " << vct2.size() << std::endl;
 
-		// vct2.insert(vct2.begin(), 2, 21);
-		// std::cout << "size " << vct2.size() << std::endl;
+		vct2.insert(vct2.end() - 2, 42);
+		tests << "size " << vct2.size() << std::endl;
 
-		// vct2.insert(vct2.end() - 2, 42);
-		// std::cout << "size " << vct2.size() << std::endl;
+		vct2.insert(vct2.end(), 2, 84);
+		tests << "size " << vct2.size() << std::endl;
 
-		// vct2.insert(vct2.end(), 2, 84);
-		// std::cout << "size " << vct2.size() << std::endl;
-
-		// vct2.resize(4);
-		// std::cout << "size " << vct2.size() << std::endl;
-
-		// vct2.insert(vct2.begin() + 2, vct.begin(), vct.end());
-		// vct.clear();
-		// std::cout << "size " << vct2.size() << std::endl;
-
-		// std::cout << "size " << vct.size() << std::endl;
+		vct2.resize(4);
+		tests << "size " << vct2.size() << std::endl;
 	}
-	std::cout << std::endl;
+	tests << std::endl;
 
 
+	
+
+	{
+		const int size = 5;
+
+		ft::vector<int> vct(size);
+		ft::vector<int>::iterator it(vct.begin());
+		ft::vector<int>::const_iterator ite(vct.end());
+
+		for (int i = 1; it != ite; ++i)
+			*it++ = i;
+		//printSize(vct, 1);
+		tests << "size " << vct.size() << std::endl;
+	}
+
+	{
+		// const int size = 5;
+		// ft::vector<int> vct(size);
+		// ft::vector<int>::reverse_iterator it = vct.rbegin();
+		// ft::vector<int>::const_reverse_iterator ite = vct.rbegin();
+
+		// for (int i = 0; i < size; ++i)
+		// 	it[i] = (size - i) * 5;
+
+		// // it = it + 5;
+		// // it = 1 + it;
+		// // it = it - 4;
+		// std::cout << *it << std::endl;
+		// std::cout << *(it += 2) << std::endl;
+		// std::cout << *(it -= 1) << std::endl;
+
+		// *(it -= 2) = 42;
+		// *(it += 2) = 21;
+
+		// tests << "const_ite +=/-=: " << *(ite += 2) << " | " << *(ite -= 2) << std::endl;
+
+		// tests << "(it == const_it): " << (ite == it) << std::endl;
+		// tests << "(const_ite - it): " << (ite - it) << std::endl;
+		// tests << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
+
+		// //printSize(vct, true);
+		// tests << "size " << vct.size() << std::endl;
+	}
+
+
+	{
+		const int size = 8;
+		ft::vector<int> vct(size);
+		ft::vector<int>::iterator it_ = vct.begin();
+		ft::vector<int>::reverse_iterator it(it_);
+
+		for (int i = 0; i < size; ++i)
+			vct[i] = (i + 1) * 5;
+		//printSize(vct);
+
+		for (ft::vector<int>::reverse_iterator rite = vct.rbegin(); rite != vct.rend(); ++rite){
+			std::cout << ' ' << *rite;
+		}
+		std::cout << '\n';
+		std::cout << "size " << vct.size() << std::endl;
+
+		std::cout << std::boolalpha << (it_ == it.base()) << std::endl;
+		std::cout << std::boolalpha << (it_ == (it + 3).base()) << std::endl;
+		std::cout << *(it.base() + 1) << std::endl;
+		std::cout << *(it - 3) << std::endl;
+		std::cout << *(it - 3).base() << std::endl; it -= 3;
+		std::cout << *it.base() << std::endl;
+		std::cout << "TEST OFFSET" << std::endl;
+		std::cout << *(it) << std::endl;
+		std::cout << *(it).base() << std::endl;
+		std::cout << *(it - 0) << std::endl;
+		std::cout << *(it - 0).base() << std::endl;
+		std::cout << *(it - 1).base() << std::endl;
+	}
+	
 }
+
+	// void	prepost_incdec(ft::vector<int> &vct) {
+	// 	ft::vector<int>::iterator it = vct.begin();
+	// 	ft::vector<int>::iterator it_tmp;
+
+	// 	tests << "Pre inc" << std::endl;
+	// 	it_tmp = ++it;
+	// 	tests << *it_tmp << " | " << *it << std::endl;
+
+	// 	tests << "Pre dec" << std::endl;
+	// 	it_tmp = --it;
+	// 	tests << *it_tmp << " | " << *it << std::endl;
+
+	// 	tests << "Post inc" << std::endl;
+	// 	it_tmp = it++;
+	// 	tests << *it_tmp << " | " << *it << std::endl;
+
+	// 	tests << "Post dec" << std::endl;
+	// 	it_tmp = it--;
+	// 	tests << *it_tmp << " | " << *it << std::endl;
+	// 	tests << "###############################################" << std::endl;
+	// }
