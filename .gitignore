@@ -1,6 +1,6 @@
 .vscode/
 obj/
-containers
+std_containers
 ft_obj/
 myVectorOutput
 realVectorOutput

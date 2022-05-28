@@ -1,7 +1,7 @@
 #ifndef BIDIRECTIONAL_ITERATOR_HPP
 # define BIDIRECTIONAL_ITERATOR_HPP
 
-# include "../Itree.hpp"
+# include "../Utils/Itree.hpp"
 
 namespace ft{
 	template <class T, class Pointer = T*, class Reference = T&,
@@ -14,6 +14,7 @@ namespace ft{
 		typedef	Reference							reference;
 		typedef Category							iterator_category;
 		typedef node<value_type>					node;
+		typedef bidirectional_iterator<T, const T*, const T&>		const_iterator_type;
 
 	private:
 		node*	_node;
@@ -63,26 +64,31 @@ namespace ft{
 		bidirectional_iterator(node* ptr, const Itree<value_type>* tree) : _node(ptr), _tree(tree) {};
 		bidirectional_iterator() : _node(NULL), _tree(NULL){};
 
-		template <class ptr, class ref>
-		bidirectional_iterator(bidirectional_iterator<T, ptr, ref> const& original) : _node( original.getNode() ), _tree( original.getTree() ){};
+		// template <class ptr, class ref>
+		// bidirectional_iterator(bidirectional_iterator<T, ptr, ref> const& original) : _node( original.getNode() ), _tree( original.getTree() ){};
 
-		// template <class U>
-		// bidirectional_iterator(bidirectional_iterator<U, U*, U&> const& original) : _node( original.getNode() ), _tree( original.getTree() ){};
-
-
+		template <class U>
+		bidirectional_iterator(bidirectional_iterator<U, U*, U&> const& original) : _node( original.getNode() ), _tree( original.getTree() ){};
 
 		~bidirectional_iterator(){};
+
+		// type conversion operator
+		operator const_iterator_type() const {
+			return const_iterator_type(_node, _tree);
+		}
 
 		bidirectional_iterator&	operator=(bidirectional_iterator const& original){
 			this->_node = original._node;
 			return *this;
 		}
 
-		inline bool operator==(const bidirectional_iterator& rhs) const{ 
-			return this->_node == rhs._node;
+		friend inline bool operator==(const bidirectional_iterator& lhs, const bidirectional_iterator& rhs) {
+			return lhs.getNode() == rhs.getNode();
+			//return this->_node == rhs._node;
 		}
-		inline bool operator!=(const bidirectional_iterator& rhs) const{ 
-			return this->_node != rhs._node;
+		friend inline bool operator!=(const bidirectional_iterator& lhs, const bidirectional_iterator& rhs) { 
+			return !(lhs.getNode() == rhs.getNode());
+			//return this->_node != rhs._node;
 		}
 
 		bidirectional_iterator& operator++(){
@@ -104,6 +110,9 @@ namespace ft{
 			return copy;
 		}
 		reference operator*(){
+			return *this->_node->data;
+		}
+		reference operator*() const{
 			return *this->_node->data;
 		}
 		pointer operator->(){

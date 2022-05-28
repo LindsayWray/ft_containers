@@ -10,8 +10,10 @@
 	#include <iostream>
 	namespace ft = std;
 #else
-	#include "../../set.hpp"
-	#include "../../vector.hpp"
+	#include "../../Containers/set.hpp"
+	#include "../../Containers/vector.hpp"
+	#include "../../Utils/RBtree.hpp"
+	#include "../RBTValidationTest.hpp"
 #endif
 
 template<class T>
@@ -29,6 +31,7 @@ void printSet(ft::set<T>& set, std::ofstream& tests){
 	}
 	tests << '\n';
 }
+
 
 
 void setTests(std::ofstream& tests){
@@ -56,6 +59,8 @@ void setTests(std::ofstream& tests){
 	}
 	tests << "current size " << testSet.size() << std::endl;
 
+	std::cout << "Is valid Red Black Tree: " << ft::validRB(testSet.getTreeForTesting(), testSet.value_comp()) << std::endl;
+
 	tests << "******************** SET STRING TESTS ********************\n";
 	ft::set<std::string> testSet2;
 
@@ -72,10 +77,13 @@ void setTests(std::ofstream& tests){
 	testSet2.insert("test");
 	testSet2.insert("testets");
 	testSet2.insert("testing more");
+	testSet2.erase("test");
 	printSet(testSet2, tests);
 
 	tests << "current size " << testSet2.size() << std::endl;
 	//tests << "max size " << testSet2.max_size() << std::endl;
+
+	std::cout << "Is valid Red Black Tree: " << ft::validRB(testSet2.getTreeForTesting(), testSet2.value_comp()) << std::endl;
 
 
 	tests << "--- TEST SECOND CONSTRUCTOR (fill with iterator range) --" << std::endl;
@@ -92,6 +100,7 @@ void setTests(std::ofstream& tests){
 	printSet(testSet3, tests);
 
 	//testSet3.printTree();
+	std::cout << "Is valid Red Black Tree: " << ft::validRB(testSet3.getTreeForTesting(), testSet3.value_comp()) << std::endl;
 
 	tests << "Set contains" << std::endl;
 	printSet(testSet, tests);
@@ -176,4 +185,5 @@ void setTests(std::ofstream& tests){
 	for(ft::vector<int>::iterator it = testvec2.begin(); it != testvec2.end(); it++)
 		tests << *it << "; ";
 	tests << std::endl;
+
 }

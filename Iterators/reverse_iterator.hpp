@@ -35,13 +35,9 @@ namespace ft{
 		reverse_iterator (const reverse_iterator<Iterator>& original) : _iter(original.getIter()){};
 
 		iterator_type base() const{
-			iterator_type copy(_iter);
-			return ++copy;
-		}
-		reference operator*(){
 			// iterator_type copy(_iter);
-			// return *(copy);
-			return *_iter;
+			// return ++copy;
+			return _iter;
 		}
 		reverse_iterator operator+(difference_type b) const{
 			reverse_iterator copy(*this);
@@ -79,13 +75,26 @@ namespace ft{
 			this->_iter += b;
 			return *this;
 		}
+		reference operator*(){
+			iterator_type copy(_iter);
+			return *(--copy);
+		}
+		reference operator*() const{
+			iterator_type copy(_iter);
+			return *(--copy);
+		}
 		pointer operator->(){
-			return &(*_iter);
+			iterator_type copy(_iter);
+			return &(*--copy);
+		}
+		pointer operator->() const{
+			iterator_type copy(_iter);
+			return &(*--copy);
 		}
 		reference operator[](difference_type index) const{
-			reverse_iterator copy(*this);
-			copy._iter -= index;
-			return *copy._iter;
+			iterator_type copy(_iter);
+			copy -= index;
+			return *(--copy);
 		}
 		Iter	getIter() const{
 			return this->_iter;

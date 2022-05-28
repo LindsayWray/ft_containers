@@ -4,9 +4,9 @@
 # include <cstring>
 # include <stdexcept>
 
-# include "Iterators/iterator.hpp"
-# include "Iterators/reverse_iterator.hpp"
-# include "utilities.hpp"
+# include "../Iterators/iterator.hpp"
+# include "../Iterators/reverse_iterator.hpp"
+# include "../Utils/utilities.hpp"
 
 namespace ft{
 	template<class T, class Alloc = std::allocator<T> >
@@ -43,7 +43,6 @@ namespace ft{
 		vector(InputIterator begin, InputIterator end, const allocator_type& alloc = allocator_type(),
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value, bool>::type = true)
 				: _array(NULL), _size(0), _allocSize(0), _alloc(alloc){
-			//increaseCapacity(end - begin);
 			int count = 0;
 			for(InputIterator it = begin; it != end; it++, count++);
 			increaseCapacity(count);
@@ -80,39 +79,24 @@ namespace ft{
 
 
 		//  ------------  ITERATOR FUNCTIONS  ------------
-		iterator begin() _NOEXCEPT {
-			return iterator(&_array[0]);
-		};
-		const_iterator begin() const _NOEXCEPT {
-			return const_iterator(&_array[0]);
-		};
-		iterator end() _NOEXCEPT {
-			return iterator(&_array[_size]);
-		};
-		const_iterator end() const _NOEXCEPT {
-			return const_iterator(&_array[_size]);
-		};
-		reverse_iterator rbegin() _NOEXCEPT {
-			return reverse_iterator(this->end() - 1);
-		};
-		const_reverse_iterator rbegin() const _NOEXCEPT {
-			return const_reverse_iterator(this->end() - 1);
-		};
-		reverse_iterator rend() _NOEXCEPT {
-			return reverse_iterator(this->begin() - 1);
-		};
-		const_reverse_iterator rend() const _NOEXCEPT {
-			return const_reverse_iterator(this->begin() - 1);
-		};
+		iterator begin() _NOEXCEPT { return iterator(&_array[0]); };
+		const_iterator begin() const _NOEXCEPT { return const_iterator(&_array[0]); };
+
+		iterator end() _NOEXCEPT { return iterator(&_array[_size]); };
+		const_iterator end() const _NOEXCEPT { return const_iterator(&_array[_size]); };
+
+		reverse_iterator rbegin() _NOEXCEPT { return reverse_iterator(this->end()); };
+		const_reverse_iterator rbegin() const _NOEXCEPT { return const_reverse_iterator(this->end()); };
+
+		reverse_iterator rend() _NOEXCEPT { return reverse_iterator(this->begin()); };
+		const_reverse_iterator rend() const _NOEXCEPT { return const_reverse_iterator(this->begin()); };
 
 
 		//  ------------  CAPACITY  ------------ 
-		size_type size() const {
-			return _size;
-		};
-		size_type max_size() const {
-			return _alloc.max_size();
-		};
+		size_type size() const { return _size; };
+
+		size_type max_size() const { return _alloc.max_size(); };
+
 		void resize(size_type n, value_type val = value_type()) {
 			if(n <= _size){
 				for(size_type i = n; i < _size; i++){
@@ -128,53 +112,39 @@ namespace ft{
 			}
 			_size = n;
 		};
-		size_type capacity() const {
-			return _allocSize;
-		};
-		bool empty() const{
-			if(_size == 0)
-				return true;
-			return false;
-		};
+
+		size_type capacity() const { return _allocSize; };
+
+		bool empty() const{ return (_size == 0); };
+
 		void reserve(size_type n) {
 			if (n > _allocSize)
 				increaseCapacity(n);
 		};
 
 
-
 		//  ------------  ELEMENT ACCESS   ------------
-		value_type& operator[](size_type index) _NOEXCEPT {  //Array subscript operator
-			return _array[index];
-		};
-		value_type const& operator[](size_type index) const _NOEXCEPT {
-			return _array[index];
-		};
-		value_type& at(size_type index) {
+		reference operator[](size_type index) _NOEXCEPT { return _array[index]; };
+		const_reference operator[](size_type index) const _NOEXCEPT { return _array[index]; };
+
+		reference at(size_type index) {
 			if (index >= _size)
 				throw(std::out_of_range("1vector")); // look into text / or make exception
 			return _array[index];
 		};
-		value_type const& at(size_type index) const {
+		const_reference at(size_type index) const {
 			if (index >= _size)
 				throw(std::out_of_range("vector"));
 			return _array[index];
 		};
-		value_type& front() _NOEXCEPT {
-			return _array[0];
-		};
-		value_type const& front() const _NOEXCEPT {
-			return _array[0];
-		};
-		value_type& back() _NOEXCEPT {
-			return _array[_size - 1];
-		};
-		value_type const& back() const _NOEXCEPT {
-			return _array[_size - 1];
-		};
+
+		reference front() _NOEXCEPT { return _array[0]; };
+		const_reference front() const _NOEXCEPT { return _array[0]; };
+
+		reference back() _NOEXCEPT { return _array[_size - 1]; };
+		const_reference back() const _NOEXCEPT { return _array[_size - 1]; };
 
 
- 
 
 		//  ------------  MODIFIERS   ------------
 		template <class InputIterator>
@@ -241,15 +211,11 @@ namespace ft{
 		};
 		template <class InputIterator>
 		typename ft::enable_if<!ft::is_integral<InputIterator>::value,void>::type insert (iterator position, InputIterator first, InputIterator last){
-			// int count = 0;
-			// for(InputIterator it = first; it != last; it++, count++);
-			// increaseCapacity(count + _size);
 			for(InputIterator it = first; it != last; it++){
 				position = insert(position, *it);
 				position++;
 			}
 		};
-
 
 
 		iterator erase (iterator position){
@@ -304,9 +270,7 @@ namespace ft{
 
 
 		//  ------------  ALLOCATOR   ------------
-		allocator_type get_allocator() const{
-			return _alloc;
-		};
+		allocator_type get_allocator() const{ return _alloc; };
 
 	private:
 		//  ------------    HELPER FUNCTIONS   ------------
@@ -340,9 +304,7 @@ namespace ft{
 	// -------------  Non-member function overloads  -----------
 
 	template <class T, class Alloc>
-	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y){
-		x.swap(y);
-	}
+	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y) { x.swap(y); }
 
 	// -------------- relational operators -------------------
 
@@ -377,7 +339,6 @@ namespace ft{
 	bool operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs){
 		return !(lhs < rhs);
 	}
-
 }
 
 #endif

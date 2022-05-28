@@ -1,10 +1,6 @@
 #ifndef SET_HPP
 # define SET_HPP
 
-# include "Iterators/bidirectional_iterator.hpp"
-# include "Iterators/reverse_iterator.hpp"
-# include "RBtree.hpp"
-
 # include "Aordered.hpp"
 
 namespace ft {
@@ -13,7 +9,7 @@ namespace ft {
 		class Compare = std::less<T>,
 		class Alloc = std::allocator<T>
 		>
-	class set : public Aordered<T, T, Compare, Alloc> {
+	class set : public Aordered<T, T, ft::bidirectional_iterator<T, const T*, const T&>, Compare, Alloc> {
 	public:
 		typedef	T																			key_type;
 		typedef	T																			value_type;
@@ -24,7 +20,7 @@ namespace ft {
 		typedef	const value_type&															const_reference;
 		typedef	value_type*																	pointer;
 		typedef	const value_type*															const_pointer;
-		typedef	ft::bidirectional_iterator<value_type>										iterator;
+		typedef	ft::bidirectional_iterator<value_type, const_pointer, const_reference>		iterator;
 		typedef	ft::bidirectional_iterator<value_type, const_pointer, const_reference>		const_iterator;
 		typedef	ft::reverse_iterator<iterator>												reverse_iterator;
 		typedef	ft::reverse_iterator<const_iterator>										const_reverse_iterator;
@@ -76,7 +72,7 @@ namespace ft {
 		};
 
 		iterator insert(iterator position, const value_type& val){
-			if(*position == val)
+			if(position != this->end() && *position == val)
 				return position;
 			return insert(val).first;
 		};
@@ -150,8 +146,19 @@ namespace ft {
 			_tree.printSetStructure();
 		};
 
+		//		*********************	Helper    ********************
 		private:
 		const Itree<value_type>& getTree() const{
+			return _tree;
+		}
+
+		key_type	getKey(const_iterator it) const{
+			return *it;
+		}
+
+		//	------------ ONLY FOR TESTING PURPOSES!! ---------------------
+		public:
+		const tree_type& getTreeForTesting() const{
 			return _tree;
 		}
 

@@ -41,18 +41,18 @@ namespace ft {
 			return addLeaf(this->_root, data);
 		}
 
-		private:
+	private:
 		bool	addLeaf(node* ptr, data_type& data) {
 			bool hasBeenAdded = true;
 			if(_root == NULL){
-				_root = CreateLeaf(NULL, data);
+				_root = createLeaf(NULL, data);
 				_root->color = BLACK;
 			}
 			else if(_compare(data, *(ptr->data))){
 				if(ptr->left != NULL)
 					return addLeaf(ptr->left, data);
 				else{
-					ptr->left = CreateLeaf(ptr, data);
+					ptr->left = createLeaf(ptr, data);
 					fixRedBlackPropertiesAfterInsert(ptr->left);
 				}
 			}
@@ -60,7 +60,7 @@ namespace ft {
 				if(ptr->right != NULL)
 					return addLeaf(ptr->right, data);
 				else{
-					ptr->right = CreateLeaf(ptr, data);
+					ptr->right = createLeaf(ptr, data);
 					fixRedBlackPropertiesAfterInsert(ptr->right);
 				}
 			}
@@ -69,7 +69,7 @@ namespace ft {
 			return hasBeenAdded;
 		}
 
-		node* CreateLeaf(node* ptr, data_type& data) {
+		node* createLeaf(node* ptr, data_type& data) {
 			node* newNode;
 			try{
 				newNode = _nodeAlloc.allocate(1);
@@ -88,7 +88,7 @@ namespace ft {
 
 
 		// 	 ************** REMOVAL FUNCTIONS **************
-		public:
+	public:
 		void	removeTree(){
 			removeSubtree(this->_root);
 			this->_root = NULL;			//clearing an empty map
@@ -99,11 +99,13 @@ namespace ft {
 			removeNode(data, this->_root);
 		}
 
-		private:
+	private:
 		void	removeNode(const data_type& data, node* parent){
 			if(this->_root != NULL){
-				if(isEqual(*(_root->data), data))
+				if(isEqual(*(_root->data), data)){
 					RemoveMatch(NULL, _root);
+				}
+					
 				else{
 					if(_compare(data, *(parent->data)) && parent->left != NULL){
 						isEqual(*(parent->left->data), data) ?
@@ -141,10 +143,10 @@ namespace ft {
 		}
 
 		void	RemoveMatch(node* parent, node* match){
+
 			node* movedUpNode = match;
 			color deletedNodeColor = match->color;
 			bool isNILnode = false;
-
 			node* nilNode = NULL;
 			
 			if(match->left == NULL && match->right == NULL)	{				//Case 0 - 0 children
@@ -160,15 +162,16 @@ namespace ft {
 				movedUpNode->parent = match->parent;
 				destroyNode(match);
 			}
-			else{															// Case 2 - node has 2 children
+			else{														// Case 2 - node has 2 children
 				node* smallestInRightSubtree = findSmallest(match->right);
 				if (smallestInRightSubtree->right)
 					movedUpNode = smallestInRightSubtree->right;
+					
 				else {
 					isNILnode = true;
 
 					data_type nilData = data_type();
-					nilNode = CreateLeaf(NULL, nilData);
+					nilNode = createLeaf(NULL, nilData);
 					nilNode->color = BLACK;
 					replaceParentsChild(smallestInRightSubtree->parent, smallestInRightSubtree, nilNode);
 					movedUpNode = nilNode;
@@ -177,6 +180,10 @@ namespace ft {
 					replaceParentsChild(match->parent, match, smallestInRightSubtree);
 					smallestInRightSubtree->left = match->left;
 					match->left->parent = smallestInRightSubtree;
+					if (!smallestInRightSubtree->right) {
+						smallestInRightSubtree->right = nilNode;
+						nilNode->parent = smallestInRightSubtree;
+					}
 				}
 				else{
 					if (smallestInRightSubtree->right) {
@@ -206,7 +213,6 @@ namespace ft {
 
 
 		//  ************** FAMILY HANDLERS **************
-
 		void handleRedSibling(node* ptr, node* sibling) {
 			sibling->color = BLACK;
 			ptr->parent->color = RED;
@@ -391,9 +397,8 @@ namespace ft {
 
 
 
-
 		// 			************** FINDERS **************
-		public:
+	public:
 		node*	findNode(const data_type& data) const{
 			return findNode(data, this->_root);
 		}
@@ -406,7 +411,7 @@ namespace ft {
 			return findLargest(this->_root);
 		}
 
-		private:
+	private:
 		node*	findNode(const data_type& data, node* ptr) const{
 			if(ptr != NULL){
 				if(isEqual(*(ptr->data), data))
@@ -451,7 +456,7 @@ namespace ft {
 			return true;
 		}
 
-		public:
+	public:
 		size_type	getSize() const {
 			return this->_size;
 		}
@@ -465,10 +470,25 @@ namespace ft {
 			this->_size = tree._size;
 			tree._size = tempSize;
 		}
+	
+		const node*	getRoot() const{
+			return _root;
+		}
 
 
 
 		//   *******  PRINT FUNCTIONS *******
+		void	printMapStructure(){
+			std::cout << "Root is: " << this->_root->data->first << std::endl;
+			printMapStructure(this->_root);
+		}
+
+		void	printSetStructure(){
+			std::cout << "Root is: " << *(this->_root->data) << std::endl;
+			printSetStructure(this->_root);
+		}
+
+	private:
 		void	printMapStructure(node* ptr, int depth = 0){
 			if(this->_root != NULL){
 				if(ptr->left != NULL)
@@ -483,11 +503,6 @@ namespace ft {
 				std::cout << "The tree is empty\n" << std::endl;
 		}
 
-		void	printMapStructure(){
-			std::cout << "Root is: " << this->_root->data->first << std::endl;
-			printMapStructure(this->_root);
-		}
-
 		void	printSetStructure(node* ptr, int depth = 0){
 			if(this->_root != NULL){
 				if(ptr->left != NULL)
@@ -500,11 +515,6 @@ namespace ft {
 			}
 			else
 				std::cout << "The tree is empty\n" << std::endl;
-		}
-
-		void	printSetStructure(){
-			std::cout << "Root is: " << *(this->_root->data) << std::endl;
-			printSetStructure(this->_root);
 		}
 	};
 }

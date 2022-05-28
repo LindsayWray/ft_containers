@@ -10,27 +10,34 @@ namespace ft{
 	struct enable_if<true, T> {
 		typedef T type;
 	};
+			/* The enable_if templates are very simple syntactically. 
+		They always come in pairs: one of them is empty and the other one 
+		has a type typedef that forwards its second type parameter. The empty 
+		structure triggers an invalid type because it contains no member. 
+		When a compile-time condition is false, the empty enable_if template is chosen. 
+		Appending ::type would result in an invalid instantiation, which the 
+		compiler throws away due to the SFINAE principle. */
 
-	template<class T>
-	struct is_integral {
-		static const bool value = false;
-	};
-	template <> struct is_integral<bool>				{static const bool value = true; };
-	template <> struct is_integral<char>				{static const bool value = true; };
-	template <> struct is_integral<signed char>			{static const bool value = true; };
-	template <> struct is_integral<unsigned char>		{static const bool value = true; };
-	template <> struct is_integral<wchar_t>				{static const bool value = true; };
-	template <> struct is_integral<char16_t>			{static const bool value = true; };
-	template <> struct is_integral<char32_t>			{static const bool value = true; };
-	template <> struct is_integral<short>				{static const bool value = true; };
-	template <> struct is_integral<unsigned short>		{static const bool value = true; };
-	template <> struct is_integral<int>					{static const bool value = true; };
-	template <> struct is_integral<unsigned int>		{static const bool value = true; };
-	template <> struct is_integral<long>				{static const bool value = true; };
-	template <> struct is_integral<unsigned long>		{static const bool value = true; };
-	template <> struct is_integral<long long>			{static const bool value = true; };
-	template <> struct is_integral<unsigned long long>	{static const bool value = true; };
+
+
+	template <class T> struct is_integral 				{ static const bool value = false;};
+	template <> struct is_integral<bool>				{ static const bool value = true; };
+	template <> struct is_integral<char>				{ static const bool value = true; };
+	template <> struct is_integral<signed char>			{ static const bool value = true; };
+	template <> struct is_integral<unsigned char>		{ static const bool value = true; };
+	template <> struct is_integral<wchar_t>				{ static const bool value = true; };
+	template <> struct is_integral<char16_t>			{ static const bool value = true; };
+	template <> struct is_integral<char32_t>			{ static const bool value = true; };
+	template <> struct is_integral<short>				{ static const bool value = true; };
+	template <> struct is_integral<unsigned short>		{ static const bool value = true; };
+	template <> struct is_integral<int>					{ static const bool value = true; };
+	template <> struct is_integral<unsigned int>		{ static const bool value = true; };
+	template <> struct is_integral<long>				{ static const bool value = true; };
+	template <> struct is_integral<unsigned long>		{ static const bool value = true; };
+	template <> struct is_integral<long long>			{ static const bool value = true; };
+	template <> struct is_integral<unsigned long long>	{ static const bool value = true; };
 	
+
 
 	template <class InputIterator1, class InputIterator2>
 	bool lexicographical_compare (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIterator2 last2){
@@ -118,12 +125,12 @@ namespace ft{
 	}
 
 	template <class T1, class T2>
-	bool operator!= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){
+	bool operator!= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs) {
 		return !(lhs == rhs);
 	}
 
 	template <class T1, class T2>
-	bool operator<  (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){
+	bool operator<  (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs) {
 		return lhs.first < rhs.first || (!(rhs.first < lhs.first) && lhs.second < rhs.second); 
 	}
 
@@ -141,7 +148,6 @@ namespace ft{
 	bool operator>= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs) {
 		return !(lhs < rhs);
 	}
-
 }
 
 #endif

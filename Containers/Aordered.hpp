@@ -1,20 +1,21 @@
 #ifndef AORDERED_HPP
 # define AORDERED_HPP
 
-# include "Iterators/bidirectional_iterator.hpp"
-# include "Iterators/reverse_iterator.hpp"
-# include "RBtree.hpp" 
+# include "../Iterators/bidirectional_iterator.hpp"
+# include "../Iterators/reverse_iterator.hpp"
+# include "../Utils/RBtree.hpp" 
 
 namespace ft {
 	template <
 		class Key,
 		class T,
+		class iterator,
 		class Compare = std::less<T>,
 		class Alloc = std::allocator<T>
 		>
 	class Aordered {
 	public:
-		typedef	Key																			key_type;
+		typedef	Key																		key_type;
 		typedef	T																			value_type;
 		typedef	size_t																		size_type;
 		typedef	ptrdiff_t																	difference_type;
@@ -24,7 +25,7 @@ namespace ft {
 		typedef	const value_type&															const_reference;
 		typedef	value_type*																	pointer;
 		typedef	const value_type*															const_pointer;
-		typedef	ft::bidirectional_iterator<value_type>										iterator;
+		//typedef	ft::bidirectional_iterator<value_type>										iterator;
 		typedef	ft::bidirectional_iterator<value_type, const_pointer, const_reference>		const_iterator;
 		typedef	ft::reverse_iterator<iterator>												reverse_iterator;
 		typedef	ft::reverse_iterator<const_iterator>										const_reverse_iterator;
@@ -53,21 +54,21 @@ namespace ft {
 		}
 
 		reverse_iterator rbegin() _NOEXCEPT{
-			//return reverse_iterator(this->end());
-			return reverse_iterator(iterator(getTree().findLargest(), &getTree()));
+			return reverse_iterator(this->end());
+			//return reverse_iterator(iterator(getTree().findLargest(), &getTree()));
 		}
 		const_reverse_iterator rbegin() const _NOEXCEPT{
-			//return const_reverse_iterator(this->end());
-			return const_reverse_iterator(const_iterator(getTree().findLargest(), &getTree()));
+			return const_reverse_iterator(this->end());
+			//return const_reverse_iterator(const_iterator(getTree().findLargest(), &getTree()));
 		}
 
 		reverse_iterator rend() _NOEXCEPT{
-			//return reverse_iterator(this->begin());
-			return reverse_iterator(iterator(NULL, &getTree()));
+			return reverse_iterator(this->begin());
+			//return reverse_iterator(iterator(NULL, &getTree()));
 		}
 		const_reverse_iterator rend() const _NOEXCEPT{
-			//return const_reverse_iterator(this->begin());
-			return const_reverse_iterator(const_iterator(NULL, &getTree()));
+			return const_reverse_iterator(this->begin());
+			//return const_reverse_iterator(const_iterator(NULL, &getTree()));
 		}
 
 
@@ -91,8 +92,13 @@ namespace ft {
 
 		// //  ------------  OPERATIONS   ------------
 		iterator lower_bound(const key_type& k){
+			// for(iterator it = begin(); it != end(); it++){
+			// 	if(!_comp_func(it->first, k))
+			// 		return it;
+			// }
+			// return end();
 			for(iterator it = begin(); it != end(); it++){
-				if(!_comp_func(it->first, k))
+				if(!_comp_func(getKey(it), k))
 					return it;
 			}
 			return end();
@@ -100,7 +106,7 @@ namespace ft {
 		
 		const_iterator lower_bound(const key_type& k) const{
 			for(const_iterator it = begin(); it != end(); it++){
-				if(!_comp_func(it->first, k))
+				if(!_comp_func(getKey(it), k))
 					return it;
 			}
 			return end();
@@ -108,13 +114,13 @@ namespace ft {
 
 		iterator upper_bound(const key_type& k){
 			iterator it = lower_bound(k);
-			if (it != end() && k == it->first)
+			if (it != end() && k == getKey(it))
 				return ++it;
 			return it;
 		};
 		const_iterator upper_bound(const key_type& k) const{
 			const_iterator it = lower_bound(k);
-			if (it != end() && k == it->first)
+			if (it != end() && k == getKey(it))
 				return ++it;
 			return it;
 		};
@@ -133,6 +139,9 @@ namespace ft {
 
 		protected:
 		virtual const Itree<value_type>& getTree() const = 0;
+
+		protected:
+			virtual key_type	getKey(const_iterator it) const = 0;
 	};
 }
 

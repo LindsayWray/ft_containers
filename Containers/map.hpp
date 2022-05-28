@@ -10,7 +10,7 @@ namespace ft {
 		class Compare = std::less<Key>,
 		class Alloc = std::allocator<ft::pair<const Key, T> >
 		>
-	class map : public Aordered<Key, ft::pair<const Key, T>, Compare, Alloc> {	
+	class map : public Aordered<Key, ft::pair<const Key, T>, ft::bidirectional_iterator<ft::pair<const Key, T> >, Compare, Alloc> {	
 	public:
 		typedef	Key																			key_type;
 		typedef	T																			mapped_type;
@@ -47,9 +47,9 @@ namespace ft {
 		typedef RBtree<value_type, Alloc, value_compare>		tree_type;
 
 	private:
-		tree_type							_tree;
-		allocator_type						_alloc;
-		key_compare							_comp_func;
+		tree_type				_tree;
+		allocator_type			_alloc;
+		key_compare				_comp_func;
 
 	public:
 		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) 
@@ -94,7 +94,7 @@ namespace ft {
 		};
 
 		iterator insert(iterator position, const value_type& val){
-			if(position->first == val.first)
+			if(position != this->end() && position->first == val.first)
 				return position;
 			return insert(val).first;
 		};
@@ -113,15 +113,16 @@ namespace ft {
 
 		size_type erase(const key_type& key) _NOEXCEPT{
 			size_t size = _tree.getSize();
-			_tree.removeNode(ft::make_pair(key, mapped_type()));
+			_tree.removeNode(ft::make_pair(key, mapped_type()));		
 			return size - _tree.getSize();
 		};
 
      	void erase(iterator first, iterator last) _NOEXCEPT{
-			 for(iterator it = first; it != last; ){
+			 for(iterator it = first; it != last;){
 				iterator temp = it;
 				temp++;
 				erase(it->first);
+
 				it = temp;
 			 }
 		 };
@@ -166,11 +167,25 @@ namespace ft {
 			_tree.printMapStructure();
 		};
 
+
+		//		*********************	Helper    *********************
 		private:
 		const Itree<value_type>& getTree() const{
 			return _tree;
 		}
+
+		key_type	getKey(const_iterator it) const{
+			return it->first;
+		}
+
+		
+	//	------------ ONLY FOR TESTING PURPOSES!! ---------------------
+		public:
+		const tree_type& getTreeForTesting() const{
+			return _tree;
+		}
 	};
+
 
 
 	// -------------  Non-member function overloads  -----------

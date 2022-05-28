@@ -10,12 +10,16 @@
 	#include <iostream>
 	namespace ft = std;
 #else
-	#include "../../map.hpp"
+	#include "../../Containers/map.hpp"
+	#include "../../Utils/RBtree.hpp"
+	#include "../RBTValidationTest.hpp"
 #endif
 
 
+
+
 template<class T1, class T2>
-void printTree(ft::map<T1, T2>& map, std::ofstream& tests){
+void printMap(ft::map<T1, T2>& map, std::ofstream& tests){
 	(void)tests;
 	for (typename ft::map<T1, T2>::const_iterator it = map.begin(); it != map.end(); it++) {
 		tests << it->first << " = " << it->second << "; ";
@@ -23,146 +27,14 @@ void printTree(ft::map<T1, T2>& map, std::ofstream& tests){
 	tests << '\n';
 }
 
-// void printTreeterminal(std::string_view comment, const std::map<std::string, int>& m)
-// {
-// 	tests << comment ;
-// 	for (std::map<std::string, int>::const_iterator it = m.begin(); it != m.end(); it++) {
-// 		tests << it->first << " = " << it->second << "; ";
-// 	}
-// 	tests << '\n';
-// }
-
-
-
-
-#include <list>
-typedef ft::pair<const int, std::string> T3;
-
-static int iter = 0;
-
-template <typename MAP, typename U>
-void	ft_erase(MAP &mp, U param) {
-	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	mp.erase(param);
-	std::cout << "size map *-*-* " << mp.size() << std::endl;
+template<class T1, class T2>
+void printMap(ft::map<T1, T2>& map){
+	for (typename ft::map<T1, T2>::const_iterator it = map.begin(); it != map.end(); it++) {
+		std::cout << it->first << " = " << it->second << "; ";
+	}
+	std::cout << '\n';
 }
 
-template <typename MAP, typename U, typename V>
-void	ft_erase(MAP &mp, U param, V param2) {
-	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	mp.erase(param, param2);
-	std::cout << "size map **** " << mp.size() << std::endl;
-}
-
-void		erase_test() {
-	std::list<T3> lst;
-	unsigned int lst_size = 10;
-	for (unsigned int i = 0; i < lst_size; ++i)
-		lst.push_back(T3(i, std::string((lst_size - i), i + 65)));
-	ft::map<int, std::string> mp(lst.begin(), lst.end());
-
-	std::cout << "size map * " << mp.size() << std::endl;
-
-	ft_erase(mp, ++mp.begin());
-
-	ft_erase(mp, mp.begin());
-	ft_erase(mp, --mp.end());
-
-	ft_erase(mp, mp.begin(), ++(++(++mp.begin())));
-	//ft_erase(mp, --(--(--mp.end())), --mp.end());
-
-	mp[10] = "Hello";
-	mp[11] = "Hi there";
-
-	std::cout << "size map ** " << mp.size() << std::endl;
-	// ft_erase(mp, --(--(--mp.end())), mp.end());
-
-	mp[12] = "ONE";
-	mp[13] = "TWO";
-	mp[14] = "THREE";
-	mp[15] = "FOUR";
-
-	std::cout << "size map*** " << mp.size() << std::endl;
-	ft_erase(mp, mp.begin(), mp.end());
-
-}
-
-
-
-
-
-
-
-
-template <typename T>
-class foo {
-	public:
-		typedef T	value_type;
-
-		foo(void) : value(), _verbose(false) { };
-		foo(value_type src, const bool verbose = false) : value(src), _verbose(verbose) { };
-		foo(foo const &src, const bool verbose = false) : value(src.value), _verbose(verbose) { };
-		~foo(void) { if (this->_verbose) std::cout << "~foo::foo()" << std::endl; };
-		void m(void) { std::cout << "foo::m called [" << this->value << "]" << std::endl; };
-		void m(void) const { std::cout << "foo::m const called [" << this->value << "]" << std::endl; };
-		foo &operator=(value_type src) { this->value = src; return *this; };
-		foo &operator=(foo const &src) {
-			if (this->_verbose || src._verbose)
-				std::cout << "foo::operator=(foo) CALLED" << std::endl;
-			this->value = src.value;
-			return *this;
-		};
-		value_type	getValue(void) const { return this->value; };
-		void		switchVerbose(void) { this->_verbose = !(this->_verbose); };
-
-		operator value_type(void) const {
-			return value_type(this->value);
-		}
-	private:
-		value_type	value;
-		bool		_verbose;
-};
-
-
-
-
-
-
-// #define T1 char
-// #define T2 foo<float>
-// typedef ft::map<T1, T2> _map;
-// typedef _map::const_iterator const_it;
-
-// static unsigned int i = 0;
-
-// void	ft_comp(const _map &mp, const const_it &it1, const const_it &it2) {
-// 	bool res[2];
-
-// 	std::cout << "\t-- [" << ++i << "] --" << std::endl;
-// 	res[0] = mp.key_comp()(it1->first, it2->first);
-// 	res[1] = mp.value_comp()(*it1, *it2);
-// 	std::cout << "with [" << it1->first << " and " << it2->first << "]: ";
-// 	std::cout << "key_comp: " << res[0] << " | " << "value_comp: " << res[1] << std::endl;
-// }
-
-
-// void		test_comp() {
-// 	_map	mp;
-
-// 	mp['a'] = 2.3;
-// 	mp['b'] = 1.4;
-// 	mp['c'] = 0.3;
-// 	mp['d'] = 4.2;
-// 	//printSize(mp);
-// 	std::cout << "size map: " << mp.size() << std::endl;
-
-// 	for (const_it it1 = mp.begin(); it1 != mp.end(); ++it1)
-// 		for (const_it it2 = mp.begin(); it2 != mp.end(); ++it2)
-// 			ft_comp(mp, it1, it2);
-
-// 	//printSize(mp);
-// 	std::cout << "size map: " << mp.size() << std::endl;
-// }
 
 
 
@@ -179,6 +51,7 @@ void mapTests(std::ofstream& tests){
 	if(empty_it == testMap.end())
 		tests << "iterator on empty map\n";
 
+	testMap.insert(ft::make_pair("hello world", 7));	
 	testMap["K"] = 100;
 	testMap["A"] = 10;
 	testMap["P"] = 22;
@@ -204,7 +77,9 @@ void mapTests(std::ofstream& tests){
 	testMap["U"] = 21;
 	testMap["W"] = 7;
 
-	//testMap.printTree();
+	//testMap.printMap();
+
+	std::cout << "Is valid Red Black Tree: " << ft::validRB(testMap.getTreeForTesting(), testMap.value_comp()) << std::endl;
 
 	tests << "Value O is: " << testMap["O"] << std::endl;
 	tests << "The map size is: " << testMap.size() << std::endl;
@@ -222,12 +97,14 @@ void mapTests(std::ofstream& tests){
 
 	testMap.insert(testMap.begin(), ft::pair<std::string,int>("G", 500));
 
+	std::cout << "Is valid Red Black Tree: " << ft::validRB(testMap.getTreeForTesting(), testMap.value_comp()) << std::endl;
+
 	// PAIR CONSTRUCTOR TESTS
 	ft::pair <std::string,double> product1;                     // default constructor
 	ft::pair <std::string,double> product2 ("tomatoes",2.30);   // value init
 	ft::pair <std::string,double> product3 (product2);          // copy constructor
 
-	product1 = ft::make_pair(std::string("lightbulbs"),0.99);   // using make_pair (move)
+	product1 = ft::make_pair(std::string("lightbulbs"),0.99);   //  make_pair (move)
 
 	product2.first = "pencils";                  // the type of first is string
 	product2.second = 39.90;                   // the type of second is double
@@ -264,12 +141,13 @@ void mapTests(std::ofstream& tests){
 	
 
 
-	//testMap2.printTree();
+	//testMap2.printMap();
 	testMap2.erase(16);
-	//testMap2.printTree();
+	//testMap2.printMap();
 	testMap2.erase(16);
-	//testMap2.printTree();
+	//testMap2.printMap();
 
+	std::cout << "Is valid Red Black Tree: " << ft::validRB(testMap2.getTreeForTesting(), testMap2.value_comp()) << std::endl;
 
 
 	//-------------------------------------------------------------------------------------------------------
@@ -350,7 +228,7 @@ void mapTests(std::ofstream& tests){
 	}
 	tests << '\n';
 
-	//testMap3.printTree();
+	//testMap3.printMap();
 
 	tests << "--- TEST ERASE WITH ITERATORS--" << std::endl;
 	ft::map<int, char>::iterator iter = testMap3.begin();
@@ -361,8 +239,8 @@ void mapTests(std::ofstream& tests){
 	}
 	tests << '\n';
 
-	//testMap3.printTree();
-
+	//testMap3.printMap();
+	std::cout << "Is valid Red Black Tree: " << ft::validRB(testMap3.getTreeForTesting(), testMap3.value_comp()) << std::endl;
 
 
 	ft::pair<ft::map<std::string,int>::iterator,bool> ret;
@@ -378,24 +256,25 @@ void mapTests(std::ofstream& tests){
 	tests << "begin map 2 before swap: " << it_testMemory->first << ", " << it_testMemory->second << std::endl;
 	tests << "Size map 2 before swap: " << testMap2.size() << std::endl;
 	tests << "Map 2 before swap: ";
-	printTree(testMap2, tests);
+	printMap(testMap2, tests);
 	ft::map<int, char>::iterator it_testMemory2 = testMap3.begin();
 	tests << "begin map 3 before swap: " << it_testMemory2->first << ", " << it_testMemory2->second << std::endl;
 	tests << "Size map 3 before swap: " << testMap3.size() << std::endl;
 	tests << "Map 3 before swap:";
-	printTree(testMap3, tests);
+	printMap(testMap3, tests);
 
 	testMap2.swap(testMap3);
 	tests << "begin map 2 after swap: " << it_testMemory->first << ", " << it_testMemory->second << std::endl;
 	tests << "Size map 2 after swap: " << testMap2.size() << std::endl;
 	tests << "Map 2 after swap: ";
-	printTree(testMap2, tests);
+	printMap(testMap2, tests);
 
 	tests << "begin map 3 after swap: " << it_testMemory2->first << ", " << it_testMemory2->second << std::endl;
 	tests << "Size map 3 after swap: " << testMap3.size() << std::endl;
 	tests << "Map 3 after swap:";
-	printTree(testMap3, tests);
+	printMap(testMap3, tests);
 
+	std::cout << "Is valid Red Black Tree: " << ft::validRB(testMap2.getTreeForTesting(), testMap2.value_comp()) << std::endl;
 
 	tests << "Value Compare TEST:\n";
 	ft::map<char,int> mymap;
@@ -462,36 +341,36 @@ void mapTests(std::ofstream& tests){
 
 	tests << "Assignment operator and Copy constructor" << std::endl;
 	tests << "Map 2 before assignment\n";
-	printTree(testMap2, tests);
+	printMap(testMap2, tests);
 	tests << "Map 3 before assignment\n";
-	printTree(testMap3, tests);
+	printMap(testMap3, tests);
 	testMap3 = testMap2;
 	tests << "Map 3 after assignment\n";
-	printTree(testMap3, tests);
+	printMap(testMap3, tests);
 	testMap3.erase(10);
 	tests << "Map 3 after erase\n";
-	printTree(testMap3, tests);
+	printMap(testMap3, tests);
 	tests << "element map 2 has not been erased\n";
-	printTree(testMap2, tests);
+	printMap(testMap2, tests);
 
 	testMap2[30] = 'o'; testMap2[-90] = 'H'; testMap2[6000] = 'p';
 	ft::map<int, char> copyMap(testMap2);
 	tests << "Map 2 contains\n";
-	printTree(testMap2, tests);
+	printMap(testMap2, tests);
 	tests << "CopyMap contains\n";
-	printTree(copyMap, tests);
+	printMap(copyMap, tests);
 	copyMap.erase(-90);
 	tests << "CopyMap after erase\n";
-	printTree(copyMap, tests);
+	printMap(copyMap, tests);
 	tests << "Map 2 not affected by erase\n";
-	printTree(testMap2, tests);
+	printMap(testMap2, tests);
+
+	std::cout << "Is valid Red Black Tree: " << ft::validRB(copyMap.getTreeForTesting(), copyMap.value_comp()) << std::endl;
 
 
 	testMap.clear();
 	tests << std::boolalpha << "Map empty after clear: " << testMap.empty() << '\n';
 
-	//test_comp();
-	erase_test();
 
 }
 

@@ -1,14 +1,14 @@
-NAME := containers
+NAME := std_containers
 FT_NAME := ft_containers
-HEADERFILES := 	vector.hpp\
-				stack.hpp\
-				map.hpp\
-				set.hpp\
-				Aordered.hpp\
-				RBtree.hpp\
-				Itree.hpp\
-				node.hpp\
-				utilities.hpp\
+HEADERFILES := 	Containers/vector.hpp\
+				Containers/stack.hpp\
+				Containers/map.hpp\
+				Containers/set.hpp\
+				Containers/Aordered.hpp\
+				Utils/RBtree.hpp\
+				Utils/Itree.hpp\
+				Utils/node.hpp\
+				Utils/utilities.hpp\
 				Iterators/iterator.hpp\
 				Iterators/iterator_traits.hpp\
 				Iterators/reverse_iterator.hpp\
@@ -21,8 +21,8 @@ SRCS :=	main.cpp\
 		tests/speed/speed.cpp
 
 FLAGS := -Wall -Wextra -Werror -std=c++98
-OBJFILES := $(SRCS:%.cpp=obj/%.o)
-FT_OBJFILES := $(SRCS:%.cpp=ft_obj/%.o)
+OBJFILES := $(SRCS:%.cpp=obj/std/%.o)
+FT_OBJFILES := $(SRCS:%.cpp=obj/ft/%.o)
 
 all: $(NAME) $(FT_NAME)
 
@@ -31,11 +31,11 @@ $(NAME): $(OBJFILES)
 $(FT_NAME): $(FT_OBJFILES) 
 	c++ -o $@ $^
 
-obj/%.o: %.cpp $(HEADERFILES)
+obj/std/%.o: %.cpp $(HEADERFILES)
 	@mkdir -p $(dir $@)
 	c++ -c $(FLAGS) -o $@ $< -D STD_CONTAINER=1
 
-ft_obj/%.o: %.cpp $(HEADERFILES)
+obj/ft/%.o: %.cpp $(HEADERFILES)
 	@mkdir -p $(dir $@)
 	c++ -c $(FLAGS) -o $@ $< -D STD_CONTAINER=0
 
@@ -50,5 +50,5 @@ fclean: clean
 re: fclean all
 
 test: all
-	./containers && ./ft_containers
+	./$(NAME) && ./$(FT_NAME)
 	diff TestOutput/my_output TestOutput/std_output

@@ -10,7 +10,7 @@
 	#include <vector>
 	namespace ft = std;
 #else
-	#include "../../vector.hpp"
+	#include "../../Containers/vector.hpp"
 #endif
 
 void	prepost_incdec(ft::vector<int> &vct);
@@ -296,7 +296,7 @@ void intVectorTests(std::ofstream& tests){
 
 
 	tests << "\n--- CONST ITERATOR COMPARE --" << std::endl;
-	ft::vector<int>::iterator const_it = testVec.begin();
+	ft::vector<int>::const_iterator const_it = testVec.begin();
 	ite = testVec.begin() + 5;
 
 	tests << std::boolalpha << "is equal			" << (ite == const_it) << std::endl;
@@ -308,6 +308,9 @@ void intVectorTests(std::ofstream& tests){
 	tests << "look up index		" << const_it[2] << std::endl;
 	tests << "subtract iterators		" << ite - const_it << std::endl;
 	tests << "subtract iterators		" << const_it - ite << std::endl;
+
+	ft::vector<int>::const_iterator const_ite(const_it);
+	tests << std::boolalpha << "is equal			" << (const_ite == const_it) << std::endl;
 
 
 
@@ -454,6 +457,41 @@ void intVectorTests(std::ofstream& tests){
 		// tests << "size " << vct.size() << std::endl;
 	}
 
+	{
+
+		std::cout << " RITE TEST VECTOR\n";
+		const int size = 5;
+		ft::vector<int> vct(size);
+		ft::vector<int>::reverse_iterator it = vct.rbegin();
+		ft::vector<int>::const_reverse_iterator ite = vct.rbegin();
+
+		for (int i = 0; i < size; ++i)
+			it[i] = (size - i) * 5;
+
+		it = it + 5;
+		it = 1 + it;
+		it = it - 4;
+
+		for (ft::vector<int>::reverse_iterator it = vct.rbegin(); it != vct.rend(); ++it){
+			std::cout << ' ' << *it;
+		}
+		std::cout << "\n";
+
+		std::cout << *(it += 2) << std::endl;
+		std::cout << *(it -= 1) << std::endl;
+
+		*(it -= 2) = 42;
+		*(it += 2) = 21;
+
+		std::cout << "const_ite +=/-=: " << *(ite += 2) << " | " << *(ite -= 2) << std::endl;
+
+		std::cout << "(it == const_it): " << (ite == it) << std::endl;
+		std::cout << "(const_ite - it): " << (ite - it) << std::endl;
+		std::cout << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
+
+		std::cout << "size " << vct.size() << std::endl;
+	}
+
 
 	{
 		const int size = 8;
@@ -484,6 +522,18 @@ void intVectorTests(std::ofstream& tests){
 		std::cout << *(it - 0).base() << std::endl;
 		std::cout << *(it - 1).base() << std::endl;
 	}
+
+	int             arr1[5] = {1, 2, 3, 4, 5};
+    ft::vector<int> v1(arr1, arr1 + 5);
+	ft::vector<int>::iterator v1_it = v1.begin();
+	std::cout << (*v1_it == 1) << std::endl;
+    std::cout << (*(int*)(v1_it.operator->()) == 1) << std::endl ;
+    std::cout << (v1_it[0] == 1) << std::endl;
+    std::cout << (v1_it[1] == 2) << std::endl;
+    std::cout << (v1_it[2] == 3) << std::endl;
+    std::cout << (v1_it[3] == 4) << std::endl;
+    std::cout << (v1_it[4] == 5) << std::endl;
+	std::cout << (v1_it == v1.begin()) << std::endl;
 	
 }
 
