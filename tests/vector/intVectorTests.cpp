@@ -13,69 +13,13 @@
 	#include "../../Containers/vector.hpp"
 #endif
 
-void	prepost_incdec(ft::vector<int> &vct);
-
-
-
-// template <typename T>
-// class foo {
-// 	public:
-// 		typedef T	value_type;
-
-// 		foo(void) : value(), _verbose(false) { };
-// 		foo(value_type src, const bool verbose = false) : value(src), _verbose(verbose) { };
-// 		foo(foo const &src, const bool verbose = false) : value(src.value), _verbose(verbose) { };
-// 		~foo(void) { if (this->_verbose) tests << "~foo::foo()" << std::endl; };
-// 		void m(void) { tests << "foo::m called [" << this->value << "]" << std::endl; };
-// 		void m(void) const { tests << "foo::m const called [" << this->value << "]" << std::endl; };
-// 		foo &operator=(value_type src) { this->value = src; return *this; };
-// 		foo &operator=(foo const &src) {
-// 			if (this->_verbose || src._verbose)
-// 				tests << "foo::operator=(foo) CALLED" << std::endl;
-// 			this->value = src.value;
-// 			return *this;
-// 		};
-// 		value_type	getValue(void) const { return this->value; };
-// 		void		switchVerbose(void) { this->_verbose = !(this->_verbose); };
-
-// 		operator value_type(void) const {
-// 			return value_type(this->value);
-// 		}
-// 	private:
-// 		value_type	value;
-// 		bool		_verbose;
-// };
-
-
-
-
-
 void printVector(ft::vector<int> testVec, std::ofstream& tests) {
 	for (ft::vector<int>::const_iterator it = testVec.begin() ; it != testVec.end(); ++it)
 		tests << ' ' << *it;
 	tests << '\n';
 }
 
-// void printVector(ft::vector<int> testVec, std::ofstream& tests) {
-// 	for (ft::vector<int>::iterator it = testVec.begin() ; it != testVec.end();  ++it)
-// 		tests << ' ' << *it;
-// 	tests << '\n';
-// }
-
-
-
-
-
-
-
-
-
-
-
-
 void intVectorTests(std::ofstream& tests){
-
-
 	tests << "--- INT VECTOR GENERAL TESTS --" << std::endl;
 	ft::vector<int> testVec;
 
@@ -115,7 +59,6 @@ void intVectorTests(std::ofstream& tests){
 	tests << "[] operator		" << testVec[399] << std::endl;
 	tests << "[] operator		" << testVec[300] << std::endl;
 
-	//tests << "max capacity		" << testVec.max_size() << std::endl;
 	testVec.reserve(300);
 	tests << "reserve capacity		" << testVec.capacity() << std::endl;
 	testVec.reserve(1000);
@@ -177,8 +120,6 @@ void intVectorTests(std::ofstream& tests){
 	tests << " is empty: " << poptest.empty() << std::endl;
 	poptest.pop_back();
 
-
-
 	tests << "  Erase TESTS\n";
 	tests << "vector contains: ";
 	printVector(testVec, tests);
@@ -222,7 +163,8 @@ void intVectorTests(std::ofstream& tests){
 	tests << "vectorB after swap: ";
 	printVector(testVec2, tests);
 	tests << *it_testMemory << std::endl;
-
+	ft::vector<int>::iterator it_swaptest = testVec.begin();
+	tests << std::boolalpha << (it_swaptest == it_testMemory) << std::endl;
 
 	ft::vector<int> copyVec(testVec);
 	tests << "  Clear TESTS\n";
@@ -245,12 +187,6 @@ void intVectorTests(std::ofstream& tests){
 	tests << "vectorB contains: ";
 	tests << testVec2.size() << std::endl;
 	printVector(testVec2, tests);
-
-
-
-
-	//-------------------------------------------------------------------------------------------------------
-
 
 	tests << "\n--- INT VECTOR ITERATOR TESTS --" << std::endl;;
 	ft::vector<int>::iterator ite = testVec.begin();
@@ -291,10 +227,6 @@ void intVectorTests(std::ofstream& tests){
 	tests << "after decrement four		" << *ite << std::endl;
 	tests << "look at index eight		" << ite[8] << std::endl;
 
-
-
-
-
 	tests << "\n--- CONST ITERATOR COMPARE --" << std::endl;
 	ft::vector<int>::const_iterator const_it = testVec.begin();
 	ite = testVec.begin() + 5;
@@ -302,7 +234,7 @@ void intVectorTests(std::ofstream& tests){
 	tests << std::boolalpha << "is equal			" << (ite == const_it) << std::endl;
 	tests << std::boolalpha << "is not equal			" << (ite != const_it) << std::endl;
 	tests << std::boolalpha << "is smaller			" << (const_it < ite) << std::endl;
-	tests << std::boolalpha << "is bigger			" << (const_it > ite) << std::endl;
+	tests << std::boolalpha << "is bigger			" << (ite > const_it) << std::endl;
 	tests << std::boolalpha << "is smaller or equal		" << (const_it + 5 <= testVec.end()) << std::endl;
 	tests << std::boolalpha << "is bigger or equal		" << (const_it >= testVec.end()) << std::endl;
 	tests << "look up index		" << const_it[2] << std::endl;
@@ -311,8 +243,6 @@ void intVectorTests(std::ofstream& tests){
 
 	ft::vector<int>::const_iterator const_ite(const_it);
 	tests << std::boolalpha << "is equal			" << (const_ite == const_it) << std::endl;
-
-
 
 	tests << "\n--- INT VECTOR REVERSE ITERATOR TESTS --" << std::endl;
 	ft::vector<int>::reverse_iterator rite = testVec.rbegin();
@@ -386,7 +316,6 @@ void intVectorTests(std::ofstream& tests){
 		vct.insert(vct.end(), lst.rbegin(), lst.rend());
 		tests << "size " << vct.size() << std::endl;
 	}
-	
 
 	{
 		ft::vector<int> vct(10);
@@ -409,57 +338,21 @@ void intVectorTests(std::ofstream& tests){
 
 		vct2.resize(4);
 		tests << "size " << vct2.size() << std::endl;
+		tests << std::endl;
 	}
-	tests << std::endl;
-
-
-	
 
 	{
 		const int size = 5;
-
 		ft::vector<int> vct(size);
 		ft::vector<int>::iterator it(vct.begin());
 		ft::vector<int>::const_iterator ite(vct.end());
 
 		for (int i = 1; it != ite; ++i)
 			*it++ = i;
-		//printSize(vct, 1);
 		tests << "size " << vct.size() << std::endl;
 	}
 
 	{
-		// const int size = 5;
-		// ft::vector<int> vct(size);
-		// ft::vector<int>::reverse_iterator it = vct.rbegin();
-		// ft::vector<int>::const_reverse_iterator ite = vct.rbegin();
-
-		// for (int i = 0; i < size; ++i)
-		// 	it[i] = (size - i) * 5;
-
-		// // it = it + 5;
-		// // it = 1 + it;
-		// // it = it - 4;
-		// std::cout << *it << std::endl;
-		// std::cout << *(it += 2) << std::endl;
-		// std::cout << *(it -= 1) << std::endl;
-
-		// *(it -= 2) = 42;
-		// *(it += 2) = 21;
-
-		// tests << "const_ite +=/-=: " << *(ite += 2) << " | " << *(ite -= 2) << std::endl;
-
-		// tests << "(it == const_it): " << (ite == it) << std::endl;
-		// tests << "(const_ite - it): " << (ite - it) << std::endl;
-		// tests << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
-
-		// //printSize(vct, true);
-		// tests << "size " << vct.size() << std::endl;
-	}
-
-	{
-
-		std::cout << " RITE TEST VECTOR\n";
 		const int size = 5;
 		ft::vector<int> vct(size);
 		ft::vector<int>::reverse_iterator it = vct.rbegin();
@@ -471,25 +364,45 @@ void intVectorTests(std::ofstream& tests){
 		it = it + 5;
 		it = 1 + it;
 		it = it - 4;
-
-		for (ft::vector<int>::reverse_iterator it = vct.rbegin(); it != vct.rend(); ++it){
-			std::cout << ' ' << *it;
-		}
-		std::cout << "\n";
-
-		std::cout << *(it += 2) << std::endl;
-		std::cout << *(it -= 1) << std::endl;
-
+		tests << *it << std::endl;
+		tests << *(it += 2) << std::endl;
+		tests << *(it -= 1) << std::endl;
 		*(it -= 2) = 42;
 		*(it += 2) = 21;
 
-		std::cout << "const_ite +=/-=: " << *(ite += 2) << " | " << *(ite -= 2) << std::endl;
+		tests << "const_ite +=/-=: " << *(ite += 2) << " | " << *(ite -= 2) << std::endl;
+		tests << "(it == const_it): " << (ite == it) << std::endl;
+		tests << "(const_ite - it): " << (ite - it) << std::endl;
+		tests << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
+		tests << "size " << vct.size() << std::endl;
+	}
 
-		std::cout << "(it == const_it): " << (ite == it) << std::endl;
-		std::cout << "(const_ite - it): " << (ite - it) << std::endl;
-		std::cout << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
+	{
+		tests << " RITE TEST VECTOR\n";
+		const int size = 5;
+		ft::vector<int> vct(size);
+		ft::vector<int>::reverse_iterator it = vct.rbegin();
+		ft::vector<int>::const_reverse_iterator ite = vct.rbegin();
 
-		std::cout << "size " << vct.size() << std::endl;
+		for (int i = 0; i < size; ++i)
+			it[i] = (size - i) * 5;
+
+		it = it + 5;
+		it = 1 + it;
+		it = it - 4;
+		for (ft::vector<int>::reverse_iterator it = vct.rbegin(); it != vct.rend(); ++it){
+			tests << ' ' << *it;
+		}
+		tests << "\n";
+		tests << *(it += 2) << std::endl;
+		tests << *(it -= 1) << std::endl;
+		*(it -= 2) = 42;
+		*(it += 2) = 21;
+		tests << "const_ite +=/-=: " << *(ite += 2) << " | " << *(ite -= 2) << std::endl;
+		tests << "(it == const_it): " << (ite == it) << std::endl;
+		tests << "(const_ite - it): " << (ite - it) << std::endl;
+		tests << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
+		tests << "size " << vct.size() << std::endl;
 	}
 
 
@@ -501,60 +414,35 @@ void intVectorTests(std::ofstream& tests){
 
 		for (int i = 0; i < size; ++i)
 			vct[i] = (i + 1) * 5;
-		//printSize(vct);
 
 		for (ft::vector<int>::reverse_iterator rite = vct.rbegin(); rite != vct.rend(); ++rite){
-			std::cout << ' ' << *rite;
+			tests << ' ' << *rite;
 		}
-		std::cout << '\n';
-		std::cout << "size " << vct.size() << std::endl;
-
-		std::cout << std::boolalpha << (it_ == it.base()) << std::endl;
-		std::cout << std::boolalpha << (it_ == (it + 3).base()) << std::endl;
-		std::cout << *(it.base() + 1) << std::endl;
-		std::cout << *(it - 3) << std::endl;
-		std::cout << *(it - 3).base() << std::endl; it -= 3;
-		std::cout << *it.base() << std::endl;
-		std::cout << "TEST OFFSET" << std::endl;
-		std::cout << *(it) << std::endl;
-		std::cout << *(it).base() << std::endl;
-		std::cout << *(it - 0) << std::endl;
-		std::cout << *(it - 0).base() << std::endl;
-		std::cout << *(it - 1).base() << std::endl;
+		tests << '\n';
+		tests << "size " << vct.size() << std::endl;
+		tests << std::boolalpha << (it_ == it.base()) << std::endl;
+		tests << std::boolalpha << (it_ == (it + 3).base()) << std::endl;
+		tests << *(it.base() + 1) << std::endl;
+		tests << *(it - 3) << std::endl;
+		tests << *(it - 3).base() << std::endl; it -= 3;
+		tests << *it.base() << std::endl;
+		tests << "TEST OFFSET" << std::endl;
+		tests << *(it) << std::endl;
+		tests << *(it).base() << std::endl;
+		tests << *(it - 0) << std::endl;
+		tests << *(it - 0).base() << std::endl;
+		tests << *(it - 1).base() << std::endl;
 	}
 
-	int             arr1[5] = {1, 2, 3, 4, 5};
+	int arr1[5] = {1, 2, 3, 4, 5};
     ft::vector<int> v1(arr1, arr1 + 5);
 	ft::vector<int>::iterator v1_it = v1.begin();
-	std::cout << (*v1_it == 1) << std::endl;
-    std::cout << (*(int*)(v1_it.operator->()) == 1) << std::endl ;
-    std::cout << (v1_it[0] == 1) << std::endl;
-    std::cout << (v1_it[1] == 2) << std::endl;
-    std::cout << (v1_it[2] == 3) << std::endl;
-    std::cout << (v1_it[3] == 4) << std::endl;
-    std::cout << (v1_it[4] == 5) << std::endl;
-	std::cout << (v1_it == v1.begin()) << std::endl;
-	
+	tests << (*v1_it == 1) << std::endl;
+    tests << (*(int*)(v1_it.operator->()) == 1) << std::endl ;
+    tests << (v1_it[0] == 1) << std::endl;
+    tests << (v1_it[1] == 2) << std::endl;
+    tests << (v1_it[2] == 3) << std::endl;
+    tests << (v1_it[3] == 4) << std::endl;
+    tests << (v1_it[4] == 5) << std::endl;
+	tests << (v1_it == v1.begin()) << std::endl;
 }
-
-	// void	prepost_incdec(ft::vector<int> &vct) {
-	// 	ft::vector<int>::iterator it = vct.begin();
-	// 	ft::vector<int>::iterator it_tmp;
-
-	// 	tests << "Pre inc" << std::endl;
-	// 	it_tmp = ++it;
-	// 	tests << *it_tmp << " | " << *it << std::endl;
-
-	// 	tests << "Pre dec" << std::endl;
-	// 	it_tmp = --it;
-	// 	tests << *it_tmp << " | " << *it << std::endl;
-
-	// 	tests << "Post inc" << std::endl;
-	// 	it_tmp = it++;
-	// 	tests << *it_tmp << " | " << *it << std::endl;
-
-	// 	tests << "Post dec" << std::endl;
-	// 	it_tmp = it--;
-	// 	tests << *it_tmp << " | " << *it << std::endl;
-	// 	tests << "###############################################" << std::endl;
-	// }

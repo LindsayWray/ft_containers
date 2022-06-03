@@ -9,11 +9,10 @@ namespace ft {
 	public:
 		typedef Itree<T>											Itree;
 		typedef typename Itree::data_type							data_type;
-		typedef typename Alloc::template rebind<data_type>::other	allocator_type;
+		typedef Alloc												allocator_type;
 		typedef typename Itree::node								node;
 		typedef typename Alloc::template rebind<node>::other		node_allocator_type;
 		typedef	size_t												size_type;
-
 
 	private:
 		node*				_root;
@@ -23,11 +22,11 @@ namespace ft {
 		Compare				_compare;		
 
 	public:
-		RBtree(allocator_type alloc, Compare compare) : _root(NULL), _alloc(alloc), _size(0), _compare(compare){};
-		RBtree() : _root(NULL), _alloc(), _size(0), _compare(){};
-		~RBtree(){};
+		RBtree(allocator_type alloc, Compare compare) : _root(NULL), _alloc(alloc), _size(0), _compare(compare) {};
+		RBtree() : _root(NULL), _alloc(), _size(0), _compare() {};
+		~RBtree() {};
 
-		RBtree& operator=(const RBtree& original){
+		RBtree& operator=(const RBtree& original) {
 			_alloc = original._alloc;
 			_nodeAlloc = original._nodeAlloc;
 			_size = original._size;
@@ -35,11 +34,8 @@ namespace ft {
 			return *this;
 		}
 
-
 		//  		**************   ADD FUNCTIONS   **************
-		bool	addLeaf(data_type data) {
-			return addLeaf(this->_root, data);
-		}
+		bool	addLeaf(data_type data) { return addLeaf(this->_root, data); }
 
 	private:
 		bool	addLeaf(node* ptr, data_type& data) {
@@ -47,72 +43,56 @@ namespace ft {
 			if(_root == NULL){
 				_root = createLeaf(NULL, data);
 				_root->color = BLACK;
-			}
-			else if(_compare(data, *(ptr->data))){
-				if(ptr->left != NULL)
+			} else if(_compare(data, *(ptr->data))) {
+				if(ptr->left != NULL) {
 					return addLeaf(ptr->left, data);
-				else{
+				} else {
 					ptr->left = createLeaf(ptr, data);
 					fixRedBlackPropertiesAfterInsert(ptr->left);
 				}
-			}
-			else if(_compare(*(ptr->data), data)){
-				if(ptr->right != NULL)
+			} else if(_compare(*(ptr->data), data)) {
+				if(ptr->right != NULL) {
 					return addLeaf(ptr->right, data);
-				else{
+				} else {
 					ptr->right = createLeaf(ptr, data);
 					fixRedBlackPropertiesAfterInsert(ptr->right);
 				}
-			}
-			else
+			} else
 				hasBeenAdded = false;
 			return hasBeenAdded;
 		}
 
 		node* createLeaf(node* ptr, data_type& data) {
-			node* newNode;
-			try{
-				newNode = _nodeAlloc.allocate(1);
-				this->_nodeAlloc.construct(newNode, node(ptr));
-				newNode->data = _alloc.allocate(1);
-				this->_alloc.construct(newNode->data, data);
-				this->_size++;
-			}
-			catch(std::bad_alloc &e){
-				std::cerr << e.what() << std::endl;	
-				exit(EXIT_FAILURE);
-			}
+			node* newNode = _nodeAlloc.allocate(1);
+			_nodeAlloc.construct(newNode, node(ptr));
+			newNode->data = _alloc.allocate(1);
+			_alloc.construct(newNode->data, data);
+			_size++;
 			return newNode;
 		}
-
 
 
 		// 	 ************** REMOVAL FUNCTIONS **************
 	public:
 		void	removeTree(){
-			removeSubtree(this->_root);
-			this->_root = NULL;			//clearing an empty map
-			this->_size = 0;
+			removeSubtree(_root);
+			_root = NULL;		//clearing an empty map
+			_size = 0;
 		}
 
-		void	removeNode(const data_type& data){
-			removeNode(data, this->_root);
-		}
+		void	removeNode(const data_type& data) { removeNode(data, this->_root); }
 
 	private:
-		void	removeNode(const data_type& data, node* parent){
-			if(this->_root != NULL){
-				if(isEqual(*(_root->data), data)){
+		void	removeNode(const data_type& data, node* parent) {
+			if(_root != NULL) {
+				if(isEqual(*(_root->data), data)) {
 					RemoveMatch(NULL, _root);
-				}
-					
-				else{
-					if(_compare(data, *(parent->data)) && parent->left != NULL){
+				} else {
+					if(_compare(data, *(parent->data)) && parent->left != NULL) {
 						isEqual(*(parent->left->data), data) ?
 						RemoveMatch(parent, parent->left)	:
 						removeNode(data, parent->left);
-					}
-					else if(_compare(*(parent->data), data) && parent->right != NULL){
+					} else if(_compare(*(parent->data), data) && parent->right != NULL) {
 						isEqual(*(parent->right->data), data) ?
 						RemoveMatch(parent, parent->right)	:
 						removeNode(data, parent->right);
@@ -121,29 +101,28 @@ namespace ft {
 			}
 		}
 		
-		void	removeSubtree(node* ptr){
-			if(ptr != NULL){
+		void	removeSubtree(node* ptr) {
+			if(ptr != NULL) {
 				if(ptr->left != NULL)
 					removeSubtree(ptr->left);
 				if(ptr->right != NULL)
 					removeSubtree(ptr->right);
-				this->_alloc.destroy(ptr->data);
+				_alloc.destroy(ptr->data);
 				_alloc.deallocate(ptr->data, 1);
-				this->_nodeAlloc.destroy(ptr);
+				_nodeAlloc.destroy(ptr);
 				_nodeAlloc.deallocate(ptr, 1);
 			}
 		}
 
-		void	destroyNode(node* ptr){
-				this->_alloc.destroy(ptr->data);
+		void	destroyNode(node* ptr) {
+				_alloc.destroy(ptr->data);
 				_alloc.deallocate(ptr->data, 1);
-				this->_nodeAlloc.destroy(ptr);
+				_nodeAlloc.destroy(ptr);
 				_nodeAlloc.deallocate(ptr, 1);
-				this->_size--;
+				_size--;
 		}
 
-		void	RemoveMatch(node* parent, node* match){
-
+		void	RemoveMatch(node* parent, node* match) {
 			node* movedUpNode = match;
 			color deletedNodeColor = match->color;
 			bool isNILnode = false;
@@ -152,8 +131,7 @@ namespace ft {
 			if(match->left == NULL && match->right == NULL)	{				//Case 0 - 0 children
 				isNILnode = true;
 				nilNode = match;
-			}
-			else if (match->left == NULL || match->right == NULL ){			// Case 1 - 1 child
+			} else if (match->left == NULL || match->right == NULL ) {		// Case 1 - 1 child
 				if(match->right != NULL)
 					movedUpNode = match->right;
 				else
@@ -161,22 +139,20 @@ namespace ft {
 				replaceParentsChild(parent, match, movedUpNode);
 				movedUpNode->parent = match->parent;
 				destroyNode(match);
-			}
-			else{														// Case 2 - node has 2 children
+			} else {														// Case 2 - node has 2 children
 				node* smallestInRightSubtree = findSmallest(match->right);
-				if (smallestInRightSubtree->right)
+				if (smallestInRightSubtree->right) {
 					movedUpNode = smallestInRightSubtree->right;
-					
-				else {
+				} else {
 					isNILnode = true;
-
 					data_type nilData = data_type();
 					nilNode = createLeaf(NULL, nilData);
 					nilNode->color = BLACK;
 					replaceParentsChild(smallestInRightSubtree->parent, smallestInRightSubtree, nilNode);
 					movedUpNode = nilNode;
 				}
-				if(smallestInRightSubtree->parent == match){
+								
+				if(smallestInRightSubtree->parent == match) {
 					replaceParentsChild(match->parent, match, smallestInRightSubtree);
 					smallestInRightSubtree->left = match->left;
 					match->left->parent = smallestInRightSubtree;
@@ -184,8 +160,7 @@ namespace ft {
 						smallestInRightSubtree->right = nilNode;
 						nilNode->parent = smallestInRightSubtree;
 					}
-				}
-				else{
+				} else {
 					if (smallestInRightSubtree->right) {
 						smallestInRightSubtree->right->parent = smallestInRightSubtree->parent;
 						smallestInRightSubtree->parent->left = smallestInRightSubtree->right;
@@ -196,16 +171,13 @@ namespace ft {
 					smallestInRightSubtree->right = match->right;
 					match->right->parent = smallestInRightSubtree;
 				}
-
 				deletedNodeColor = smallestInRightSubtree->color;
 				smallestInRightSubtree->color = match->color;
 				destroyNode(match);
 			}
-			if (deletedNodeColor == BLACK){
+			if (deletedNodeColor == BLACK)
 				fixRedBlackPropertiesAfterDelete(movedUpNode);
-			}
-				
-			if(isNILnode){
+			if(isNILnode) {
 				replaceParentsChild(nilNode->parent, nilNode, NULL);
 				destroyNode(nilNode);
 			}
@@ -216,10 +188,9 @@ namespace ft {
 		void handleRedSibling(node* ptr, node* sibling) {
 			sibling->color = BLACK;
 			ptr->parent->color = RED;
-
-			if (ptr == ptr->parent->left) {
+			if (ptr == ptr->parent->left)
 				rotateLeft(ptr->parent);
-			} else
+			else
 				rotateRight(ptr->parent);
 		}
 
@@ -255,7 +226,6 @@ namespace ft {
 		void replaceParentsChild(node* parent, node* oldChild, node* newChild) {
 			if (parent == NULL)
 				_root = newChild;
-
 			else if (parent->left == oldChild)
 				parent->left = newChild;
 			else if (parent->right == oldChild) 
@@ -266,17 +236,17 @@ namespace ft {
 
 		node* getAunt(node* parent) {
 			node* grandparent = parent->parent;
-			if (grandparent->left == parent) {
+			if (grandparent->left == parent)
 				return grandparent->right;
-			} else
+			else
 				return grandparent->left;
 		}
 
 		node* getSibling(node* ptr) {
 			node* parent = ptr->parent;
-			if (ptr == parent->left) {
+			if (ptr == parent->left)
 				return parent->right;
-			} else
+			else
 				return parent->left;
 		}
 
@@ -286,13 +256,10 @@ namespace ft {
 			node* leftChild = ptr->left;
 
 			ptr->left = leftChild->right;
-			if (leftChild->right != NULL) {
+			if (leftChild->right != NULL)
 				leftChild->right->parent = ptr;
-			}
-
 			leftChild->right = ptr;
 			ptr->parent = leftChild;
-
 			replaceParentsChild(parent, ptr, leftChild);
 		}
 
@@ -301,10 +268,8 @@ namespace ft {
 			node* rightChild = ptr->right;
 
 			ptr->right = rightChild->left;
-			if (rightChild->left != NULL) {
+			if (rightChild->left != NULL)
 				rightChild->left->parent = ptr;
-			}
-
 			rightChild->left = ptr;
 			ptr->parent = rightChild;
 			replaceParentsChild(parent, ptr, rightChild);
@@ -335,25 +300,17 @@ namespace ft {
 				// Call recursively for grandparent, which is now red.
 				// It might be root or have a red parent, in which case we need to fix more...
 				fixRedBlackPropertiesAfterInsert(grandparent);
-			}
-
-			// Parent is left child of grandparent
-			else if (parent == grandparent->left) {
+			} else if (parent == grandparent->left) {	// Parent is left child of grandparent
 				// Case 3a: aunt is black and node is left->right "inner child" of its grandparent
 				if (newNode == parent->right) {
 					rotateLeft(parent);
 					parent = newNode;
 				}
-
 				// Case 4a: aunt is black and node is left->left "outer child" of its grandparent
 				rotateRight(grandparent);
-				// Recolor original parent and grandparent
 				parent->color = BLACK;
 				grandparent->color = RED;
-			}
-
-			// Parent is right child of grandparent
-			else {
+			} else {	// Parent is right child of grandparent
 				// Case 3b: aunt is black and node is right->left "inner child" of its grandparent
 				if (newNode == parent->left) {
 					rotateRight(parent);
@@ -367,19 +324,16 @@ namespace ft {
 		}
 
 		void fixRedBlackPropertiesAfterDelete(node* movedNode) {
-			// Case 1: Examined node is root, end of recursion
-			if (movedNode == _root) {
+			if (movedNode == _root) {	// Case 1: Examined node is root, end of recursion
 				movedNode->color = BLACK;
 				return;
 			}
-
 			node* sibling = getSibling(movedNode);
 			// Case 2: Red sibling
 			if (sibling->color == RED) {
 				handleRedSibling(movedNode, sibling);
 				sibling = getSibling(movedNode); // Get new sibling for fall-through to cases 3-6
 			}
-
 			// Cases 3+4: Black sibling with two black children
 			if (isBlack(sibling->left) && isBlack(sibling->right)) {
 				sibling->color = RED;
@@ -396,45 +350,37 @@ namespace ft {
 		}
 
 
-
 		// 			************** FINDERS **************
 	public:
-		node*	findNode(const data_type& data) const{
-			return findNode(data, this->_root);
-		}
+		node*	findNode(const data_type& data) const { return findNode(data, this->_root); }
 
-		node*		findSmallest() const{
-			return findSmallest(this->_root);
-		}
+		node*	findSmallest() const { return findSmallest(this->_root); }
 		
-		node*		findLargest() const{
-			return findLargest(this->_root);
-		}
+		node*	findLargest() const { return findLargest(this->_root); }
 
 	private:
-		node*	findNode(const data_type& data, node* ptr) const{
-			if(ptr != NULL){
-				if(isEqual(*(ptr->data), data))
+		node*	findNode(const data_type& data, node* ptr) const {
+			if(ptr != NULL) {
+				if(isEqual(*(ptr->data), data)) {
 					return ptr;
-				else{
+				} else {
 					if(_compare(data, *(ptr->data)))
 						return findNode(data, ptr->left);
 					else
 						return findNode(data, ptr->right);
 				}
-			}
-			else
+			} else
 				return NULL;
 		}
 
-		node*		findSmallest(node* ptr) const{
+		node*	findSmallest(node* ptr) const {
 			if(ptr && ptr->left != NULL)
 				return findSmallest(ptr->left);
 			else
 				return ptr;
 		}
 
-		node*		findLargest(node* ptr) const{
+		node*	findLargest(node* ptr) const {
 			if(ptr && ptr->right != NULL)
 				return findLargest(ptr->right);
 			else
@@ -442,13 +388,10 @@ namespace ft {
 		}
 
 
-
 		// 			************** UTILS **************
-		bool isBlack(node* ptr) {
-			return ptr == NULL || ptr->color == BLACK;
-		}
+		bool isBlack(node* ptr) { return ptr == NULL || ptr->color == BLACK; }
 
-		bool	isEqual(const data_type& x, const data_type& y) const{
+		bool	isEqual(const data_type& x, const data_type& y) const {
 			if(_compare(x, y))
 				return false;
 			if(_compare(y,x))
@@ -457,40 +400,42 @@ namespace ft {
 		}
 
 	public:
-		size_type	getSize() const {
-			return this->_size;
-		}
+		size_type	getSize() const { return _size; }
 		
-		void swapTrees(RBtree& tree){
-			node* tempRoot = this->_root;
-			this->_root = tree._root;
+		void swapTrees(RBtree& tree) {
+			node* tempRoot = _root;
+			_root = tree._root;
 			tree._root = tempRoot;
 
-			size_type tempSize = this->_size;
-			this->_size = tree._size;
+			size_type tempSize = _size;
+			_size = tree._size;
 			tree._size = tempSize;
-		}
-	
-		const node*	getRoot() const{
-			return _root;
+
+			Compare tempComp = _compare;
+			_compare = tree._compare;
+			tree._compare = tempComp;
+
+			allocator_type tempAlloc= _alloc;
+			_alloc = tree._alloc;
+			tree._alloc = tempAlloc;
+			
+			node_allocator_type tempNodeAlloc= _nodeAlloc;
+			_nodeAlloc = tree._nodeAlloc;
+			tree._nodeAlloc = tempNodeAlloc;
 		}
 
+		const node*	getRoot() const { return _root; }
 
 
 		//   *******  PRINT FUNCTIONS *******
-		void	printMapStructure(){
-			std::cout << "Root is: " << this->_root->data->first << std::endl;
-			printMapStructure(this->_root);
-		}
+		void	printMapStructure() { printMapStructure(_root); }
 
-		void	printSetStructure(){
-			std::cout << "Root is: " << *(this->_root->data) << std::endl;
-			printSetStructure(this->_root);
-		}
+		void	printSetStructure() { printSetStructure(_root); }
 
 	private:
-		void	printMapStructure(node* ptr, int depth = 0){
-			if(this->_root != NULL){
+		void	printMapStructure(node* ptr, int depth = 0) {
+			if(_root != NULL){
+				std::cout << "Root is: " << _root->data->first << std::endl;
 				if(ptr->left != NULL)
 					printMapStructure(ptr->left, depth + 1);
 				for (int i = 0; i < depth; i++)
@@ -503,8 +448,9 @@ namespace ft {
 				std::cout << "The tree is empty\n" << std::endl;
 		}
 
-		void	printSetStructure(node* ptr, int depth = 0){
-			if(this->_root != NULL){
+		void	printSetStructure(node* ptr, int depth = 0) {
+			if(_root != NULL){
+				std::cout << "Root is: " << *(_root->data) << std::endl;
 				if(ptr->left != NULL)
 					printSetStructure(ptr->left, depth + 1);
 				for (int i = 0; i < depth; i++)

@@ -13,19 +13,13 @@
 #endif
 
 
-void printVector(ft::vector<std::string> testVec, std::ofstream& tests){
+void printVector(ft::vector<std::string> testVec, std::ofstream& tests) {
 	for (ft::vector<std::string>::iterator it = testVec.begin() ; it != testVec.end(); ++it)
 		tests << ' ' << *it;
 	tests << '\n';
 }
 
-// void printVector(ft::vector<std::string> testVec, std::ofstream& tests){
-// 	for (ft::vector<std::string>::iterator it = testVec.begin() ; it != testVec.end(); ++it)
-// 		std::cout << ' ' << *it;
-// 	std::cout << '\n';
-// }
-
-void	stringVectorTests(std::ofstream& tests){
+void	stringVectorTests(std::ofstream& tests) {
 
 	tests << "\n--- STRING VECTOR GENERAL TESTS --" << std::endl;
 	ft::vector<std::string> testVec;
@@ -112,13 +106,11 @@ void	stringVectorTests(std::ofstream& tests){
 	testVec.resize(15);
 	printVector(testVec, tests);
 
-
 	tests << "SECOND VECTOR CONSTRUCTOR\n";
 	ft::vector<std::string> testVec2 (3,"test");
 	tests << "vector constructor with input:";
 	printVector(testVec2, tests);
 	tests << "capacity	" << testVec2.capacity() << std::endl;
-
 
 	ft::vector<std::string> testVec3 (testVec.begin(), testVec.end());
 		tests << "vector constructor with range contains:";
@@ -140,8 +132,6 @@ void	stringVectorTests(std::ofstream& tests){
 	tests << "vector pop_back:	";
 	printVector(testVec, tests);
 
-
-
 	tests << "  Erase TESTS\n";
 	tests << "vector contains: ";
 	printVector(testVec, tests);
@@ -156,13 +146,10 @@ void	stringVectorTests(std::ofstream& tests){
 	tests << "size after mass erase: " << testVec.size() << std::endl;
 
 
-
 	tests << "  Assign TESTS\n";
 	tests << "vector contains: ";
 	printVector(testVec2, tests);
 	tests << "capacity before resize: " << testVec2.capacity() << std::endl;
-	//testVec.resize(400);
-	//testVec2.resize(400);
 	tests << "capacity before assign: " << testVec2.capacity() << std::endl;
 	testVec2.assign(testVec.begin(), testVec.end());
 	printVector(testVec, tests);
@@ -173,7 +160,6 @@ void	stringVectorTests(std::ofstream& tests){
 	tests << "vector after assign: ";
 	printVector(testVec2, tests);
 	tests << "capacity after assign: " << testVec2.capacity() << std::endl << std::endl;
-
 
 	ft::vector<std::string> copyVec(testVec);
 	tests << "  Clear TESTS\n";
@@ -187,12 +173,6 @@ void	stringVectorTests(std::ofstream& tests){
 	tests << "vector after clear: ";
 	printVector(testVec, tests);
 	testVec = copyVec;
-
-
-	//-------------------------------------------------------------------------------------------------------
-
-
-
 
 	tests << "\n--- STRING VECTOR ITERATOR TESTS --" << std::endl;
 	ft::vector<std::string>::iterator ite = testVec.begin();
@@ -235,10 +215,8 @@ void	stringVectorTests(std::ofstream& tests){
 	tests << "after decrement			" << *ite << std::endl;
 	ite += 5;
 	tests << "after increment			" << *ite << std::endl;
-	tests << "look at index eight		" << ite[8] << std::endl;
+	tests << "look at index two		" << ite[2] << std::endl;
 
-	
-	
 	
 	tests << "\n--- CONST ITERATOR COMPARE --" << std::endl;
 	ft::vector<std::string>::iterator const_it = testVec.begin();
@@ -253,11 +231,6 @@ void	stringVectorTests(std::ofstream& tests){
 	tests << "look up index		" << const_it[2] << std::endl;
 	tests << "subtract iterators		" << ite - const_it << std::endl;
 	tests << "subtract iterators		" << const_it - ite << std::endl;
-	
-
-
-	//-------------------------------------------------------------------------------------------------------
-
 
 	tests << "\n--- STRING VECTOR REVERSE ITERATOR TESTS --" << std::endl;
 	ft::vector<std::string>::reverse_iterator rite = testVec.rbegin();

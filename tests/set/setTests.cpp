@@ -7,7 +7,6 @@
 	#include <set>
 	#include <stack>
 	#include <vector>
-	#include <iostream>
 	namespace ft = std;
 #else
 	#include "../../Containers/set.hpp"
@@ -17,21 +16,14 @@
 #endif
 
 template<class T>
-// void printSet(ft::set<T>& set, std::ofstream& tests){
-// 	for (typename ft::set<T>::iterator it = set.begin(); it != set.end(); it++) {
-// 		tests << *it << "; ";
-// 	}
-// 	tests << '\n';
-// }
-
 void printSet(ft::set<T>& set, std::ofstream& tests){
-	(void)tests;
-;	for (typename ft::set<T>::iterator it = set.begin(); it != set.end(); it++) {
+	for (typename ft::set<T>::iterator it = set.begin(); it != set.end(); it++) {
 		tests << *it << "; ";
 	}
 	tests << '\n';
-}
 
+	//std::cout << "Is valid Red Black Tree: " << ft::validRB(set.getTreeForTesting(), set.value_comp()) << std::endl;
+}
 
 
 void setTests(std::ofstream& tests){
@@ -59,7 +51,7 @@ void setTests(std::ofstream& tests){
 	}
 	tests << "current size " << testSet.size() << std::endl;
 
-	std::cout << "Is valid Red Black Tree: " << ft::validRB(testSet.getTreeForTesting(), testSet.value_comp()) << std::endl;
+	printSet(testSet, tests);
 
 	tests << "******************** SET STRING TESTS ********************\n";
 	ft::set<std::string> testSet2;
@@ -83,8 +75,6 @@ void setTests(std::ofstream& tests){
 	tests << "current size " << testSet2.size() << std::endl;
 	//tests << "max size " << testSet2.max_size() << std::endl;
 
-	std::cout << "Is valid Red Black Tree: " << ft::validRB(testSet2.getTreeForTesting(), testSet2.value_comp()) << std::endl;
-
 
 	tests << "--- TEST SECOND CONSTRUCTOR (fill with iterator range) --" << std::endl;
 	ft::set<int>::iterator ite = testSet.begin();
@@ -100,8 +90,6 @@ void setTests(std::ofstream& tests){
 	printSet(testSet3, tests);
 
 	//testSet3.printTree();
-	std::cout << "Is valid Red Black Tree: " << ft::validRB(testSet3.getTreeForTesting(), testSet3.value_comp()) << std::endl;
-
 	tests << "Set contains" << std::endl;
 	printSet(testSet, tests);
 	// tests << "Set backwards" << std::endl;

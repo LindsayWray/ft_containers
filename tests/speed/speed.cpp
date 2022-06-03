@@ -7,11 +7,12 @@
 	#include <map>
 	#include <stack>
 	#include <vector>
-	#include <iostream>
+	#include <set>
 	namespace ft = std;
 #else
 	#include "../../Containers/vector.hpp"
 	#include "../../Containers/map.hpp"
+	#include "../../Containers/set.hpp"
 #endif
 
 
@@ -36,7 +37,6 @@ void speedTestVector(){
 	ft::vector<std::string> copyVecString(largeStringVec);
 	ft::vector<int> copyVecInt(largeIntVec);
 
-
 	for (ft::vector<int>::const_iterator ite = largeIntVec.begin() ; ite != largeIntVec.end(); ){ ++ite; }
 	for (ft::vector<std::string>::const_iterator ite = largeStringVec.begin() ; ite != largeStringVec.end(); ){ ++ite; }
 
@@ -44,22 +44,19 @@ void speedTestVector(){
 	largeStringVec.resize(800);
 }
 
-void speedTestMap(){
-
+void speedTestMap() {
 	ft::map<int, int> testBigMap;
 	for(long i = 0, j = 100000; i < 100000; i++, j--){
 		testBigMap[i] = j;
 	}
 
 	ft::map<int, int> copyBigMap(testBigMap);
-
-	ft::map<std::string, std::string> testBigMap2;
-	for(long i = 0; i < 100000; i++){
-		testBigMap2["test"] = "TEST";
+	ft::map<float, std::string> testBigMap2;
+	for(float i = 0; i < 100000; i++){
+		testBigMap2.insert(ft::make_pair(i, "TEST"));
 	}
 
 	ft::map<std::string, int> testMap;
-
 	testMap.empty();
 
 	testMap["K"] = 100;
@@ -86,7 +83,6 @@ void speedTestMap(){
 	testMap["S"] = 30;
 	testMap["U"] = 21;
 	testMap["W"] = 7;
-
 
 	int val = testMap["O"];
 	testMap.size();
@@ -163,8 +159,6 @@ void speedTestMap(){
 	val_str = it->first;
 	val = it->second;
 
-
-
 	//--- TEST SECOND CONSTRUCTOR (fill with iterator range)
 	ft::map<int, char>::iterator ite = testMap2.begin();
 	ite++, ite++, ite++;
@@ -172,8 +166,6 @@ void speedTestMap(){
 	for (ft::map<int, char>::iterator it = testMap3.begin(); it != testMap3.end(); ) {
 		it++;
 	}
-
-
 
 	// Swap TESTS\n";
 	ft::map<int, char>::iterator it_testMemory = testMap2.begin();
@@ -192,5 +184,21 @@ void speedTestMap(){
 	}
 
 	testMap.clear();
+}
+
+void speedTestSet() {
+	ft::set<int> testBigSet;
+	for(long i = 0, j = 100000; i < 100000; i++, j--){
+		testBigSet.insert(j);
+	}
+
+	ft::set<int> copyBigSet(testBigSet);
+	ft::set<std::string> testBigSet2;
+	for(long i = 0; i < 100000; i++){
+		testBigSet2.insert("TEST");
+	}
+
+	testBigSet.clear();
+	testBigSet2.clear();
 }
 

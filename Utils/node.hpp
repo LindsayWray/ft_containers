@@ -3,14 +3,15 @@
 
 #include <stdlib.h>
 
-namespace ft{
+namespace ft {
 
 	enum color{
 		RED,
 		BLACK
 	};
+
 	template<class data_type>
-	struct node{
+	struct node {
 		node(node* parent) : color(RED), left(NULL), right(NULL), parent(parent) {};
 
 		data_type*		data;
@@ -19,7 +20,6 @@ namespace ft{
 		node*			right;
 		node*			parent;
 	};
-	
 }
 
 #endif

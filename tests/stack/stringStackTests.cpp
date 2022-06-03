@@ -12,12 +12,8 @@
 	#include "../../Containers/stack.hpp"
 #endif
 
-
-
-void printStack(ft::stack<std::string> stack, std::ofstream& tests)
-{
+void printStack(ft::stack<std::string> stack, std::ofstream& tests) {
 	tests << "(" << stack.size() << " elements)\n";
-
 	while(!stack.empty()){
 		tests << stack.top() << " ";
 		stack.pop();
@@ -25,10 +21,7 @@ void printStack(ft::stack<std::string> stack, std::ofstream& tests)
 	tests << '\n';
 }
 
-
 void stringStackTests(std::ofstream& tests){
-
-	(void)tests;
 	tests << "--- INT STACK GENERAL --" << std::endl;
 	ft::stack<std::string> testStack;
 

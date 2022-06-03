@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string>
 #include <fstream>
+#include <list>
+#include <vector>
+#include <deque>
 
 #if STD_CONTAINER
 	#include <map>
@@ -12,12 +15,9 @@
 	#include "../../Containers/stack.hpp"
 #endif
 
-
-
-void printStack(ft::stack<int> stack, std::ofstream& tests)
-{
+template<class container> 
+void printStack(ft::stack<int, container> stack, std::ofstream& tests) {
 	tests << "(" << stack.size() << " elements)\n";
-
 	while(!stack.empty()){
 		tests << stack.top() << " ";
 		stack.pop();
@@ -25,20 +25,7 @@ void printStack(ft::stack<int> stack, std::ofstream& tests)
 	tests << '\n';
 }
 
-void printStackTerminal(ft::stack<int> stack)
-{
-	std::cout << "(" << stack.size() << " elements)\n";
-
-	while(!stack.empty()){
-		std::cout << stack.top() << " ";
-		stack.pop();
-	}
-	std::cout << '\n';
-}
-
-
-void intStackTests(std::ofstream& tests){
-
+void intStackTests(std::ofstream& tests) {
 	tests << "--- INT STACK GENERAL --" << std::endl;
 	ft::stack<int> testStack;
 
@@ -83,4 +70,24 @@ void intStackTests(std::ofstream& tests){
 	tests << "is bigger			" << (copyVec > testStack) << std::endl;
 	tests << "is smaller or equal		" << (copyVec<= testStack) << std::endl;
 	tests << "is bigger or equal		" << (testStack >= testStack) << std::endl;
+
+
+	ft::stack<int, std::list<int> > testStackList;
+	for(int i = 0; i < 30; i++){
+		testStackList.push(i);
+	}
+	printStack(testStackList, tests);
+
+	ft::stack<int, std::vector<int> > testStackVector;
+	for(int i = 0; i < 30; i++){
+		testStackVector.push(i);
+	}
+	printStack(testStackVector, tests);
+
+	ft::stack<int, std::deque<int> > testStackDeque;
+	for(int i = 0; i < 30; i++){
+		testStackDeque.push(i);
+	}
+	printStack(testStackDeque, tests);
+
 }

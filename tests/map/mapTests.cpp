@@ -7,7 +7,6 @@
 	#include <map>
 	#include <stack>
 	#include <vector>
-	#include <iostream>
 	namespace ft = std;
 #else
 	#include "../../Containers/map.hpp"
@@ -15,33 +14,18 @@
 	#include "../RBTValidationTest.hpp"
 #endif
 
-
-
-
 template<class T1, class T2>
-void printMap(ft::map<T1, T2>& map, std::ofstream& tests){
-	(void)tests;
+void printMap(ft::map<T1, T2>& map, std::ofstream& tests) {
 	for (typename ft::map<T1, T2>::const_iterator it = map.begin(); it != map.end(); it++) {
 		tests << it->first << " = " << it->second << "; ";
 	}
 	tests << '\n';
-}
 
-template<class T1, class T2>
-void printMap(ft::map<T1, T2>& map){
-	for (typename ft::map<T1, T2>::const_iterator it = map.begin(); it != map.end(); it++) {
-		std::cout << it->first << " = " << it->second << "; ";
-	}
-	std::cout << '\n';
+	//std::cout << "Is valid Red Black Tree: " << ft::validRB(map.getTreeForTesting(), map.value_comp()) << std::endl;
 }
 
 
-
-
-
-
-void mapTests(std::ofstream& tests){
-
+void mapTests(std::ofstream& tests) {
 	tests << "\n--- MAP GENERAL TESTS --" << std::endl;
 
 	ft::map<std::string, int> testMap;
@@ -77,13 +61,10 @@ void mapTests(std::ofstream& tests){
 	testMap["U"] = 21;
 	testMap["W"] = 7;
 
-	//testMap.printMap();
-
-	std::cout << "Is valid Red Black Tree: " << ft::validRB(testMap.getTreeForTesting(), testMap.value_comp()) << std::endl;
+	printMap(testMap, tests);
 
 	tests << "Value O is: " << testMap["O"] << std::endl;
 	tests << "The map size is: " << testMap.size() << std::endl;
-	tests << "The max size is: " << testMap.max_size() << std::endl;
 	tests << "Value A before: " << testMap["A"] << std::endl;
 	testMap["A"] = 25;  // update an existing value
 	tests << "Value A after: " << testMap["A"] << std::endl;
@@ -93,22 +74,20 @@ void mapTests(std::ofstream& tests){
 	tests << "Value X is: " << testMap["X"] << std::endl;
 	tests << "Value Y is: " << testMap["Y"] << std::endl;
 	tests << "Value Z is: " << testMap["Z"] << std::endl;
-	//testMap.erase("M");
+	testMap.erase("M");
 
 	testMap.insert(testMap.begin(), ft::pair<std::string,int>("G", 500));
 
-	std::cout << "Is valid Red Black Tree: " << ft::validRB(testMap.getTreeForTesting(), testMap.value_comp()) << std::endl;
+	printMap(testMap, tests);
 
 	// PAIR CONSTRUCTOR TESTS
 	ft::pair <std::string,double> product1;                     // default constructor
-	ft::pair <std::string,double> product2 ("tomatoes",2.30);   // value init
+	ft::pair <std::string,double> product2 ("tomatoes", 2.30);   // value init
 	ft::pair <std::string,double> product3 (product2);          // copy constructor
 
-	product1 = ft::make_pair(std::string("lightbulbs"),0.99);   //  make_pair (move)
-
-	product2.first = "pencils";                  // the type of first is string
-	product2.second = 39.90;                   // the type of second is double
-
+	product1 = ft::make_pair(std::string("lightbulbs"),0.99);
+	product2.first = "pencils";
+	product2.second = 39.90;
 	tests << "The price of " << product1.first << " is $" << product1.second << '\n';
 	tests << "The price of " << product2.first << " is $" << product2.second << '\n';
 	tests << "The price of " << product3.first << " is $" << product3.second << '\n';
@@ -122,7 +101,6 @@ void mapTests(std::ofstream& tests){
 	tests << std::boolalpha << "is smaller or equal	" << (product4 <= product2) << std::endl;
 	tests << std::boolalpha << "is bigger		" << (product1 > product1) << std::endl;
 	tests << std::boolalpha << "is bigger or equal	" << (product2 >= product1) << std::endl;
-
 
 
 	ft::map<int, char> testMap2;
@@ -140,18 +118,22 @@ void mapTests(std::ofstream& tests){
 	testMap2[70] = 'l';
 	
 
+	// iterators remain valid test
+	ft::map<int, char>::iterator validIt = testMap2.find(15);
+	tests << "validIt is: " << validIt->first << std::endl;
 
-	//testMap2.printMap();
+	//Double root erase
 	testMap2.erase(16);
-	//testMap2.printMap();
 	testMap2.erase(16);
-	//testMap2.printMap();
+	printMap(testMap2, tests);
 
-	std::cout << "Is valid Red Black Tree: " << ft::validRB(testMap2.getTreeForTesting(), testMap2.value_comp()) << std::endl;
+	tests << "validIt is: " << validIt->first << std::endl;
+	validIt++;
+	tests << "validIt is: " << validIt->first << std::endl;
 
-
-	//-------------------------------------------------------------------------------------------------------
-
+	testMap2[17] = 'X';
+	validIt--;
+	tests << "validIt is: " << validIt->first << std::endl;
 
 	tests << "\n--- MAP ITERATOR TESTS --" << std::endl;
 	ft::map<std::string, int>::iterator it = testMap.begin();
@@ -180,8 +162,6 @@ void mapTests(std::ofstream& tests){
 	tests << " begin: " << it->second << std::endl;
 
 
-
-
 	// tests << "Map contains" << std::endl;
 	// for (ft::map<std::string, int>::iterator it = testMap.begin(); it != testMap.end(); it++) {
 	// 	tests << it->first << " = " << it->second << "; ";
@@ -206,8 +186,6 @@ void mapTests(std::ofstream& tests){
 	// tests << '\n';
 
 
-
-
 	tests << "\n--- CONST ITERATOR COMPARE --" << std::endl;
 	ft::map<std::string, int>::iterator const_it = testMap.begin(); 
 	it = testMap.begin();
@@ -228,7 +206,7 @@ void mapTests(std::ofstream& tests){
 	}
 	tests << '\n';
 
-	//testMap3.printMap();
+	printMap(testMap3, tests);
 
 	tests << "--- TEST ERASE WITH ITERATORS--" << std::endl;
 	ft::map<int, char>::iterator iter = testMap3.begin();
@@ -239,9 +217,7 @@ void mapTests(std::ofstream& tests){
 	}
 	tests << '\n';
 
-	//testMap3.printMap();
-	std::cout << "Is valid Red Black Tree: " << ft::validRB(testMap3.getTreeForTesting(), testMap3.value_comp()) << std::endl;
-
+	printMap(testMap3, tests);
 
 	ft::pair<ft::map<std::string,int>::iterator,bool> ret;
 	ret = testMap.insert(ft::pair<std::string,int>("X", 500));
@@ -274,8 +250,6 @@ void mapTests(std::ofstream& tests){
 	tests << "Map 3 after swap:";
 	printMap(testMap3, tests);
 
-	std::cout << "Is valid Red Black Tree: " << ft::validRB(testMap2.getTreeForTesting(), testMap2.value_comp()) << std::endl;
-
 	tests << "Value Compare TEST:\n";
 	ft::map<char,int> mymap;
 	mymap['x']=1001;
@@ -286,7 +260,6 @@ void mapTests(std::ofstream& tests){
 		tests << std::boolalpha << mymap.value_comp()(*it, highest);
 		tests << " " << it->first << " => " << it->second << '\n';
 	}
-
 
 
 	tests << "Operations TESTS" << std::endl;
@@ -365,12 +338,7 @@ void mapTests(std::ofstream& tests){
 	tests << "Map 2 not affected by erase\n";
 	printMap(testMap2, tests);
 
-	std::cout << "Is valid Red Black Tree: " << ft::validRB(copyMap.getTreeForTesting(), copyMap.value_comp()) << std::endl;
-
-
 	testMap.clear();
 	tests << std::boolalpha << "Map empty after clear: " << testMap.empty() << '\n';
-
-
 }
 

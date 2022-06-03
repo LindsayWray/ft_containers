@@ -1,10 +1,9 @@
 #ifndef ITERATOR_HPP
 # define ITERATOR_HPP
 
-namespace ft{
+namespace ft {
 	template <	class T, class Pointer = T*, class Reference = T&,
 				class Category = std::random_access_iterator_tag, class Distance = std::ptrdiff_t>
-		
 	class iterator {
 	public:
 		typedef T								value_type;
@@ -17,103 +16,91 @@ namespace ft{
 	private:
 		value_type* 	_ptr;
 	public:
-		iterator() : _ptr(NULL){};
-		iterator(value_type* ptr) : _ptr(ptr){};
+		iterator() : _ptr(NULL) {};
+		iterator(value_type* ptr) : _ptr(ptr) {};
 
-		template <class U>
-		iterator(iterator<U, U*, U&> const& original) : _ptr(original.get_pos()){};
+		iterator(iterator const& original) : _ptr(original.get_pos()) {};
 
-		~iterator(){};
+		~iterator() {};
 
-		iterator&	operator=(iterator const& original){
-			this->_ptr = original._ptr;
+		iterator&	operator=(iterator const& original) {
+			_ptr = original._ptr;
 			return *this;
 		}
 
-		// ********* type conversion operator *********
-		operator const_iterator_type() const {
-			return const_iterator_type(_ptr);
-		}
+		operator const_iterator_type() const { return const_iterator_type(_ptr); }	// ********* type conversion operator *********
 
 		// ********* Non member operator overloads *********
-		friend inline bool operator==(const iterator& lhs, const iterator& rhs) { 
-			return lhs.get_pos() == rhs.get_pos();
-		}
-		friend inline bool operator!=(const iterator& lhs, const iterator& rhs) { 
-			return !(lhs.get_pos() == rhs.get_pos());
-		}
-		friend bool operator<(const iterator& lhs, const iterator& rhs) {
-			return lhs.get_pos() < rhs.get_pos();
-		}
-		friend bool operator>(const iterator& lhs, const iterator& rhs) {
-			return rhs.get_pos() < lhs.get_pos();
-		}
-		friend bool operator<=(const iterator& lhs, const iterator& rhs) {
-			return !(rhs.get_pos() < lhs.get_pos());
-		}
-		friend bool operator>=(const iterator& lhs, const iterator& rhs) {
-			return !(lhs.get_pos() < rhs.get_pos());
-		}
+		friend inline bool operator==(const iterator& lhs, const iterator& rhs) { return lhs.get_pos() == rhs.get_pos(); }
 
-		iterator& operator++(){
-			this->_ptr++;
+		friend inline bool operator!=(const iterator& lhs, const iterator& rhs) { return !(lhs.get_pos() == rhs.get_pos()); }
+
+		friend bool operator<(const iterator& lhs, const iterator& rhs) { return lhs.get_pos() < rhs.get_pos(); }
+
+		friend bool operator>(const iterator& lhs, const iterator& rhs) { return rhs.get_pos() < lhs.get_pos(); }
+
+		friend bool operator<=(const iterator& lhs, const iterator& rhs) { return !(rhs.get_pos() < lhs.get_pos()); }
+
+		friend bool operator>=(const iterator& lhs, const iterator& rhs) { return !(lhs.get_pos() < rhs.get_pos()); }
+
+		iterator& operator++() {
+			_ptr++;
 			return *this;
 		}
-		iterator operator++(int){
+		iterator operator++(int) {
 			iterator copy(*this);
-			this->_ptr++;
+			_ptr++;
 			return copy;
 		}
 
-		iterator& operator--(){
-			this->_ptr--;
+		iterator& operator--() {
+			_ptr--;
 			return *this;
 		}
-		iterator operator--(int){
+		iterator operator--(int) {
 			iterator copy(*this);
-			this->_ptr--;
+			_ptr--;
 			return copy;
 		}
 
-		reference operator*() { return *(this->_ptr); }
-		reference operator*() const { return *(this->_ptr); }
+		reference operator*() { return *(_ptr); }
+		reference operator*() const { return *(_ptr); }
 
-		pointer operator->() { return this->_ptr; }
-		pointer operator->() const { return this->_ptr; }
+		pointer operator->() { return _ptr; }
+		pointer operator->() const { return _ptr; }
 
-		reference operator[](difference_type index) const{
+		reference operator[](difference_type index) const {
 			iterator copy(*this);
 			copy._ptr += index;
 			return *copy._ptr;
 		}
-		iterator operator+(const int& n) const{
+
+		iterator operator+(const int& n) const {
 			iterator copy(*this);
 			copy._ptr += n;
 			return copy;
 		}
-		//friend gives acces, even though no instance is calling this function
 		friend iterator operator+(const int &n, const iterator& b){ return b + n; }
 
-		iterator operator-(const int& b) const{
+		iterator operator-(const int& b) const {
 			iterator copy(*this);
 			copy._ptr -= b;
 			return copy;
 		}
+		difference_type operator-(const const_iterator_type& b) const { return _ptr - b.get_pos(); }
 
-		difference_type operator-(const const_iterator_type& b) const { return this->_ptr - b.get_pos(); }
-
-		iterator& operator+=(const int &b){
-			this->_ptr += b;
+		iterator& operator+=(const int &b) {
+			_ptr += b;
 			return *this;
 		}
 
-		iterator& operator-=(const int &b){
-			this->_ptr -= b;
+		iterator& operator-=(const int &b) {
+			_ptr -= b;
 			return *this;
 		}
 
-		// ********* helper to give const_iterator access to position of iterator for copying/conversion *********
-		value_type* get_pos() const{ return this->_ptr; }
+		// helper to give const_iterator access to position of iterator for copying/conversion
+		value_type* get_pos() const{ return _ptr; }
 	};
 }
 

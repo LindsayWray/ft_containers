@@ -1,7 +1,7 @@
 #ifndef UTILITIES_HPP
 # define UTILITIES_HPP
 
-namespace ft{
+namespace ft {
 
 	template<bool Cond, class T = void>
 	struct enable_if {};
@@ -10,14 +10,12 @@ namespace ft{
 	struct enable_if<true, T> {
 		typedef T type;
 	};
-			/* The enable_if templates are very simple syntactically. 
-		They always come in pairs: one of them is empty and the other one 
-		has a type typedef that forwards its second type parameter. The empty 
+		/* The enable_if templates always come in pairs: one of them is empty and the 
+		other one has a type typedef that forwards its second type parameter. The empty 
 		structure triggers an invalid type because it contains no member. 
 		When a compile-time condition is false, the empty enable_if template is chosen. 
 		Appending ::type would result in an invalid instantiation, which the 
 		compiler throws away due to the SFINAE principle. */
-
 
 
 	template <class T> struct is_integral 				{ static const bool value = false;};
@@ -37,8 +35,6 @@ namespace ft{
 	template <> struct is_integral<long long>			{ static const bool value = true; };
 	template <> struct is_integral<unsigned long long>	{ static const bool value = true; };
 	
-
-
 	template <class InputIterator1, class InputIterator2>
 	bool lexicographical_compare (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIterator2 last2){
 		while (first1 != last1){
@@ -96,58 +92,44 @@ namespace ft{
 		T1			first;
 		T2			second;
 
-		pair() : first(), second(){};
+		pair() : first(), second() {};
 
 		template<class t1, class t2> 
-		pair(const pair<t1,t2>& original) : first(original.first), second(original.second){};
+		pair(const pair<t1,t2>& original) : first(original.first), second(original.second) {};
 
-		pair(const first_type& a, const second_type& b) : first(a), second(b){};
+		pair(const first_type& a, const second_type& b) : first(a), second(b) {};
 
-		// implicitly declared:
-		pair& operator= (const pair& original){
+		pair& operator= (const pair& original) {
 			this->first = original.first;
 			this->second = original.second;
-
 			return *this;
 		};
-
 	};
 
 	template <class T1,class T2>
-	pair<T1,T2> make_pair(T1 x, T2 y) {
-		return pair<T1,T2>(x, y);
-	}
-
+	pair<T1,T2> make_pair(T1 x, T2 y) { return pair<T1,T2>(x, y); }
 	
 	template <class T1, class T2>
-	bool operator== (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs) {
+	bool operator==(const pair<T1,T2>& lhs, const pair<T1,T2>& rhs) {
 		return lhs.first == rhs.first && lhs.second == rhs.second;
 	}
 
 	template <class T1, class T2>
-	bool operator!= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs) {
-		return !(lhs == rhs);
-	}
-
-	template <class T1, class T2>
-	bool operator<  (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs) {
+	bool operator<(const pair<T1,T2>& lhs, const pair<T1,T2>& rhs) {
 		return lhs.first < rhs.first || (!(rhs.first < lhs.first) && lhs.second < rhs.second); 
 	}
 
 	template <class T1, class T2>
-	bool operator<= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs){
-		return !(rhs < lhs);
-	}
+	bool operator!= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs) { return !(lhs == rhs); }
 
 	template <class T1, class T2>
-	bool operator>  (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs) {
-		return rhs < lhs;
-	}
+	bool operator<= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs) { return !(rhs < lhs); }
 
 	template <class T1, class T2>
-	bool operator>= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs) {
-		return !(lhs < rhs);
-	}
+	bool operator>  (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs) { return rhs < lhs; }
+
+	template <class T1, class T2>
+	bool operator>= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs) { return !(lhs < rhs); }
 }
 
 #endif
