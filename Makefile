@@ -50,5 +50,6 @@ fclean: clean
 re: fclean all
 
 test: all
+	@mkdir -p TestOutput
 	./$(NAME) && ./$(FT_NAME)
 	diff TestOutput/my_output TestOutput/std_output
