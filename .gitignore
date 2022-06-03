@@ -5,6 +5,7 @@ ft_obj/
 myVectorOutput
 realVectorOutput
 ft_containers
-TestOutput/
+TestOutput/my_output
+TestOutput/std_output
 
 containers_test/
